@@ -1,0 +1,16 @@
+.header
+{
+    height: 100px;
+}
+
+.main
+{
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 115px);
+}
+
+.footer
+{
+    height: 15px;
+}
