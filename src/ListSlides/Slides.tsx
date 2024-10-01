@@ -4,9 +4,7 @@ import Slide from './Slide/Slide.tsx';
 import styles from './Slides.module.css';
 function Slides()
 {
-    // const { presentation } = usePresentation();
     const { presentation } = usePresentation();
-    // const { presentation, setPresentation } = usePresentation();
     return (
         <div
             className={styles.slides}

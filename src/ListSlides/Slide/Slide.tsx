@@ -31,10 +31,14 @@ function Slide({ slide }: SlideProps)
             resizeObserver.disconnect(); 
         };
     }, []);
+    const backgroundStyle = slide.background.type === 'solid'
+        ? { backgroundColor: slide.background.color }
+        : { backgroundImage: `url(${slide.background.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }; 
     return (
         <div ref={parentRef} 
             className={`${styles.slide} ${isSelected ? styles.slideSelected : ''}`}
             onClick={() => selectSlide(slide.uid)}
+            style={backgroundStyle}
         >
             {slide.objects.map(object => (
                 (object.type == 'text')

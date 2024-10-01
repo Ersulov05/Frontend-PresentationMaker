@@ -1,6 +1,5 @@
 .workAreaContainer
 {
-
     background-color: aqua;
     width: 100%;
     height: 100%;
@@ -16,5 +15,4 @@
     background-color: burlywood;
     width: 100%;
     height: 100%;
-    /* transform: scale(2); */
 }

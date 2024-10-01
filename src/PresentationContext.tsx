@@ -1,21 +1,19 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Presentation, Slide, ObjectText } from './Presentation'; // Импортируем тип Presentation
+import { Presentation, Slide, ObjectText } from './Presentation'; 
 
-// Определяем тип контекста
 interface PresentationContextType {
-    presentation: Presentation; // Объект презентации
-    setPresentation: React.Dispatch<React.SetStateAction<Presentation>>; // Функция для обновления презентации
+    presentation: Presentation;
+    setPresentation: React.Dispatch<React.SetStateAction<Presentation>>;
     addSlide: () => void;
     selectSlide: (slideUid: string) => void;
 }
 
-// Создаем контекст
 const PresentationContext = createContext<PresentationContextType | undefined>(undefined);
 
 
 const PresentationMin:Presentation = {
     name: "My Presentation",
-    slides: [], // Изначально пустой массив слайдов
+    slides: [],
     selectedSlideIds: [],
     scale: 1,
 }
@@ -25,7 +23,7 @@ const PresentationMax:Presentation = {
   slides: [
     {
       uid: '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b',
-      background: { color: '#FFFFFF', type: 'solid' },
+      background: { color: '#AF00F1', type: 'solid' },
       objects: [
         {
           uid: 'a4764091-6cf2-4b5a-a586-ede15a722b86',
@@ -55,7 +53,7 @@ const PresentationMax:Presentation = {
     },
     {
       uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
-      background: { src: 'test-src', type: 'image' },
+      background: { src: '/image/fon.jpeg', type: 'image' },
       objects: [
         {
           uid: 'a8fa7818-7232-4981-b369-1b8fcced8d5f',
@@ -77,7 +75,7 @@ const PresentationMax:Presentation = {
             lineHeight: 1
           },
           color: '#ff00ff',
-          backgroundColor: '#00ff00',
+          backgroundColor: '#00fff0',
           type: 'text'
         }
       ],
@@ -88,9 +86,7 @@ const PresentationMax:Presentation = {
   scale: 1
 }
 
-// Провайдер контекста
 export const PresentationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // Инициализируем состояние
     const [presentation, setPresentation] = useState<Presentation>(PresentationMax);
 
     function generateUID(): string {
@@ -143,7 +139,6 @@ export const PresentationProvider: React.FC<{ children: ReactNode }> = ({ childr
     );
 };
 
-// Хук для использования контекста
 export const usePresentation = () => {
     const context = useContext(PresentationContext);
     if (!context) {

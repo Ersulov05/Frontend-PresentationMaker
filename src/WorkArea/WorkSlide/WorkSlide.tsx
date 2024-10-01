@@ -34,9 +34,15 @@ function WorkSlide({ slide }: SlideProps)
             </div>
         );
     }
-    
+    const backgroundStyle = slide.background.type === 'solid'
+        ? { backgroundColor: slide.background.color }
+        : { backgroundImage: `url(${slide.background.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }; 
     return (
-        <div ref={parentRef} className={styles.workSlide}>
+        <div 
+            ref={parentRef} 
+            className={styles.workSlide}
+            style={backgroundStyle}
+        >
             {slide.objects.map(object => (
                 (object.type == 'text')
                     ? <TextObject key={object.uid} object={object} widthCoef={widthCoef}/>
