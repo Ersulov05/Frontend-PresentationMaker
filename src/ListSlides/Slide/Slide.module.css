@@ -1,4 +1,5 @@
 .slide {
+    position: relative;
     aspect-ratio: 16 / 9;
     width: 95%;   /* Процент от родительского контейнера */
     margin: 0 auto; /* Отступ между слайдами */
@@ -8,6 +9,7 @@
     box-sizing: border-box; /* Основной фон для обычного слайда */
     flex-shrink: 0;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .slideSelected {

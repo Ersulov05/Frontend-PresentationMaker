@@ -36,9 +36,9 @@ const PresentationMax:Presentation = {
         },
         {
           uid: '25f6059b-42ca-40c9-95be-0502cd0844b2',
-          pos: { x: 100, y: 100 },
+          pos: { x: 0, y: 100 },
           size: { width: 100, height: 100 },
-          value: '',
+          value: 'Тут текст',
           font: {
             style: 'italic',
             family: 'arial',
@@ -66,13 +66,13 @@ const PresentationMax:Presentation = {
         },
         {
           uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
-          pos: { x: 100, y: 100 },
+          pos: { x: 200, y: 200 },
           size: { width: 100, height: 100 },
           value: 'text',
           font: {
             style: 'normal',
             family: 'arial',
-            size: 15,
+            size: 36,
             weight: 400,
             lineHeight: 1
           },

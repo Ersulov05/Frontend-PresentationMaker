@@ -1,18 +1,32 @@
 // import React from 'react'
-import { usePresentation } from '../../PresentationContext.tsx'
-import { Slide as SlideType } from '../../Presentation.ts'; // Импортируйте тип Slide
+import { useRef, useEffect, useState } from 'react';
+import { Slide as SlideType } from '../../Presentation.ts'; 
 import styles from './WorkSlide.module.css';
-import TextObject from './Objects/TextObject.tsx';
-import ImageObject from './Objects/ImageObject.tsx';
+import TextObject from '../../components/objects/TextObject.tsx';
+import ImageObject from '../../components/objects/ImageObject.tsx';
+import {WIDTH_SLIDE} from '../../constants.ts'
 
 interface SlideProps {
-    slide?: SlideType; // Пропсы, ожидающие объект слайда
+    slide?: SlideType; 
 }
 
 function WorkSlide({ slide }: SlideProps)
 {
-    // const { presentation } = usePresentation();
-    // const { presentation, setPresentation } = usePresentation();
+    const parentRef = useRef<HTMLDivElement | null>(null);
+    const [widthCoef, setWidthCoef] = useState<number>(1);
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => {
+            if (parentRef.current) {
+                setWidthCoef(parentRef.current.offsetWidth / WIDTH_SLIDE);
+            }
+        });
+        if (parentRef.current) {
+            resizeObserver.observe(parentRef.current); 
+        }
+        return () => {
+            resizeObserver.disconnect(); 
+        };
+    }, []);
     if (!slide) {
         return (
             <div className={styles.workArea}>
@@ -20,12 +34,13 @@ function WorkSlide({ slide }: SlideProps)
             </div>
         );
     }
+    
     return (
-        <div className={styles.workSlide}>
+        <div ref={parentRef} className={styles.workSlide}>
             {slide.objects.map(object => (
                 (object.type == 'text')
-                    ? <TextObject key={object.uid} object={object}/>
-                    : <ImageObject key={object.uid} object={object}/>
+                    ? <TextObject key={object.uid} object={object} widthCoef={widthCoef}/>
+                    : <ImageObject key={object.uid} object={object} widthCoef={widthCoef}/>
             ))}
         </div>
     )
