@@ -3,14 +3,12 @@ import { usePresentation } from '../../PresentationContext.tsx'
 import { Slide as SlideType } from '../../Presentation.ts'; 
 import styles from './Slide.module.css';
 import {WIDTH_SLIDE} from '../../constants.ts'
-import TextObject from '../../components/objects/TextObject.tsx';
-import ImageObject from '../../components/objects/ImageObject.tsx';
+import TextObject from './ViewObjects/TextObject.tsx';
+import ImageObject from './ViewObjects/ImageObject.tsx';
 
 interface SlideProps {
     slide: SlideType;
 }
-
-
 
 function Slide({ slide }: SlideProps)
 {

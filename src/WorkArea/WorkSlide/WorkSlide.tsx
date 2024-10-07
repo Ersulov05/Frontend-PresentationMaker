@@ -2,9 +2,10 @@
 import { useRef, useEffect, useState } from 'react';
 import { Slide as SlideType } from '../../Presentation.ts'; 
 import styles from './WorkSlide.module.css';
-import TextObject from '../../components/objects/TextObject.tsx';
-import ImageObject from '../../components/objects/ImageObject.tsx';
+import TextObject from './Objects/TextObject.tsx';
+import ImageObject from './Objects/ImageObject.tsx';
 import {WIDTH_SLIDE} from '../../constants.ts'
+import Selection from './Selection/Selection.tsx';
 
 interface SlideProps {
     slide?: SlideType; 
@@ -48,6 +49,7 @@ function WorkSlide({ slide }: SlideProps)
                     ? <TextObject key={object.uid} object={object} widthCoef={widthCoef}/>
                     : <ImageObject key={object.uid} object={object} widthCoef={widthCoef}/>
             ))}
+            <Selection slide={slide} widthCoef={widthCoef}/>
         </div>
     )
 }
