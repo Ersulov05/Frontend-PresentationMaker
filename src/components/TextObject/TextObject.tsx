@@ -1,4 +1,4 @@
-import { ObjectText as ObjectType } from '../../Presentation.ts';
+import { ObjectText as ObjectType } from '../../store/Presentation.ts';
 import styles from './TextObject.module.css';
 
 interface ObjectProps {

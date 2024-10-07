@@ -1,5 +1,5 @@
 // import React from 'react'
-import { usePresentation } from '../PresentationContext.tsx'
+import { usePresentation } from '../../PresentationContext.tsx'
 import Slide from './Slide/Slide.tsx';
 import styles from './Slides.module.css';
 function Slides()

@@ -1,15 +1,9 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Presentation, Slide, ObjectText } from './store/Presentation'; 
+import { Presentation } from "./Presentation"
 
-interface PresentationContextType {
-    presentation: Presentation;
-    setPresentation: React.Dispatch<React.SetStateAction<Presentation>>;
-    addSlide: () => void;
-    selectSlide: (slideUid: string) => void;
+
+export type Editor = {
+    presentation: Presentation
 }
-
-const PresentationContext = createContext<PresentationContextType | undefined>(undefined);
-
 
 const PresentationMin:Presentation = {
     name: "My Presentation",
@@ -86,63 +80,34 @@ const PresentationMax:Presentation = {
     scale: 1
 }
 
-export const PresentationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [presentation, setPresentation] = useState<Presentation>(PresentationMax);
+let editor: Editor = 
+{
+    presentation: PresentationMin,
+}
+// export type EditorChangeHandler = () => void;
+let editorChangeHandler: Function | null = null
 
-    function generateUID(): string {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
+export function getEditor()
+{
+    return editor
+}
+
+export function setEditor(newEditor: Editor)
+{
+    editor = newEditor
+}
+
+export function addEditorChangeHandler(handler: Function)
+{
+    editorChangeHandler = handler
+}
+
+export function dispatch(modifyFn: Function, payload: Object)
+{
+    const newEditor = modifyFn(editor, payload)
+    setEditor(newEditor)
+    if (editorChangeHandler)
+    {
+        editorChangeHandler()
     }
-
-    const addSlide = () => {
-        const newSlide: Slide = {
-            uid: generateUID(),
-            background: {
-                color: "#FFFFFF",
-                type: "solid"
-            },
-            objects: [],
-            selectedObjectIds: []
-        }
-
-        setPresentation(prev => ({
-            ...prev,
-            slides: [...prev.slides, newSlide],
-            selectedSlideIds: [newSlide.uid],
-        }));
-    };
-
-    const selectSlide = (slideUid: string) => {
-        const { slides } = presentation
-        setPresentation(prev => ( {
-            ...prev,
-            slides: slides.map(slide => {
-                if (slide.uid === slideUid) {
-                    return {
-                        ...slide,
-                        selectedObjectIds: []
-                    }
-                }
-                return slide
-            }),
-            selectedSlideIds: [slideUid]
-        }))
-    }
-
-    return (
-        <PresentationContext.Provider value={{ presentation, setPresentation, addSlide, selectSlide }}>
-            {children}
-        </PresentationContext.Provider>
-    );
-};
-
-export const usePresentation = () => {
-    const context = useContext(PresentationContext);
-    if (!context) {
-        throw new Error('usePresentation must be used within a PresentationProvider');
-    }
-    return context;
-};
+}

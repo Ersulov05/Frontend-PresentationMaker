@@ -1,19 +1,20 @@
-// import React from 'react'
 import { useRef, useEffect, useState } from 'react';
-import { Slide as SlideType } from '../../Presentation.ts'; 
-import styles from './WorkSlide.module.css';
-import TextObject from './Objects/TextObject.tsx';
-import ImageObject from './Objects/ImageObject.tsx';
-import {WIDTH_SLIDE} from '../../constants.ts'
-import Selection from './Selection/Selection.tsx';
+import { usePresentation } from '../../../PresentationContext.tsx'
+import { Slide as SlideType } from '../../../store/Presentation.ts'; 
+import styles from './Slide.module.css';
+import {WIDTH_SLIDE} from '../../../constants.ts'
+import TextObject from './ViewObjects/TextObject.tsx';
+import ImageObject from './ViewObjects/ImageObject.tsx';
 
 interface SlideProps {
-    slide?: SlideType; 
+    slide: SlideType;
 }
 
-function WorkSlide({ slide }: SlideProps)
+function Slide({ slide }: SlideProps)
 {
-    const parentRef = useRef<HTMLDivElement | null>(null);
+    const { presentation, selectSlide } = usePresentation();
+    const isSelected = presentation.selectedSlideIds.includes(slide.uid);
+    const parentRef = useRef<HTMLDivElement | null>(null); 
     const [widthCoef, setWidthCoef] = useState<number>(1);
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
@@ -22,26 +23,19 @@ function WorkSlide({ slide }: SlideProps)
             }
         });
         if (parentRef.current) {
-            resizeObserver.observe(parentRef.current); 
+            resizeObserver.observe(parentRef.current);
         }
         return () => {
             resizeObserver.disconnect(); 
         };
     }, []);
-    if (!slide) {
-        return (
-            <div className={styles.workArea}>
-                <p>Нет слайда для отображения</p>
-            </div>
-        );
-    }
     const backgroundStyle = slide.background.type === 'solid'
         ? { backgroundColor: slide.background.color }
         : { backgroundImage: `url(${slide.background.src})`, backgroundSize: 'cover', backgroundPosition: 'center' }; 
     return (
-        <div 
-            ref={parentRef} 
-            className={styles.workSlide}
+        <div ref={parentRef} 
+            className={`${styles.slide} ${isSelected ? styles.slideSelected : ''}`}
+            onClick={() => selectSlide(slide.uid)}
             style={backgroundStyle}
         >
             {slide.objects.map(object => (
@@ -49,9 +43,8 @@ function WorkSlide({ slide }: SlideProps)
                     ? <TextObject key={object.uid} object={object} widthCoef={widthCoef}/>
                     : <ImageObject key={object.uid} object={object} widthCoef={widthCoef}/>
             ))}
-            <Selection slide={slide} widthCoef={widthCoef}/>
         </div>
     )
 }
 
-export default WorkSlide
+export default Slide

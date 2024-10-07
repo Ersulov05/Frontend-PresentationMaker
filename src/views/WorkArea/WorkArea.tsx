@@ -1,6 +1,6 @@
 // import React from 'react'
-import { usePresentation } from '../PresentationContext.tsx'
-import { Slide as SlideType } from '../Presentation.ts'; // Импортируйте тип Slide
+import { usePresentation } from '../../PresentationContext.tsx'
+import { Slide as SlideType } from '../../store/Presentation.ts'; // Импортируйте тип Slide
 import styles from './WorkArea.module.css';
 import WorkSlide from './WorkSlide/WorkSlide.tsx';
 

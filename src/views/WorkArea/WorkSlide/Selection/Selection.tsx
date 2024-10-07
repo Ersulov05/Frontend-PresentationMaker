@@ -1,5 +1,5 @@
-import { ObjectText as ObjectType } from '../../../Presentation.ts';
-import { Position, Size, Slide as SlideType } from '../../../Presentation.ts'; 
+import { ObjectText as ObjectType } from '../../../../store/Presentation.ts';
+import { Position, Size, Slide as SlideType } from '../../../../store/Presentation.ts'; 
 import styles from './Selection.module.css';
 
 interface SlideProps {
