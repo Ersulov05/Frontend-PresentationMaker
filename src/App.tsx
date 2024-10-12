@@ -1,39 +1,90 @@
-// import React from 'react'
-import Slides from './views/ListSlides/Slides.tsx'
-import WorkArea from './views/WorkArea/WorkArea.tsx'
-// import { usePresentation } from './PresentationContext'
-import { Editor } from './store/editor.ts'
+import { dispatch, EditorType } from './store/editor.ts'
+import { ListSlides } from './views/ListSlides/ListSlides.tsx';
 import styles from './App.module.css';
-// import './App.css'
+import { WorkArea } from './views/WorkArea/WorkArea.tsx';
+import { addSlide } from './store/addSlide.ts';
+import { removeSlide } from './store/removeSlide.ts';
+import { TextField } from './components/textField/TextField.tsx';
+import { renamePresentation } from './store/renamePresentation.ts';
+import { addScale, changeScale, subScale } from './store/changeScale.ts';
+import { NumberField } from './components/numberField/NumberField.tsx';
+import { Button } from './components/button/Button.tsx';
 
-interface AppProps {
-    editor: Editor; // Определяем тип для пропсов
+type AppProps = {
+    editor: EditorType; // Определяем тип для пропсов
 }
 
 function App({ editor }: AppProps) {
     const { presentation } = editor;
-    const selectedSlideId = presentation.selectedSlideIds.length > 0
-        ? presentation.selectedSlideIds[0] // Если есть выбранные слайды, берем первый
-        : null;
+    function onRenamePresentation(name: string) {
+        dispatch(renamePresentation, name)
+    }
 
-    const selectedSlide = selectedSlideId
-        ? presentation.slides.find(slide => slide.uid === selectedSlideId)
-        : undefined;
+    function onAddSlide() {
+        dispatch(addSlide)
+    }
+
+    function onRemoveSlide() {
+        dispatch(removeSlide)
+    }
+
+    function onAddScale() {
+        dispatch(addScale)
+    }
+
+    function onSubScale() {
+        dispatch(subScale)
+    }
+
+    function onChangeScale(newScale: number) {
+        dispatch(changeScale, newScale)
+    }
+
+    const selectedSlide = presentation.slides.find(slide => slide.uid === presentation.selectedSlideIds[0]);
 
     return (
         <>
             <header className={styles.header}>
                 <h1>{presentation.name}</h1>
-                <button onClick={console.log} style={{ marginBottom: '20px' }}>
+                <TextField 
+                    value={presentation.name}
+                    onChange={(value) => onRenamePresentation(value)}
+                />
+                <button onClick={onAddSlide} style={{ marginBottom: '20px' }}>
                     Add Slide
                 </button>
+                <button onClick={onRemoveSlide} style={{ marginBottom: '20px' }}>
+                    Remove Slide
+                </button>
+                <button onClick={onAddScale} style={{ marginBottom: '20px' }}>
+                    Add Scale
+                </button>
+                <button onClick={onSubScale} style={{ marginBottom: '20px' }}>
+                    Sub Scale
+                </button>
+                <Button value='button' onClick={() => console.log('click')}/>
+                <NumberField 
+                    value={presentation.scale.toString()} 
+                    onChange={(value) => onChangeScale(value)} 
+                    isFloat={true}
+                    limit={{
+                        minValue: 0.5,
+                        maxValue: 2
+                    }}
+                />
             </header>
-            {/* <main
+            <main
                 className={styles.main}
             >
-                <Slides/>
-                <WorkArea slide={selectedSlide} />
-            </main> */}
+                <ListSlides 
+                    slides={ presentation.slides }
+                    selectedSlideIds={ presentation.selectedSlideIds }
+                />
+                <WorkArea 
+                    slide={selectedSlide} 
+                    scale={presentation.scale}
+                />
+            </main>
             <footer className={styles.footer}>
 
             </footer>

@@ -1,9 +1,0 @@
-.anglePoint
-{
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    background-color: blue;
-    cursor: pointer;
-}

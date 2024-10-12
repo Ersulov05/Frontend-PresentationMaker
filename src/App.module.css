@@ -1,16 +1,24 @@
+:root {
+    --top-panel-height: 100px;
+    --slide-list-width: 200px;
+
+    --dark-gray: #555555;
+}
+
+
 .header
 {
-    height: 100px;
+    height: var(--top-panel-height);
 }
 
 .main
 {
     display: flex;
     width: 100%;
-    height: calc(100vh - 115px);
+    height: calc(100vh - var(--top-panel-height));
 }
 
 .footer
 {
-    height: 15px;
+    /* height: 15px; */
 }

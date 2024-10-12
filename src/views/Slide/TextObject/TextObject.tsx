@@ -1,4 +1,4 @@
-import { ObjectText as ObjectType } from '../../../../store/Presentation.ts';
+import { ObjectText as ObjectType } from '../../../store/PresentationType.ts';
 import styles from './TextObject.module.css';
 
 interface ObjectProps {
@@ -21,9 +21,7 @@ function TextObject({ object, widthCoef}: ObjectProps)
                 fontWeight: object.font.weight,  
                 fontSize: `${object.font.size*widthCoef}px`,  
                 lineHeight: `${object.font.lineHeight*widthCoef}px` 
-            }}
-            
-        >
+            }}>
             <div className={styles.text}>{object.value}</div>
         </div>
     )

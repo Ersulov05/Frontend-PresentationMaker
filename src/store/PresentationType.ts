@@ -18,13 +18,13 @@ export type Image = {
     type: "image"
 }
 
-export type ObjectSlide = {
+export type BaseObject = {
     uid: string
     pos: Position
     size: Size    
 }
 
-export type ObjectImage = ObjectSlide & {
+export type ObjectImage = BaseObject & {
     src: string
     type: 'image'
 }
@@ -37,7 +37,7 @@ export type Font = {
     lineHeight: number,
 }
 
-export type ObjectText = ObjectSlide & {
+export type ObjectText = BaseObject & {
     value: string
     font: Font
     color: string
@@ -45,16 +45,18 @@ export type ObjectText = ObjectSlide & {
     type: 'text'
 }
 
-export type Slide = {
+export type ObjectType = ObjectText | ObjectImage
+
+export type SlideType = {
     uid: string
     background: Solid | Image
-    objects: Array<ObjectText | ObjectImage>
-    selectedObjectIds: Array<string>
+    objects: ObjectType[]
+    selectedObjectIds: string[]
 }
 
 export type Presentation = {
     name: string
-    slides: Slide[]
+    slides: SlideType[]
     selectedSlideIds: string[]
     scale: number
 }

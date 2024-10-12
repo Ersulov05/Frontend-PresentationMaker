@@ -1,8 +1,7 @@
 .slide {
     position: relative;
+    width: 100%;
     aspect-ratio: 16 / 9;
-    width: 95%;   /* Процент от родительского контейнера */
-    margin: 0 auto; /* Отступ между слайдами */
     border-radius: 8px;
     border: 1px solid #ccc;
     background-color: white; /* Основной фон для обычного слайда */

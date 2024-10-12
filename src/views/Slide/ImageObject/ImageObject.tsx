@@ -1,4 +1,4 @@
-import { ObjectImage as ObjectType } from '../../../../store/Presentation.ts';
+import { ObjectImage as ObjectType } from '../../store/PresentationType.ts';
 import styles from './ImageObject.module.css';
 
 interface ObjectProps {
