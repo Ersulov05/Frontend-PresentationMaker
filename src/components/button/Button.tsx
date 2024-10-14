@@ -1,9 +1,9 @@
 import { CSSProperties } from "react"
 import { joinStyles } from "../../store/joinStyles"
-import _style from './Button.module.css'
+// import classNames from "classnames";
+import styles from './Button.module.css'
 
-
-type ButtopProps = {
+export type ButtopProps = {
     onClick?: () => void
     value?: string
     className?: string
@@ -12,7 +12,14 @@ type ButtopProps = {
     valueLocationVertical?: "center" | "top" | "bottom"
 }
 
-function Button({ className = "", style = {}, value = "", onClick, valueLocationHorizontal = 'center', valueLocationVertical = 'center' }: ButtopProps) {
+function Button({ 
+    className = undefined, 
+    style = {}, 
+    value = "", 
+    onClick, 
+    valueLocationHorizontal = 'center', 
+    valueLocationVertical = 'center',
+ }: ButtopProps) {
     const buttonStyles: CSSProperties = {
         justifyContent: valueLocationHorizontal === 'left' ? 'flex-start' 
                         : valueLocationHorizontal === 'right' ? 'flex-end' 
@@ -21,17 +28,17 @@ function Button({ className = "", style = {}, value = "", onClick, valueLocation
                         : valueLocationVertical === 'bottom' ? 'flex-end' 
                         : 'center',
     }
-    
+
     return (
-        <div
-            className={joinStyles(className, _style.button)} 
+        <div 
+            className={joinStyles(className ? className : styles.buttonDefault, styles.button)} 
             style={{ ...style, ...buttonStyles }} 
-            onClick={onClick}
+            onClick={onClick}         
         >
             <div>
                 {value}
             </div>
-        </div>
+        </div>       
     );
 }
 

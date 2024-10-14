@@ -1,12 +1,19 @@
+.container {
+    display: inline-block;
+    position: relative;
+}
+.buttonContainer
+{
+}
 .button {
     display: inline-flex;
     user-select: none;
-    cursor: pointer;
 }
 
 .buttonDafault {
     width: fit-content;
     height: fit-content;
+    cursor: pointer;
     padding: 5px;
     margin: 1px;
     background-color: blueviolet;

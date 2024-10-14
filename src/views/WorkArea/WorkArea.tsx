@@ -1,9 +1,11 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { SlideType, ObjectType } from '../../store/PresentationType.ts'; // Импортируйте тип Slide
-import Slide from '../Slide/Slide.tsx';
+import Slide from './Slide/Slide.tsx';
 import styles from './WorkArea.module.css';
-
+import { ListActions, ListComponentsType } from '../../components/listActions/ListActions.tsx';
+import { joinStyles } from '../../store/joinStyles.ts';
+import { PopupChangeBackground } from './PopupChangeBackground/PopupChangeBackground.tsx';
 
 // const WORK_AREA_BORDER_WIDTH: number = 20
 
@@ -40,6 +42,32 @@ type SlideProps = {
 
 function WorkArea({ slide, scale }: SlideProps)
 {
+    const [openPopupChangeBackground, setOpenPopupChangeBackground] = useState(false)
+    const [contextMenuVisible, setContextMenuVisible] = useState(false);
+    const [mouseX, setMouseX] = useState(0);
+    const [mouseY, setMouseY] = useState(0);
+
+    const components: ListComponentsType = [
+        {
+            type: "Button",
+            value: "change backgraund",
+            className: joinStyles(styles.buttonListAction),
+            onClick: () => setOpenPopupChangeBackground(true)
+        },
+    ] 
+
+
+    function handleContextMenu(event: React.MouseEvent) {
+        event.preventDefault()
+        setMouseX(event.clientX)
+        setMouseY(event.clientY)
+        setContextMenuVisible(true)
+    }
+
+    function closeContextMenu() {
+        setContextMenuVisible(false)
+    }
+
     if (!slide) {
         return (
             <div className={styles.workArea}>
@@ -65,11 +93,31 @@ function WorkArea({ slide, scale }: SlideProps)
     }
     
     return (
-        <div className={styles.workAreaContainer}>
-            <div className={styles.workArea} style={workAreaStyles}>
-                <Slide slide={slide} style={slideStyles}/>
+        <>
+            <div 
+                className={styles.workAreaContainer}
+                onContextMenu={handleContextMenu}
+                onClick={closeContextMenu}
+            >
+                <div className={styles.workArea} style={workAreaStyles}>
+                    <Slide slide={slide} style={slideStyles}/>
+                </div>
+                {contextMenuVisible && (
+                    <ListActions 
+                        components={components} 
+                        regarding={{
+                            type: "mouse",
+                            mouseX: mouseX,
+                            mouseY: mouseY,
+                        }}
+                    />
+                )}
             </div>
-        </div>
+            {openPopupChangeBackground && (
+                <PopupChangeBackground onClickClose={() => setOpenPopupChangeBackground(false)}/>
+            )}
+        </>
+        
     )
 }
 

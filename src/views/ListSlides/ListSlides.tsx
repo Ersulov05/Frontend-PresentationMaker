@@ -2,15 +2,13 @@ import { CSSProperties } from 'react';
 import { dispatch } from '../../store/editor.ts';
 import { SlideType } from '../../store/PresentationType.ts'
 import { selectSlide } from '../../store/selectSlide.ts';
-import Slide from '../Slide/Slide.tsx';
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
+import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 type SlidesProps = {
     slides: SlideType[],
     selectedSlideIds: string[],
 }
-
-// const SLIDE_PREVIEW_SCALE: number = 0.2
 
 function ListSlides({ slides, selectedSlideIds }: SlidesProps)
 {
@@ -28,7 +26,7 @@ function ListSlides({ slides, selectedSlideIds }: SlidesProps)
             className={styles.slides}
         >
             {slides.map(slide => (
-                <Slide 
+                <PreviewSlide 
                     key={slide.uid} 
                     slide={slide} 
                     onClick={() => onSelectSlide(slide.uid)}

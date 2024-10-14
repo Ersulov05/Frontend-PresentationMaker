@@ -23,3 +23,15 @@
     max-width: 100%;
     border: 50px solid transparent;
 }
+
+.buttonListAction {
+    width: 200px;
+    height: 20px;
+    background-color: aqua;
+}
+.buttonListAction:hover {
+    opacity: 0.9;
+}
+.buttonListAction:active {
+    opacity: 0.8;
+}

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, CSSProperties } from 'react';
-import { SlideType } from '../../store/PresentationType.ts'; 
+import { SlideType } from '../../../store/PresentationType.ts'; 
 import styles from './Slide.module.css';
-import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../store/constants.ts'
+import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
 

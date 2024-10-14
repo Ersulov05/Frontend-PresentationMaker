@@ -1,0 +1,14 @@
+.listAction {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    /* bottom: -100;
+    left: 0; 
+    transform: translateY(100%); */
+    
+    z-index: 1;
+    background-color: lightgray;
+    padding: 2px;
+}

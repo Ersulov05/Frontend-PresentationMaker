@@ -1,0 +1,17 @@
+.slide {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: white; /* Основной фон для обычного слайда */
+    box-sizing: border-box; /* Основной фон для обычного слайда */
+    flex-shrink: 0;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.slideSelected {
+    border: 2px solid red; /* Стиль для выделенного слайда */
+    /* background-color: rgba(255, 0, 0, 0.1); Фон для выделенного слайда */
+}

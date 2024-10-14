@@ -8,7 +8,13 @@ import { TextField } from './components/textField/TextField.tsx';
 import { renamePresentation } from './store/renamePresentation.ts';
 import { addScale, changeScale, subScale } from './store/changeScale.ts';
 import { NumberField } from './components/numberField/NumberField.tsx';
-import { Button } from './components/button/Button.tsx';
+import { Button } from './components/buttonWithList/Button.tsx';
+import { ListActions, ListComponentsType } from './components/listActions/ListActions.tsx';
+import { Solid } from './store/PresentationType.ts';
+import { changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
+import { addTextToSlide } from './store/addTextToSlide.ts';
+import { deleteObject } from './store/deleteObject.ts';
+import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
 
 type AppProps = {
     editor: EditorType; // Определяем тип для пропсов
@@ -40,6 +46,47 @@ function App({ editor }: AppProps) {
         dispatch(changeScale, newScale)
     }
 
+    function onChangeBackgroundSlide() {
+        const background: Solid = {
+            color: "#888888",
+            type: "solid"
+        }
+        dispatch(changeBackgroundSlide, background)
+    }
+
+    function onAddTextToSlide() {
+        const data = {
+            position: {
+                x: 10,
+                y: 10,
+            },
+            size: {
+                width: 100,
+                height: 100,
+            }
+        }
+        dispatch(addTextToSlide, data)
+    }
+
+    function onAddImageToSlide() {
+        const data: ImageDataType = {
+            position: {
+                x: 10,
+                y: 10,
+            },
+            size: {
+                width: 100,
+                height: 100,
+            },
+            src: '/image/react.svg'
+        }
+        dispatch(addImageToSlide, data)
+    }
+
+    function onDeleteObject() {
+        dispatch(deleteObject)
+    }
+
     const selectedSlide = presentation.slides.find(slide => slide.uid === presentation.selectedSlideIds[0]);
 
     return (
@@ -62,7 +109,26 @@ function App({ editor }: AppProps) {
                 <button onClick={onSubScale} style={{ marginBottom: '20px' }}>
                     Sub Scale
                 </button>
-                <Button value='button' onClick={() => console.log('click')}/>
+                <button onClick={onChangeBackgroundSlide} style={{ marginBottom: '20px' }}>
+                    change background
+                </button>
+                <button onClick={onAddTextToSlide} style={{ marginBottom: '20px' }}>
+                    add Text
+                </button>
+                <button onClick={onAddImageToSlide} style={{ marginBottom: '20px' }}>
+                    add Image
+                </button>
+                <button onClick={onDeleteObject} style={{ marginBottom: '20px' }}>
+                    delete Object
+                </button>
+                {/* <Button 
+                    value='button' 
+                    onClick={() => console.log('click')}
+                    isClickToFix={true}
+                >
+                    <ListActions components={components} />
+                </Button> */}
+                
                 <NumberField 
                     value={presentation.scale.toString()} 
                     onChange={(value) => onChangeScale(value)} 
