@@ -2,7 +2,12 @@ import { EditorType } from "./editor";
 import { generateUID } from "./generateUID";
 import { ObjectText, Position, Size } from "./PresentationType";
 
-function addTextToSlide(editor: EditorType, data: {position: Position, size: Size}): EditorType
+export type TextDataType = {
+    position: Position,
+    size: Size,
+}
+
+function addTextToSlide(editor: EditorType, data: TextDataType): EditorType
 {
     const { slides, selectedSlideIds } = editor.presentation
     if (selectedSlideIds.length == 0) {
@@ -25,7 +30,7 @@ function addTextToSlide(editor: EditorType, data: {position: Position, size: Siz
         backgroundColor: "none",
         type: "text"
     }
-    
+
     return {
         ...editor,
         presentation: {

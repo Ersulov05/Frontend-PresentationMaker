@@ -11,8 +11,8 @@ import { NumberField } from './components/numberField/NumberField.tsx';
 import { Button } from './components/buttonWithList/Button.tsx';
 import { ListActions, ListComponentsType } from './components/listActions/ListActions.tsx';
 import { Solid } from './store/PresentationType.ts';
-import { changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
-import { addTextToSlide } from './store/addTextToSlide.ts';
+import { BackgroundDataType, changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
+import { addTextToSlide, TextDataType } from './store/addTextToSlide.ts';
 import { deleteObject } from './store/deleteObject.ts';
 import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
 
@@ -47,15 +47,17 @@ function App({ editor }: AppProps) {
     }
 
     function onChangeBackgroundSlide() {
-        const background: Solid = {
-            color: "#888888",
-            type: "solid"
+        const data: BackgroundDataType = {
+            background: {
+                color: "#888888",
+                type: "solid",
+            },
         }
-        dispatch(changeBackgroundSlide, background)
+        dispatch(changeBackgroundSlide, data)
     }
 
     function onAddTextToSlide() {
-        const data = {
+        const data: TextDataType = {
             position: {
                 x: 10,
                 y: 10,
