@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef, useState } from "react"
 import { joinStyles } from "../../store/joinStyles"
 // import classNames from "classnames";
-import styles from './Button.module.css'
+import styles from './ButtonWithChild.module.css'
 
 type ButtonWithChildProps = {
     onClick?: () => void
@@ -29,7 +29,7 @@ function ButtonWithChild({
     const [viewChild, setViewChild] = useState(false)
     const [isChildVisible, setIsChildVisible] = useState(false);
     const buttonRef = useRef<HTMLDivElement>(null);
-    // const containerRef = useRef<HTMLDivElement>(null);
+    const childRef = useRef<HTMLDivElement>(null);
     const buttonStyles: CSSProperties = {
         justifyContent: valueLocationHorizontal === 'left' ? 'flex-start' 
                         : valueLocationHorizontal === 'right' ? 'flex-end' 
@@ -60,6 +60,7 @@ function ButtonWithChild({
     }
 
     function handleClick() {
+        setIsChildVisible(prev => !prev)
         if (onClick) {
             onClick()
         }
@@ -67,15 +68,17 @@ function ButtonWithChild({
 
     function handleChildClick() {
         if (isClickChildClose) {
-            setIsChildVisible(false)
-            setViewChild(false)
+            setTimeout(() => {
+                setIsChildVisible(false)
+                setViewChild(false)
+            }, 50)
         } 
     }
 
     function handleClickOutside(event: MouseEvent) {
         if (
-            buttonRef.current && !buttonRef.current.contains(event.target as Node) //&&
-            // containerRef.current && !containerRef.current.contains(event.target as Node)
+            buttonRef.current && !buttonRef.current.contains(event.target as Node) &&
+            childRef.current && !childRef.current.contains(event.target as Node)
         ) {
             setIsChildVisible(false);
             setViewChild(false);
@@ -111,6 +114,7 @@ function ButtonWithChild({
                     <div 
                         className={styles.childContainer}
                         onClick={handleChildClick}
+                        ref={childRef}
                     >
                         {children}
                     </div>

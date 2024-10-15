@@ -1,18 +1,25 @@
 import { useRef, useEffect, useState, CSSProperties } from 'react';
-import { SlideType } from '../../../store/PresentationType.ts'; 
+import { BackgroundType, SlideType } from '../../../store/PresentationType.ts'; 
 import styles from './PreviewSlide.module.css';
 import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
 
 type SlideProps = {
-    slide: SlideType;
-    isSelected?: boolean;
-    style?: CSSProperties;
-    onClick?: () => void;
+    slide: SlideType
+    isSelected?: boolean
+    style?: CSSProperties
+    onClick?: () => void
+    tempBackground: BackgroundType | null
 }
 
-function PreviewSlide({ slide, isSelected = false, style = {}, onClick = undefined }: SlideProps)
+function PreviewSlide({ 
+    slide, 
+    isSelected = false, 
+    style = {}, 
+    onClick,
+    tempBackground
+}: SlideProps)
 {
     const parentRef = useRef<HTMLDivElement | null>(null); 
     const [scale, setScale] = useState<number>(0.2);
@@ -28,12 +35,20 @@ function PreviewSlide({ slide, isSelected = false, style = {}, onClick = undefin
         return () => {
             resizeObserver.disconnect(); 
         };
-    }, []);
-    const backgroundStyle = slide.background.type === 'solid'
-        ? { backgroundColor: slide.background.color }
-        : { backgroundImage: `url(${slide.background.src})`, 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center' }; 
+    }, []); 
+
+    const backgroundStyle = tempBackground 
+        ? tempBackground.type === "solid"
+            ? { backgroundColor: tempBackground.color }
+            : { backgroundImage: `url(${tempBackground.src})`, 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center' }
+        : slide.background.type === 'solid'
+            ? { backgroundColor: slide.background.color }
+            : { backgroundImage: `url(${slide.background.src})`, 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center' }
+
     const slideStyles: CSSProperties = {
         ...backgroundStyle,
         // width: `${ scale * WIDTH_SLIDE }px`,

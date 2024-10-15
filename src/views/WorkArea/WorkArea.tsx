@@ -1,13 +1,11 @@
 import { CSSProperties, useState } from 'react';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
-import { SlideType, ObjectType } from '../../store/PresentationType.ts'; // Импортируйте тип Slide
+import { SlideType, ObjectType, BackgroundType } from '../../store/PresentationType.ts'; // Импортируйте тип Slide
 import Slide from './Slide/Slide.tsx';
 import styles from './WorkArea.module.css';
 import { ListActions, ListComponentsType } from '../../components/listActions/ListActions.tsx';
 import { joinStyles } from '../../store/joinStyles.ts';
 import { PopupChangeBackground } from './PopupChangeBackground/PopupChangeBackground.tsx';
-
-// const WORK_AREA_BORDER_WIDTH: number = 20
 
 type OverflowType = {
     top: number,
@@ -38,9 +36,18 @@ function calculateOverflow(objects: ObjectType[]): OverflowType
 type SlideProps = {
     slide?: SlideType,
     scale: number,
+    colors: string[],
+    onGetTempBackground: (backgraund: BackgroundType | null) => void,
+    tempBackground: BackgroundType | null,
 }
 
-function WorkArea({ slide, scale }: SlideProps)
+function WorkArea({ 
+    slide, 
+    scale, 
+    colors,
+    onGetTempBackground,
+    tempBackground,
+}: SlideProps)
 {
     const [openPopupChangeBackground, setOpenPopupChangeBackground] = useState(false)
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
@@ -55,7 +62,6 @@ function WorkArea({ slide, scale }: SlideProps)
             onClick: () => setOpenPopupChangeBackground(true)
         },
     ] 
-
 
     function handleContextMenu(event: React.MouseEvent) {
         event.preventDefault()
@@ -89,7 +95,7 @@ function WorkArea({ slide, scale }: SlideProps)
         top: `${ scale * Math.max(overflow.top, overflow.bottom)}px`,
         left: `${ scale * Math.max(overflow.left, overflow.right)}px`,
         width: `${ scale * WIDTH_SLIDE}px`,
-        height: `${ scale * HEIGHT_SLIDE}px`
+        height: `${ scale * HEIGHT_SLIDE}px`,
     }
     
     return (
@@ -100,7 +106,13 @@ function WorkArea({ slide, scale }: SlideProps)
                 onClick={closeContextMenu}
             >
                 <div className={styles.workArea} style={workAreaStyles}>
-                    <Slide slide={slide} style={slideStyles}/>
+                    <Slide 
+                        slide={slide} 
+                        style={{
+                            ...slideStyles
+                        }}
+                        tempBackground={tempBackground}
+                    />
                 </div>
                 {contextMenuVisible && (
                     <ListActions 
@@ -114,7 +126,12 @@ function WorkArea({ slide, scale }: SlideProps)
                 )}
             </div>
             {openPopupChangeBackground && (
-                <PopupChangeBackground onClickClose={() => setOpenPopupChangeBackground(false)}/>
+                <PopupChangeBackground 
+                    onClose={() => setOpenPopupChangeBackground(false)}
+                    colors={colors}
+                    background={slide.background}
+                    onGetBackground={onGetTempBackground}
+                />
             )}
         </>
         

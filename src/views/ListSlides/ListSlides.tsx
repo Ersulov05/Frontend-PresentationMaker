@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { dispatch } from '../../store/editor.ts';
-import { SlideType } from '../../store/PresentationType.ts'
+import { BackgroundType, SlideType } from '../../store/PresentationType.ts'
 import { selectSlide } from '../../store/selectSlide.ts';
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
@@ -8,9 +8,14 @@ import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 type SlidesProps = {
     slides: SlideType[],
     selectedSlideIds: string[],
+    tempBackground: BackgroundType | null,
 }
 
-function ListSlides({ slides, selectedSlideIds }: SlidesProps)
+function ListSlides({ 
+    slides, 
+    selectedSlideIds,
+    tempBackground,
+}: SlidesProps)
 {
     function onSelectSlide(slideUid: string) {
         dispatch(selectSlide, slideUid)
@@ -32,6 +37,11 @@ function ListSlides({ slides, selectedSlideIds }: SlidesProps)
                     onClick={() => onSelectSlide(slide.uid)}
                     isSelected={selectedSlideIds.includes(slide.uid)}
                     style={slideStyles}
+                    tempBackground={
+                        selectedSlideIds[0] === slide.uid 
+                            ? tempBackground 
+                            : null
+                    }
                  />
             ))}
         </div>

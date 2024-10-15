@@ -1,8 +1,8 @@
 import { EditorType } from "./editor";
-import { Solid, Image } from "./PresentationType";
+import { BackgroundType } from "./PresentationType";
 
 export type BackgroundDataType = {
-    background: Solid | Image,
+    background: BackgroundType,
     all?: boolean
 }
 

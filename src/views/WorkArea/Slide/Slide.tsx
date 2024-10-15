@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, CSSProperties } from 'react';
-import { SlideType } from '../../../store/PresentationType.ts'; 
+import { BackgroundType, SlideType } from '../../../store/PresentationType.ts'; 
 import styles from './Slide.module.css';
 import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
@@ -10,9 +10,16 @@ type SlideProps = {
     isSelected?: boolean;
     style?: CSSProperties;
     onClick?: () => void;
+    tempBackground: BackgroundType | null,
 }
 
-function Slide({ slide, isSelected = false, style = {}, onClick = undefined }: SlideProps)
+function Slide({ 
+    slide, 
+    isSelected = false, 
+    style = {}, 
+    onClick,
+    tempBackground,
+}: SlideProps)
 {
 
     const parentRef = useRef<HTMLDivElement | null>(null); 
@@ -30,11 +37,19 @@ function Slide({ slide, isSelected = false, style = {}, onClick = undefined }: S
             resizeObserver.disconnect(); 
         };
     }, []);
-    const backgroundStyle = slide.background.type === 'solid'
-        ? { backgroundColor: slide.background.color }
-        : { backgroundImage: `url(${slide.background.src})`, 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center' }; 
+
+    const backgroundStyle = tempBackground 
+        ? tempBackground.type === "solid"
+            ? { backgroundColor: tempBackground.color }
+            : { backgroundImage: `url(${tempBackground.src})`, 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center' }
+        : slide.background.type === 'solid'
+            ? { backgroundColor: slide.background.color }
+            : { backgroundImage: `url(${slide.background.src})`, 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center' }
+
     const slideStyles: CSSProperties = {
         ...backgroundStyle,
         width: `${ scale * WIDTH_SLIDE }px`,

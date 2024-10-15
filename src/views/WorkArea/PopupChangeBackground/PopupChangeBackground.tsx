@@ -1,20 +1,60 @@
+import { useState } from 'react'
 import { Button } from '../../../components/button/Button'
+import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithChild'
+import { ListChooseColor } from '../../ListChooseColor/ListChooseColor'
 import styles from './PopupChangeBackground.module.css'
+import { BackgroundType } from '../../../store/PresentationType'
+import { BackgroundDataType, changeBackgroundSlide } from '../../../store/changeBackgroundSlide'
+import { dispatch } from '../../../store/editor'
 
 type PopupChangeBackgroundProps = {
-    onClickClose: () => void
+    onClose: () => void,
+    colors: string[],
+    background: BackgroundType,
+    onGetBackground?: (backgraund: BackgroundType | null) => void
 }
 
 function PopupChangeBackground({
-    onClickClose,
+    onClose,
+    onGetBackground,
+    colors,
+    background,
 }: PopupChangeBackgroundProps)
 {
-    function onSaveHandler() {
-        onClickClose()
-    }
+    const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background);
 
     function onApplyToAllHandler() {
-        onClickClose()
+        onCloseHandler()
+    }
+
+    function onGetColor(color: string) {
+        const backgraund: BackgroundType = {
+            type: "solid",
+            color: color
+        }
+        setCurrentBackground(backgraund)
+        if (onGetBackground) {
+            onGetBackground(backgraund)
+        }
+    }
+
+    function onChangeBackgroundSlide(all: boolean = false) {
+        if (background !== currentBackground || all)
+        {
+            const data: BackgroundDataType = {
+                background: currentBackground,
+                all: all,
+            }
+            dispatch(changeBackgroundSlide, data)
+        }
+        onCloseHandler()
+    }
+
+    function onCloseHandler() {
+        if (onGetBackground) {
+            onGetBackground(null)
+        }
+        onClose()
     }
 
     return (
@@ -24,17 +64,21 @@ function PopupChangeBackground({
                     <div className={styles.popupTitle}>Background</div>
                     <Button 
                         className={styles.buttonClosePopup} 
-                        onClick={onClickClose}
+                        onClick={onCloseHandler}
                     />
                 </div>
                 <div className={styles.popupContent}>
                     <div className={styles.popupContentItem}>
                         <label className={styles.popupLabel}>Color:</label>
-                        <Button 
+                        <ButtonWithChild
                             className={styles.popupButton} 
                             value='Choose color'
-                            onClick={onApplyToAllHandler}
-                        />
+                        >
+                            <ListChooseColor 
+                                colors={colors} 
+                                onGetColor={(color) => onGetColor(color)}
+                            />
+                        </ButtonWithChild>
                     </div>
                     <div className={styles.popupContentItem}>
                         <label className={styles.popupLabel}>Image:</label>
@@ -49,12 +93,12 @@ function PopupChangeBackground({
                     <Button 
                         className={styles.popupButton} 
                         value='Apply to all'
-                        onClick={onApplyToAllHandler}
+                        onClick={() => onChangeBackgroundSlide(true)}
                     />
                     <Button 
                         className={styles.popupButton} 
                         value='Save'
-                        onClick={onSaveHandler}
+                        onClick={() => onChangeBackgroundSlide()}
                     />
                 </div>
             </div>

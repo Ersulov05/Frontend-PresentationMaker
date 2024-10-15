@@ -46,10 +46,11 @@ export type ObjectText = BaseObject & {
 }
 
 export type ObjectType = ObjectText | ObjectImage
+export type BackgroundType = Solid | Image
 
 export type SlideType = {
     uid: string
-    background: Solid | Image
+    background: BackgroundType
     objects: ObjectType[]
     selectedObjectIds: string[]
 }

@@ -10,11 +10,12 @@ import { addScale, changeScale, subScale } from './store/changeScale.ts';
 import { NumberField } from './components/numberField/NumberField.tsx';
 import { Button } from './components/buttonWithList/Button.tsx';
 import { ListActions, ListComponentsType } from './components/listActions/ListActions.tsx';
-import { Solid } from './store/PresentationType.ts';
+import { BackgroundType } from './store/PresentationType.ts';
 import { BackgroundDataType, changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
 import { addTextToSlide, TextDataType } from './store/addTextToSlide.ts';
 import { deleteObject } from './store/deleteObject.ts';
 import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
+import { useState } from 'react';
 
 type AppProps = {
     editor: EditorType; // Определяем тип для пропсов
@@ -22,6 +23,7 @@ type AppProps = {
 
 function App({ editor }: AppProps) {
     const { presentation } = editor;
+    const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
     function onRenamePresentation(name: string) {
         dispatch(renamePresentation, name)
     }
@@ -147,10 +149,14 @@ function App({ editor }: AppProps) {
                 <ListSlides 
                     slides={ presentation.slides }
                     selectedSlideIds={ presentation.selectedSlideIds }
+                    tempBackground={ tempBackground }
                 />
                 <WorkArea 
                     slide={selectedSlide} 
                     scale={presentation.scale}
+                    colors={editor.colors}
+                    onGetTempBackground={setTempBackground}
+                    tempBackground={tempBackground}
                 />
             </main>
             <footer className={styles.footer}>
