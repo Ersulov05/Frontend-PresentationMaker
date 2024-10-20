@@ -6,6 +6,7 @@ import styles from './PopupChangeBackground.module.css'
 import { BackgroundType } from '../../../store/PresentationType'
 import { BackgroundDataType, changeBackgroundSlide } from '../../../store/changeBackgroundSlide'
 import { dispatch } from '../../../store/editor'
+import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
 
 type PopupChangeBackgroundProps = {
     onClose: () => void,
@@ -21,8 +22,8 @@ function PopupChangeBackground({
     background,
 }: PopupChangeBackgroundProps)
 {
-    const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background);
-
+    const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
+    const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
     function onApplyToAllHandler() {
         onCloseHandler()
     }
@@ -58,51 +59,59 @@ function PopupChangeBackground({
     }
 
     return (
-        <div className={styles.popupContainer}>
-            <div className={styles.popup}>
-                <div className={styles.popupTitleContainer}>
-                    <div className={styles.popupTitle}>Background</div>
-                    <Button 
-                        className={styles.buttonClosePopup} 
-                        onClick={onCloseHandler}
-                    />
-                </div>
-                <div className={styles.popupContent}>
-                    <div className={styles.popupContentItem}>
-                        <label className={styles.popupLabel}>Color:</label>
-                        <ButtonWithChild
-                            className={styles.popupButton} 
-                            value='Choose color'
-                        >
-                            <ListChooseColor 
-                                colors={colors} 
-                                onGetColor={(color) => onGetColor(color)}
-                            />
-                        </ButtonWithChild>
+        <>
+            <div className={styles.popupContainer}>
+                <div className={styles.popup}>
+                    <div className={styles.popupTitleContainer}>
+                        <div className={styles.popupTitle}>Background</div>
+                        <Button 
+                            className={styles.buttonClosePopup} 
+                            onClick={onCloseHandler}
+                        />
                     </div>
-                    <div className={styles.popupContentItem}>
-                        <label className={styles.popupLabel}>Image:</label>
+                    <div className={styles.popupContent}>
+                        <div className={styles.popupContentItem}>
+                            <label className={styles.popupLabel}>Color:</label>
+                            <ButtonWithChild
+                                className={styles.popupButton} 
+                                value='Choose color'
+                            >
+                                <ListChooseColor 
+                                    colors={colors} 
+                                    onGetColor={(color) => onGetColor(color)}
+                                    addColor={() => setOpenPopupAddColor(true)}
+                                />
+                            </ButtonWithChild>
+                        </div>
+                        <div className={styles.popupContentItem}>
+                            <label className={styles.popupLabel}>Image:</label>
+                            <Button 
+                                className={styles.popupButton} 
+                                value='Load image'
+                                onClick={onApplyToAllHandler}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.popupButtonsContainer}>
                         <Button 
                             className={styles.popupButton} 
-                            value='Load image'
-                            onClick={onApplyToAllHandler}
+                            value='Apply to all'
+                            onClick={() => onChangeBackgroundSlide(true)}
+                        />
+                        <Button 
+                            className={styles.popupButton} 
+                            value='Save'
+                            onClick={() => onChangeBackgroundSlide()}
                         />
                     </div>
                 </div>
-                <div className={styles.popupButtonsContainer}>
-                    <Button 
-                        className={styles.popupButton} 
-                        value='Apply to all'
-                        onClick={() => onChangeBackgroundSlide(true)}
-                    />
-                    <Button 
-                        className={styles.popupButton} 
-                        value='Save'
-                        onClick={() => onChangeBackgroundSlide()}
-                    />
-                </div>
             </div>
-        </div>
+            {openPopupAddColor && (
+                <PopupAddColor 
+                    onClose={() => setOpenPopupAddColor(false)}
+                />
+            )}
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-function joinStyles(...styles: (string | undefined)[]) {
+function joinStyles(...styles: (string | undefined | boolean)[]) {
     return styles.filter(Boolean).join(' ');
 }
 

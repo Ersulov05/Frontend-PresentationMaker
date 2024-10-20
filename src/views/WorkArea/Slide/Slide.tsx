@@ -4,6 +4,8 @@ import styles from './Slide.module.css';
 import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
+import { Slider } from '../../../components/slider/Slider.tsx';
+import { SliderArea } from '../../../components/sliderArea/SliderArea.tsx';
 
 type SlideProps = {
     slide: SlideType;
@@ -21,7 +23,6 @@ function Slide({
     tempBackground,
 }: SlideProps)
 {
-
     const parentRef = useRef<HTMLDivElement | null>(null); 
     const [scale, setScale] = useState<number>(0.2);
     useEffect(() => {
@@ -67,6 +68,27 @@ function Slide({
                     ? <TextObject key={object.uid} object={object} widthCoef={scale}/>
                     : <ImageObject key={object.uid} object={object} widthCoef={scale}/>
             ))}
+            <SliderArea
+                width={200}
+                height={100}
+                pointSize={20}
+                range={{
+                    minValueX: 0,
+                    minValueY: 0,
+                    maxValueX: 255,
+                    maxValueY: 255,
+                }}
+            />
+            {/* <Slider
+                length={200}
+                size={20}
+                // startValue={10}
+                step={1}
+                range={{
+                    minValue: 1,
+                    maxValue: 255,
+                }}
+            /> */}
         </div>
     )
 }

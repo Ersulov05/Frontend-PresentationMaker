@@ -1,0 +1,41 @@
+.sliderContainer {
+    padding: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.sliderStrip {
+    position: relative;
+    background-color: greenyellow;
+}
+
+.pointContainer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    /* background-color: red; */
+    top: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    border: solid 2px transparent;
+    /* border: solid 2px blue; */
+    box-sizing: border-box;
+}
+
+.pointContainerBorder {
+    border: solid 2px blue;
+}
+
+.point {
+    width: 100%;
+    height: 100%;
+    border: solid 2px white;
+    background-color: red;
+    box-sizing: border-box;
+    border-radius: 50%;
+}

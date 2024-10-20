@@ -3,11 +3,13 @@ import styles from './ListChooseColor.module.css'
 
 type ListChooseColorProps = {
     onGetColor?: (color: string) => void
+    addColor: () => void
     colors: string[]
 }
 
 function ListChooseColor({
     onGetColor,
+    addColor,
     colors,
 }: ListChooseColorProps) {
 
@@ -38,6 +40,11 @@ function ListChooseColor({
                         </div>
                     )
                 })}
+                <img 
+                    src='/image/react.svg'
+                    className={styles.colorItem}
+                    onClick={addColor}
+                />
             </div>
         </div>
     )
