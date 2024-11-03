@@ -65,30 +65,19 @@ function Slide({
         >
             {slide.objects.map(object => (
                 (object.type == 'text')
-                    ? <TextObject key={object.uid} object={object} widthCoef={scale}/>
-                    : <ImageObject key={object.uid} object={object} widthCoef={scale}/>
+                    ? <TextObject 
+                        key={object.uid} 
+                        object={object} 
+                        widthCoef={scale} 
+                        isSelected={slide.selectedObjectIds.includes(object.uid)}
+                    />
+                    : <ImageObject 
+                        key={object.uid} 
+                        object={object} 
+                        widthCoef={scale}
+                        isSelected={slide.selectedObjectIds.includes(object.uid)}
+                        />
             ))}
-            <SliderArea
-                width={200}
-                height={100}
-                pointSize={20}
-                range={{
-                    minValueX: 0,
-                    minValueY: 0,
-                    maxValueX: 255,
-                    maxValueY: 255,
-                }}
-            />
-            {/* <Slider
-                length={200}
-                size={20}
-                // startValue={10}
-                step={1}
-                range={{
-                    minValue: 1,
-                    maxValue: 255,
-                }}
-            /> */}
         </div>
     )
 }

@@ -190,7 +190,7 @@ function SliderArea({
                     className={styles.point}
                     style={pointStyle}
                 >
-                    {valueX}
+                    {valueX}, {valueY}
                 </div>
             </div>
         </div>

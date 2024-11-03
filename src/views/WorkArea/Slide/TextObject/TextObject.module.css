@@ -11,3 +11,7 @@
     margin: 0;
     line-height: 1;
 }
+
+.select {
+    border: solid 1px blue;
+}

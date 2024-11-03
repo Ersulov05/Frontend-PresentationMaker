@@ -1,15 +1,28 @@
+import { useEffect } from 'react';
+import { dispatch } from '../../../../store/editor.ts';
+import { joinStyles } from '../../../../store/joinStyles.ts';
 import { ObjectText as ObjectType } from '../../../../store/PresentationType.ts';
+import { selectObject } from '../../../../store/selectObject.ts';
 import styles from './TextObject.module.css';
 
 interface ObjectProps {
     object: ObjectType;
     widthCoef: number;
+    isSelected?: boolean;
 }
 
-function TextObject({ object, widthCoef}: ObjectProps)
+function TextObject({ 
+    object, 
+    widthCoef,
+    isSelected = false,
+}: ObjectProps)
 {
+    function onClickHandler(uid: string) {
+        dispatch(selectObject, uid)
+    }
     return (
-        <div className={styles.textArea} 
+        <div className={joinStyles(styles.textArea, isSelected ? styles.select : '')} 
+            onClick={() => onClickHandler(object.uid)}
             style={{
                 top: `${object.pos.y*widthCoef}px`,
                 left: `${object.pos.x*widthCoef}px`,
