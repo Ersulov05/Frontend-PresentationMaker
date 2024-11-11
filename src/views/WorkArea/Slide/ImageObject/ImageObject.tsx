@@ -6,13 +6,13 @@ import { joinStyles } from '../../../../store/joinStyles.ts';
 
 interface ObjectProps {
     object: ObjectType; 
-    widthCoef: number;
+    scale: number;
     isSelected?: boolean;
 }
 
 function ImageObject({ 
     object, 
-    widthCoef,
+    scale,
     isSelected = false,
 }: ObjectProps)
 {
@@ -20,14 +20,15 @@ function ImageObject({
         dispatch(selectObject, uid)
     }
     return (
-        <img 
+        <img
             className={joinStyles(styles.image, isSelected ? styles.select : '')} 
             src={object.src}
+            draggable={false}
             style={{
-                top: `${object.pos.y*widthCoef}px`,
-                left: `${object.pos.x*widthCoef}px`,
-                width: `${object.size.width*widthCoef}px`,
-                height: `${object.size.height*widthCoef}px`,
+                top: `${object.pos.y*scale}px`,
+                left: `${object.pos.x*scale}px`,
+                width: `${object.size.width*scale}px`,
+                height: `${object.size.height*scale}px`,
             }}
             onClick={() => onClickHandler(object.uid)}
         />

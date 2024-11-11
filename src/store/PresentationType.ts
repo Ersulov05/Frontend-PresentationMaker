@@ -8,6 +8,11 @@ export type Size = {
     height: number
 }
 
+export type TransformType = {
+    position: Position,
+    size: Size,
+}
+
 export type Solid = {
     color: string
     type: "solid"

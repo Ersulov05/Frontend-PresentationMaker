@@ -1,0 +1,77 @@
+.container {
+    border: red solid 2px;
+    position: relative;
+}
+
+.leftUp {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.leftDown {
+    left: 0;
+    bottom: 0;
+    transform: translate(-50%, 50%);
+}
+
+.rightUp {
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+}
+
+.rightDown {
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+}
+
+.horizontalLine {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background-color: orange;
+    border: solid 5px transparent;
+    z-index: 1;
+    background-clip: padding-box;
+    cursor: all-scroll;
+}
+
+.verticalLine {
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    background-color: orange;
+    border: solid 5px transparent;
+    z-index: 1;
+    background-clip: padding-box;
+    cursor: all-scroll;
+}
+
+.left {
+    left: 0;
+    transform: translateX(-50%);
+}
+.top {
+    top: 0;
+    transform: translateY(-50%);
+}
+.right {
+    right: 0;
+    transform: translateX(50%);
+}
+.bottom {
+    bottom: 0;
+    transform: translateY(50%);
+}
+
+
+.point {
+    position: absolute;
+    background-color: blue;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    z-index: 1;
+}

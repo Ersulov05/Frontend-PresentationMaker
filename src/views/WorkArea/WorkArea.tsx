@@ -111,6 +111,7 @@ function WorkArea({
                         style={{
                             ...slideStyles
                         }}
+                        scale={scale}
                         tempBackground={tempBackground}
                     />
                 </div>

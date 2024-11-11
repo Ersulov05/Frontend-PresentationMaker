@@ -47,15 +47,15 @@ const PresentationMax: Presentation = {
             objects: [
                 {
                 uid: 'a8fa7818-7232-4981-b369-1b8fcced8d5f',
-                pos: { x: 100, y: 100 },
-                size: { width: 100, height: 100 },
-                src: '/image/react.svg',
+                pos: { x: 0, y: 0 },
+                size: { width: 50, height: 50 },
+                src: '/image/Test.svg',
                 type: 'image'
                 },
                 {
                 uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
-                pos: { x: -200, y: 200 },
-                size: { width: 100, height: 100 },
+                pos: { x: 50, y: 50 },
+                size: { width: 50, height: 50 },
                 value: 'text',
                 font: {
                     style: 'normal',
