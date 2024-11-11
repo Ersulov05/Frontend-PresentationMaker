@@ -51,8 +51,6 @@ function PreviewSlide({
 
     const slideStyles: CSSProperties = {
         ...backgroundStyle,
-        // width: `${ scale * WIDTH_SLIDE }px`,
-        // height: `${ scale * HEIGHT_SLIDE }px`,
         ...style
     }
     return (
