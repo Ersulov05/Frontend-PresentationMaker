@@ -1,11 +1,9 @@
-import { useRef, useEffect, useState, CSSProperties } from 'react';
+import { useRef, CSSProperties } from 'react';
 import { BackgroundType, ObjectType, SlideType, TransformType } from '../../../store/PresentationType.ts'; 
 import styles from './Slide.module.css';
 import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
-import { Slider } from '../../../components/slider/Slider.tsx';
-import { SliderArea } from '../../../components/sliderArea/SliderArea.tsx';
 import { Selection } from './Selection/Selection.tsx';
 
 type SlideProps = {
@@ -106,11 +104,13 @@ function Slide({
                         isSelected={slide.selectedObjectIds.includes(object.uid)}
                         />
             ))}
-            <Selection 
-                transform={globalSelectedTransform}
-                scale={scale}
-                selectedObjects={selectedObjects}
-            />
+            {selectedObjects.length > 0 && (
+                <Selection 
+                    transform={globalSelectedTransform}
+                    scale={scale}
+                    selectedObjects={selectedObjects}
+                />
+            )}
         </div>
     )
 }

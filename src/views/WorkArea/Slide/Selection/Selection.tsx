@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect } from "react"
 import { joinStyles } from "../../../../store/joinStyles"
 import styles from "./Selection.module.css"
-import { useDragAndDrop } from "../hooks/useDragAndDrop"
+import { useDragAndDrop } from "../../../hooks/useDragAndDrop"
 import { dispatch } from "../../../../store/editor"
 import { transformObjects } from "../../../../store/transformObject"
 import { ObjectType, TransformType } from "../../../../store/PresentationType"

@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     width: var(--slide-list-width);
-    /* width: calc(100% - 10px); */
     overflow-y: scroll;
     background-color: darkgoldenrod;
     box-sizing: border-box;
