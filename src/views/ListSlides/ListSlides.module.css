@@ -1,8 +1,10 @@
 .slides {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: var(--slide-list-width);
     overflow-y: scroll;
+    overflow-x: hidden;
     background-color: darkgoldenrod;
     box-sizing: border-box;
     gap: 8px;

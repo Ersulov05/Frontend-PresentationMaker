@@ -1,23 +1,23 @@
-import { useRef, useEffect, useState, CSSProperties } from 'react';
+import { useRef, useState, CSSProperties } from 'react';
 import { BackgroundType, SlideType } from '../../../store/PresentationType.ts'; 
 import styles from './PreviewSlide.module.css';
-import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
-import { useDragAndDrop } from '../../hooks/useDragAndDrop.tsx';
 
 type SlideProps = {
     slide: SlideType
     isSelected?: boolean
+    scale?: number
     style?: CSSProperties
     onClick?: () => void
-    onDrag?: (event: React.MouseEvent<HTMLDivElement>) => void
+    onDrag?: (event: React.MouseEvent<HTMLDivElement>, x: number, y: number) => void
     tempBackground: BackgroundType | null
 }
 
 function PreviewSlide({ 
     slide, 
     isSelected = false, 
+    scale = 1,
     style = {}, 
     onClick,
     onDrag,
@@ -25,32 +25,8 @@ function PreviewSlide({
 }: SlideProps)
 {
     const parentRef = useRef<HTMLDivElement | null>(null);
-    const [scale, setScale] = useState<number>(0.2)
-    const drag = useDragAndDrop()
-    useEffect(() => {
-        const resizeObserver = new ResizeObserver(() => {
-            if (parentRef.current) {
-                setScale(Math.min(parentRef.current.offsetWidth / WIDTH_SLIDE, parentRef.current.offsetHeight / HEIGHT_SLIDE,));
-            }
-        });
-        if (parentRef.current) {
-            resizeObserver.observe(parentRef.current);
-        }
-        return () => {
-            resizeObserver.disconnect(); 
-        };
-    }, []); 
-
-    // useEffect(() => {
-    //     if (drag.position.x === 0 && drag.position.y === 0) {
-    //         console.log("++")
-    //         if (onClick) {
-    //             onClick()
-    //         }
-    //     }
-    //     drag.position.x = 0
-    //     drag.position.y = 0
-    // }, [drag.position]); 
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [mouseMoved, setMouseMoved] = useState<boolean>(false);
 
     const backgroundStyle = tempBackground 
         ? tempBackground.type === "solid"
@@ -68,13 +44,41 @@ function PreviewSlide({
         ...backgroundStyle,
         ...style
     }
+
+    const handleMouseDown = () => {
+        setIsDragging(true);
+        setMouseMoved(false);
+    };
+
+    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (!mouseMoved && isDragging) {
+            setMouseMoved(true);
+            if (onDrag && parentRef.current) {
+                const slide = parentRef.current.getBoundingClientRect();
+                console.log(slide.top)
+                onDrag(event, -slide.left, -slide.top + slide.height)
+            }
+        }
+    };
+
+    const handleMouseUp = () => {
+        if (!mouseMoved && onClick) {
+            onClick();
+        }
+        setIsDragging(false);
+        setMouseMoved(false);
+    };
+
     return (
-        <div ref={parentRef} 
+        <div 
+            ref={parentRef}
             className={`${styles.slide} ${isSelected ? styles.slideSelected : ''}`}
-            onClick={onClick}
+            data-at="slide"
             style={slideStyles}
-            // onMouseDown={onDrag}
-        >
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+        >   
             {slide.objects.map(object => (
                 (object.type == 'text')
                     ? <TextObject key={object.uid} object={object} widthCoef={scale}/>
