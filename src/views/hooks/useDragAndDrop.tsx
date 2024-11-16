@@ -6,7 +6,6 @@ function useDragAndDrop(saveDrag?: () => void) {
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     const endDrag = () => {
-        console.log(position.x)
         if (saveDrag) {
             saveDrag()
         }

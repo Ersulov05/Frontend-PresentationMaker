@@ -28,8 +28,10 @@ function ListSlides({
     const [insertIndex, setInsertIndex] = useState<number | null>(null);
 
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
+    const orderedSelectedSlides = selectedSlides.sort((a, b) => {
+        return selectedSlideIds.indexOf(b.uid) - selectedSlideIds.indexOf(a.uid);
+    });
     const noSelectedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
-    const firstSlide = selectedSlides[0]
     const scale = 0.18
 
     useEffect(() => {
@@ -61,7 +63,7 @@ function ListSlides({
                     const dataAtValue = child.getAttribute('data-at');
                     if (dataAtValue == "slide") {
                         const rect = child.getBoundingClientRect();
-                        if (currentY > rect.top - rect.height * 0.5) {
+                        if (currentY > rect.top - rect.height * 0.6) {
                             newInsertIndex = slideIndex
                         }
                         slideIndex++
@@ -77,7 +79,6 @@ function ListSlides({
     useEffect(() => {   
         if (dragSlide.dragging !== null) {
             if (!dragSlide.dragging) { 
-                console.log("save")
                 if (insertIndex !== null) {
                     dispatch(translateSlides, insertIndex)
                 }
@@ -116,8 +117,11 @@ function ListSlides({
                                 slide={slide} 
                                 onClick={() => onSelectSlide(slide.uid)}
                                 isSelected={selectedSlideIds.includes(slide.uid)}
-                                style={slideStyles}
-                                tempBackground={
+                                style={{
+                                    ...slideStyles,
+                                    pointerEvents: "none"
+                                }}
+                                background={
                                     selectedSlideIds[0] === slide.uid 
                                         ? tempBackground 
                                         : null
@@ -131,20 +135,13 @@ function ListSlides({
                         </>
                     )
                 })}
-                <SlidesDrag 
-                    key={firstSlide.uid}
+                <SlidesDrag       
                     ref={slidesDragRef}
                     scale={scale}
                     x={7}
                     y={dragSlide.position.y+listSlidesCoords.y}
-                    slide={firstSlide} 
-                    isSelected={selectedSlideIds.includes(firstSlide.uid)}
+                    slides={orderedSelectedSlides} 
                     style={slideStyles}
-                    tempBackground={
-                        selectedSlideIds[0] === firstSlide.uid 
-                            ? tempBackground 
-                            : null
-                    }
                 />
             </div>
         )
@@ -162,7 +159,7 @@ function ListSlides({
                     onClick={() => onSelectSlide(slide.uid)}
                     isSelected={selectedSlideIds.includes(slide.uid)}
                     style={slideStyles}
-                    tempBackground={
+                    background={
                         selectedSlideIds[0] === slide.uid 
                             ? tempBackground 
                             : null

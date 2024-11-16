@@ -11,7 +11,7 @@ type SlideProps = {
     style?: CSSProperties
     onClick?: () => void
     onDrag?: (event: React.MouseEvent<HTMLDivElement>, x: number, y: number) => void
-    tempBackground: BackgroundType | null
+    background?: BackgroundType | null
 }
 
 function PreviewSlide({ 
@@ -21,17 +21,17 @@ function PreviewSlide({
     style = {}, 
     onClick,
     onDrag,
-    tempBackground,
+    background,
 }: SlideProps)
 {
     const parentRef = useRef<HTMLDivElement | null>(null);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [mouseMoved, setMouseMoved] = useState<boolean>(false);
 
-    const backgroundStyle = tempBackground 
-        ? tempBackground.type === "solid"
-            ? { backgroundColor: tempBackground.color }
-            : { backgroundImage: `url(${tempBackground.src})`, 
+    const backgroundStyle = background 
+        ? background.type === "solid"
+            ? { backgroundColor: background.color }
+            : { backgroundImage: `url(${background.src})`, 
                 backgroundSize: 'cover', 
                 backgroundPosition: 'center' }
         : slide.background.type === 'solid'
@@ -51,11 +51,10 @@ function PreviewSlide({
     };
 
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (!mouseMoved && isDragging) {
+        if (!mouseMoved && isDragging && isSelected) {
             setMouseMoved(true);
             if (onDrag && parentRef.current) {
                 const slide = parentRef.current.getBoundingClientRect();
-                console.log(slide.top)
                 onDrag(event, -slide.left, -slide.top + slide.height)
             }
         }

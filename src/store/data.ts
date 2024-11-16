@@ -12,6 +12,36 @@ const PresentationMax: Presentation = {
     name: 'New presentation',
     slides: [
         {
+            uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
+            background: { src: '/image/fon.jpeg', type: 'image' },
+            objects: [
+                {
+                uid: 'a8fa7818-7232-4981-b369-1b8fcced8d5f',
+                pos: { x: 0, y: 0 },
+                size: { width: 50, height: 50 },
+                src: '/image/Test.svg',
+                type: 'image'
+                },
+                {
+                uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
+                pos: { x: 50, y: 50 },
+                size: { width: 50, height: 50 },
+                value: 'text',
+                font: {
+                    style: 'normal',
+                    family: 'arial',
+                    size: 36,
+                    weight: 400,
+                    lineHeight: 1
+                },
+                color: '#ff00ff',
+                backgroundColor: '#00fff0',
+                type: 'text'
+                }
+            ],
+            selectedObjectIds: [ '40fd75e3-2abc-4b14-a02b-31740e2774d2', 'a8fa7818-7232-4981-b369-1b8fcced8d5f' ]
+        },
+        {
             uid: '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b',
             background: { color: '#AF00F1', type: 'solid' },
             objects: [
@@ -42,18 +72,18 @@ const PresentationMax: Presentation = {
             selectedObjectIds: [ '25f6059b-42ca-40c9-95be-0502cd0844b2' ]
         },
         {
-            uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
+            uid: 'b27d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
             background: { src: '/image/fon.jpeg', type: 'image' },
             objects: [
                 {
-                uid: 'a8fa7818-7232-4981-b369-1b8fcced8d5f',
+                uid: 'a7fa7818-7232-4981-b369-1b8fcced8d5f',
                 pos: { x: 0, y: 0 },
                 size: { width: 50, height: 50 },
                 src: '/image/Test.svg',
                 type: 'image'
                 },
                 {
-                uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
+                uid: '41fd75e3-2abc-4b14-a02b-31740e2774d2',
                 pos: { x: 50, y: 50 },
                 size: { width: 50, height: 50 },
                 value: 'text',
@@ -69,10 +99,10 @@ const PresentationMax: Presentation = {
                 type: 'text'
                 }
             ],
-            selectedObjectIds: [ '40fd75e3-2abc-4b14-a02b-31740e2774d2', 'a8fa7818-7232-4981-b369-1b8fcced8d5f' ]
+            selectedObjectIds: [ '41fd75e3-2abc-4b14-a02b-31740e2774d2', 'a7fa7818-7232-4981-b369-1b8fcced8d5f' ]
         }
     ],
-    selectedSlideIds: [ 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465', '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b' ],
+    selectedSlideIds: [ '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b', 'b27d7ce8-86c7-4e45-8cbd-79e8fbf8c465', 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465' ],
     scale: 1
 }
 
