@@ -93,7 +93,7 @@ function ListSlides({
 
     const slideStyles: CSSProperties = {
         width: WIDTH_SLIDE * scale + "px",
-        aspectRatio: `${WIDTH_SLIDE}/${HEIGHT_SLIDE}`,
+        height: HEIGHT_SLIDE * scale + "px"
     }
 
     if (dragSlide.dragging) {
