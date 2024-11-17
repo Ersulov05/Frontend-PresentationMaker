@@ -25,7 +25,6 @@ const data = localStorage.getItem('localData')
 if (data) {
     const editorData = JSON.parse(data)
     if (validateEditorData(editorData)) {
-        console.log(1)
         editor = editorData
     }
 }
