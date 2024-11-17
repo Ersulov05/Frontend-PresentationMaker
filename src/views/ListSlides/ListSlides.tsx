@@ -1,10 +1,14 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { dispatch } from '../../store/editor.ts';
 import { BackgroundType, SlideType } from '../../store/PresentationType.ts'
 import { selectSlide } from '../../store/selectSlide.ts';
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
+import { useDragAndDrop } from '../hooks/useDragAndDrop.tsx';
+import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
+import { translateSlides } from '../../store/translateSlides.ts';
+
 type SlidesProps = {
     slides: SlideType[],
     selectedSlideIds: string[],
@@ -17,31 +21,151 @@ function ListSlides({
     tempBackground,
 }: SlidesProps)
 {
+    const dragSlide = useDragAndDrop()
+    const listSlidesRef = useRef<HTMLDivElement | null>(null);
+    const slidesDragRef = useRef<HTMLDivElement | null>(null);
+    const [listSlidesCoords, setListSlidesCoords] = useState({x: 0, y: 0}) 
+    const [insertIndex, setInsertIndex] = useState<number | null>(null);
+
+    const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
+    const orderedSelectedSlides = selectedSlides.sort((a, b) => {
+        return selectedSlideIds.indexOf(b.uid) - selectedSlideIds.indexOf(a.uid);
+    });
+    const noSelectedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
+    const scale = 0.18
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (listSlidesRef.current) {
+                setListSlidesCoords({
+                    x: listSlidesRef.current.scrollLeft,
+                    y: listSlidesRef.current.scrollTop,
+                })
+            }
+        }
+
+        const listSlidesElement = listSlidesRef.current;
+        listSlidesElement?.addEventListener('scroll', handleScroll);
+
+        return () => {
+            listSlidesElement?.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (dragSlide.dragging) {
+            const currentY = dragSlide.position.y
+            let newInsertIndex = -1
+            if (listSlidesRef.current) {
+                let slideIndex = 0
+                for (let i = 0; i < listSlidesRef.current.children.length; i++) {
+                    const child = listSlidesRef.current.children[i];
+                    const dataAtValue = child.getAttribute('data-at');
+                    if (dataAtValue == "slide") {
+                        const rect = child.getBoundingClientRect();
+                        if (currentY > rect.top - rect.height * 0.6) {
+                            newInsertIndex = slideIndex
+                        }
+                        slideIndex++
+                    }
+                }
+            }
+            setInsertIndex(newInsertIndex);
+        } else {
+            setInsertIndex(null);
+        }
+    }, [dragSlide.dragging, dragSlide.position.y, listSlidesCoords.y]);
+
+    useEffect(() => {   
+        if (dragSlide.dragging !== null) {
+            if (!dragSlide.dragging) { 
+                if (insertIndex !== null) {
+                    dispatch(translateSlides, insertIndex)
+                }
+                dragSlide.position.x = 0
+                dragSlide.position.y = 0
+            }
+        }  
+    }, [dragSlide.dragging]);
+
     function onSelectSlide(slideUid: string) {
         dispatch(selectSlide, slideUid)
     }
 
     const slideStyles: CSSProperties = {
-        width: "100%",
-        aspectRatio: `${WIDTH_SLIDE}/${HEIGHT_SLIDE}`,
+        width: WIDTH_SLIDE * scale + "px",
+        height: HEIGHT_SLIDE * scale + "px"
     }
 
+    if (dragSlide.dragging) {
+        return (
+            <div
+                ref={listSlidesRef}
+                className={styles.slides}
+            >
+                {insertIndex === -1 && (
+                    <div style={{ height: '100px', backgroundColor: 'lightgrey', flexShrink: 0 }}>
+                        Preview
+                    </div>
+                )}
+                {noSelectedSlides.map((slide, index) => {
+                    return (
+                        <>
+                            <PreviewSlide
+                                scale={scale}
+                                key={slide.uid} 
+                                slide={slide} 
+                                onClick={() => onSelectSlide(slide.uid)}
+                                isSelected={selectedSlideIds.includes(slide.uid)}
+                                style={{
+                                    ...slideStyles,
+                                    pointerEvents: "none"
+                                }}
+                                background={
+                                    selectedSlideIds[0] === slide.uid 
+                                        ? tempBackground 
+                                        : null
+                                }
+                            />
+                            {index === insertIndex && (
+                                <div  key={"preview"+slide.uid} style={{ height: '100px', backgroundColor: 'lightgrey', flexShrink: 0 }}>
+                                    Preview
+                                </div>
+                            )}
+                        </>
+                    )
+                })}
+                <SlidesDrag       
+                    ref={slidesDragRef}
+                    scale={scale}
+                    x={7}
+                    y={dragSlide.position.y+listSlidesCoords.y}
+                    slides={orderedSelectedSlides} 
+                    style={slideStyles}
+                />
+            </div>
+        )
+    }
     return (
         <div
+            ref={listSlidesRef}
             className={styles.slides}
         >
             {slides.map(slide => (
                 <PreviewSlide 
                     key={slide.uid} 
                     slide={slide} 
+                    scale={scale}
                     onClick={() => onSelectSlide(slide.uid)}
                     isSelected={selectedSlideIds.includes(slide.uid)}
                     style={slideStyles}
-                    tempBackground={
+                    background={
                         selectedSlideIds[0] === slide.uid 
                             ? tempBackground 
                             : null
                     }
+                    onDrag={dragSlide.startDrag}
+
                  />
             ))}
         </div>

@@ -10,7 +10,6 @@ function useDragAndDrop(saveDrag?: () => void) {
             saveDrag()
         }
         setDragging(false)
-        
     };
 
     const onDrag = (event: MouseEvent) => {
@@ -37,16 +36,16 @@ function useDragAndDrop(saveDrag?: () => void) {
         };
     }, [dragging, offset]);
 
-    const startDrag = (event: React.MouseEvent<HTMLDivElement>) => {
+    const startDrag = (event: React.MouseEvent<HTMLDivElement>, x: number = 0, y: number = 0) => {
         setDragging(true);
-        setPosition({
-            x: 0,
-            y: 0,
-        })
         setOffset({
-            x: event.clientX - position.x,
-            y: event.clientY - position.y,
+            x: event.clientX + x,
+            y: event.clientY + y,
         });
+        setPosition({
+            x: x,
+            y: y,
+        })
     };
 
     return {

@@ -8,8 +8,6 @@ import { TextField } from './components/textField/TextField.tsx';
 import { renamePresentation } from './store/renamePresentation.ts';
 import { addScale, changeScale, subScale } from './store/changeScale.ts';
 import { NumberField } from './components/numberField/NumberField.tsx';
-import { Button } from './components/buttonWithList/Button.tsx';
-import { ListActions, ListComponentsType } from './components/listActions/ListActions.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
 import { BackgroundDataType, changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
 import { addTextToSlide, TextDataType } from './store/addTextToSlide.ts';
