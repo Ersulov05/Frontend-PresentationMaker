@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 
 function useDragAndDrop(saveDrag?: () => void) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const [dragging, setDragging] = useState(false);
+    const [dragging, setDragging] = useState<boolean | null>(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
     const endDrag = () => {
-        console.log(position.x)
         if (saveDrag) {
             saveDrag()
         }

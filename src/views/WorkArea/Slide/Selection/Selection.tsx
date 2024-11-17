@@ -40,7 +40,7 @@ function Selection({
     }
 
     useEffect(() => {
-        if (!leftUpPoint.dragging) { 
+        if (!leftUpPoint.dragging && leftUpPoint.dragging !== null) { 
             saveTransformObjects()
             leftUpPoint.position.x = 0
             leftUpPoint.position.y = 0
@@ -48,7 +48,7 @@ function Selection({
     }, [leftUpPoint.dragging]);
 
     useEffect(() => {
-        if (!rightUpPoint.dragging) {
+        if (!rightUpPoint.dragging && rightUpPoint.dragging !== null) {
             saveTransformObjects()
             rightUpPoint.position.x = 0
             rightUpPoint.position.y = 0
@@ -56,7 +56,7 @@ function Selection({
     }, [rightUpPoint.dragging]);
 
     useEffect(() => {
-        if (!leftDownPoint.dragging) {
+        if (!leftDownPoint.dragging && leftDownPoint.dragging !== null) {
             saveTransformObjects()
             leftDownPoint.position.x = 0
             leftDownPoint.position.y = 0
@@ -64,7 +64,7 @@ function Selection({
     }, [leftDownPoint.dragging]);
 
     useEffect(() => {
-        if (!rightDownPoint.dragging) {
+        if (!rightDownPoint.dragging && rightDownPoint.dragging !== null) {
             saveTransformObjects()
             rightDownPoint.position.x = 0
             rightDownPoint.position.y = 0
@@ -72,7 +72,7 @@ function Selection({
     }, [rightDownPoint.dragging]);
 
     useEffect(() => {
-        if (!drag.dragging) {
+        if (!drag.dragging && drag.dragging !== null) {
             saveTransformObjects()
             drag.position.x = 0
             drag.position.y = 0

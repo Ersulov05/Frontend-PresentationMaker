@@ -51,19 +51,23 @@
 
 .left {
     left: 0;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 .top {
+    left: 50%;
     top: 0;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
 }
 .right {
     right: 0;
-    transform: translateX(50%);
+    top: 50%;
+    transform: translate(50%, -50%);
 }
 .bottom {
+    left: 50%;
     bottom: 0;
-    transform: translateY(50%);
+    transform: translate(-50%, 50%);
 }
 
 

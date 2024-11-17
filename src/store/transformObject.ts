@@ -67,51 +67,6 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
     }
 }
 
-// function transformObjects2(presentation: Presentation, newPosition: Position, newSize: Size): Presentation {
-//     const { slides, selectedSlideIds } = presentation
-//     if (selectedSlideIds.length == 0) {
-//         return presentation
-//     }
-//     const selectedSlideIndex = slides.findIndex(slide => slide.uid === selectedSlideIds[0])
-//     const { objects, selectedObjectIds } = slides[selectedSlideIndex]
-//     if (selectedObjectIds.length == 0) {
-//         return presentation
-//     }
-//     const selectedObjects = objects.filter(object => slide.selectedObjectIds.includes(object.uid))
-//     const globalSelectedTransform = getGlobalSelectionObject(selectedObjects)
-//     // const selectedObjects: Array<ObjectText | ObjectImage> = objects.filter(object => selectedObjectIds.includes(object.uid))
-//     // const globalSelectionObject: ObjectSlide = getGlobalSelectionObject(selectedObjects)
-    
-//     return {
-//         ...presentation,
-//         slides: slides.map(slide => {
-//             if (slide.uid === selectedSlideIds[0]) {
-//                 return {
-//                     ...slide,
-//                     objects: objects.map(object => {
-//                         if (selectedObjectIds.includes(object.uid)) {
-//                             return {
-//                                 ...object,
-//                                 pos: {
-//                                     x: object.pos.x + newPosition.x - globalSelectionObject.pos.x,
-//                                     y: object.pos.y + newPosition.y - globalSelectionObject.pos.y
-//                                 },
-//                                 size: {
-//                                     width: object.size.width * newSize.width / globalSelectionObject.size.width,
-//                                     height: object.size.height * newSize.height / globalSelectionObject.size.height
-//                                 }
-//                             }
-//                         } 
-//                         return object
-//                     }),
-//                 }
-//             }
-//             return slide
-//         }),
-//         selectedSlideIds: [selectedSlideIds[0]]
-//     }
-// }
-
 function transformObjects(editor: EditorType, transform: TransformType): EditorType {
     const { slides, selectedSlideIds} = editor.presentation
     if (selectedSlideIds.length === 0) {
@@ -136,7 +91,6 @@ function transformObjects(editor: EditorType, transform: TransformType): EditorT
                         ...slide,
                         objects: slide.objects.map(object => {
                             if (selectedObjectIds.includes(object.uid)) {
-                                console.log("d", object.size.width * transform.size.width / globalSelectedTransform.size.width)
                                 return {
                                     ...object,
                                     pos: {
