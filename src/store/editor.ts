@@ -1,5 +1,6 @@
+import { validateEditorData } from "../services/validationTypes"
 import { Presentation } from "./PresentationType"
-import { PresentationMin, PresentationMax } from "./data"
+import { PresentationMax } from "./data"
 
 export type EditorType = {
     presentation: Presentation,
@@ -19,6 +20,14 @@ let editor: EditorType =
         '#ff00ff',
         '#ffffff'
     ]
+}
+const data = localStorage.getItem('localData')
+if (data) {
+    const editorData = JSON.parse(data)
+    if (validateEditorData(editorData)) {
+        console.log(1)
+        editor = editorData
+    }
 }
 let editorChangeHandler: Function | null = null
 
@@ -40,6 +49,7 @@ function addEditorChangeHandler(handler: Function)
 function dispatch(modifyFn: Function, payload?: Object)
 {
     const newEditor = modifyFn(editor, payload)
+    localStorage.setItem('localData', JSON.stringify(newEditor))
     setEditor(newEditor)
     if (editorChangeHandler)
     {

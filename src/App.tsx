@@ -14,6 +14,8 @@ import { addTextToSlide, TextDataType } from './store/addTextToSlide.ts';
 import { deleteObject } from './store/deleteObject.ts';
 import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
 import { useState } from 'react';
+import { saveEditorToFile } from './services/saveFile.ts';
+import { loadEditorFromFile } from './services/loadFile.ts';
 
 type AppProps = {
     editor: EditorType; // Определяем тип для пропсов
@@ -99,6 +101,16 @@ function App({ editor }: AppProps) {
                     value={presentation.name}
                     onChange={(value) => onRenamePresentation(value)}
                 />
+
+                <input  
+                    type="file"
+                    accept=".json"
+                    onChange={loadEditorFromFile}
+                    style={{ marginBottom: '20px' }}
+                />
+                <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
+                    Save
+                </button>
                 <button onClick={onAddSlide} style={{ marginBottom: '20px' }}>
                     Add Slide
                 </button>
