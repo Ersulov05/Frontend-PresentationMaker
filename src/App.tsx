@@ -16,13 +16,21 @@ import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
 import { useState } from 'react';
 import { saveEditorToFile } from './services/saveFile.ts';
 import { loadEditorFromFile } from './services/loadFile.ts';
+import { useAppSelector } from './store/reducers/reducers.ts';
 
-type AppProps = {
-    editor: EditorType; // Определяем тип для пропсов
-}
+// type AppProps = {
+//     editor: EditorType; // Определяем тип для пропсов
+// }
 
-function App({ editor }: AppProps) {
-    const { presentation } = editor;
+function App() {
+    // const { presentation } = editor;
+    const slidesState = useAppSelector(state => state.slides)
+    const scale = useAppSelector(state => state.scale)
+    const colors = useAppSelector(state => state.colors)
+    const name = useAppSelector(state => state.title)
+    const slides = slidesState.slides
+    const selectedSlideIds = slidesState.selectedSlideIds
+
     const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
     function onRenamePresentation(name: string) {
         dispatch(renamePresentation, name)
@@ -91,14 +99,14 @@ function App({ editor }: AppProps) {
         dispatch(deleteObject)
     }
 
-    const selectedSlide = presentation.slides.find(slide => slide.uid === presentation.selectedSlideIds[0]);
+    const selectedSlide = slides.find(slide => slide.uid === selectedSlideIds[0]);
 
     return (
         <>
             <header className={styles.header}>
-                <h1>{presentation.name}</h1>
+                <h1>{name}</h1>
                 <TextField 
-                    value={presentation.name}
+                    value={name}
                     onChange={(value) => onRenamePresentation(value)}
                 />
 
@@ -144,7 +152,7 @@ function App({ editor }: AppProps) {
                 </Button> */}
                 
                 <NumberField 
-                    value={presentation.scale.toString()} 
+                    value={scale.toString()} 
                     onChange={(value) => onChangeScale(value)} 
                     isFloat={true}
                     limit={{
@@ -157,14 +165,14 @@ function App({ editor }: AppProps) {
                 className={styles.main}
             >
                 <ListSlides 
-                    slides={ presentation.slides }
-                    selectedSlideIds={ presentation.selectedSlideIds }
+                    slides={ slides }
+                    selectedSlideIds={ selectedSlideIds }
                     tempBackground={ tempBackground }
                 />
                 <WorkArea 
                     slide={selectedSlide} 
-                    scale={presentation.scale}
-                    colors={editor.colors}
+                    scale={scale}
+                    colors={colors}
                     onGetTempBackground={setTempBackground}
                     tempBackground={tempBackground}
                 />
