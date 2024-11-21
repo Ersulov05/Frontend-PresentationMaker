@@ -1,8 +1,7 @@
-import { dispatch } from '../../../../store/editor.ts';
-import { joinStyles } from '../../../../store/joinStyles.ts';
-import { ObjectText as ObjectType } from '../../../../store/PresentationType.ts';
-import { selectObject } from '../../../../store/selectObject.ts';
+import { joinStyles } from '../../../../store/utils/joinStyles.ts';
+import { ObjectTextType as ObjectType } from '../../../../store/PresentationType.ts';
 import styles from './TextObject.module.css';
+import { useAppActions } from '../../../../store/reducers/reducers.ts';
 
 interface ObjectProps {
     object: ObjectType;
@@ -16,13 +15,11 @@ function TextObject({
     isSelected = false,
 }: ObjectProps)
 {
-    function onClickHandler(uid: string) {
-        dispatch(selectObject, uid)
-    }
+    const { selectObject } = useAppActions()
 
     return (
         <div className={joinStyles(styles.textArea, isSelected ? styles.select : '')} 
-            onClick={() => onClickHandler(object.uid)}
+            onClick={() => selectObject(object.uid)}
             style={{
                 top: `${(object.pos.y)*scale}px`,
                 left: `${(object.pos.x)*scale}px`,

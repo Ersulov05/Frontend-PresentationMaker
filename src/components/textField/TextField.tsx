@@ -1,5 +1,5 @@
 import { CSSProperties, useState } from "react";
-import { joinStyles } from "../../store/joinStyles";
+import { joinStyles } from "../../store/utils/joinStyles";
 import _style from "./TextField.module.css"
 
 type TextFieldProps = {

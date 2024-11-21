@@ -1,4 +1,4 @@
-import { SlidesStateType } from "./reducers/slidesReducers"
+import { SlidesStateType } from "../reducers/slidesReducers"
 
 function deleteSlides(state: SlidesStateType): SlidesStateType{
     const { slides, selectedSlideIds } = state

@@ -1,8 +1,7 @@
-import { dispatch } from '../../../../store/editor.ts';
-import { selectObject } from '../../../../store/selectObject.ts';
-import { ObjectImage as ObjectType } from '../../../../store/PresentationType.ts';
+import { ObjectImageType as ObjectType } from '../../../../store/PresentationType.ts';
 import styles from './ImageObject.module.css';
-import { joinStyles } from '../../../../store/joinStyles.ts';
+import { joinStyles } from '../../../../store/utils/joinStyles.ts';
+import { useAppActions } from '../../../../store/reducers/reducers.ts';
 
 interface ObjectProps {
     object: ObjectType; 
@@ -16,9 +15,8 @@ function ImageObject({
     isSelected = false,
 }: ObjectProps)
 {
-    function onClickHandler(uid: string) {
-        dispatch(selectObject, uid)
-    }
+    const { selectObject } = useAppActions()
+
     return (
         <img
             className={joinStyles(styles.image, isSelected ? styles.select : '')} 
@@ -30,7 +28,7 @@ function ImageObject({
                 width: `${object.size.width*scale}px`,
                 height: `${object.size.height*scale}px`,
             }}
-            onClick={() => onClickHandler(object.uid)}
+            onClick={() => selectObject(object.uid)}
         />
     )
 }

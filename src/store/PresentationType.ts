@@ -29,7 +29,7 @@ export type BaseObject = {
     size: Size    
 }
 
-export type ObjectImage = BaseObject & {
+export type ObjectImageType = BaseObject & {
     src: string
     type: 'image'
 }
@@ -42,7 +42,7 @@ export type Font = {
     lineHeight: number,
 }
 
-export type ObjectText = BaseObject & {
+export type ObjectTextType = BaseObject & {
     value: string
     font: Font
     color: string
@@ -50,7 +50,7 @@ export type ObjectText = BaseObject & {
     type: 'text'
 }
 
-export type ObjectType = ObjectText | ObjectImage
+export type ObjectType = ObjectTextType | ObjectImageType
 export type BackgroundType = Solid | Image
 
 export type SlideType = {

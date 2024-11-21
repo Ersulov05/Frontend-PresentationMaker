@@ -1,8 +1,10 @@
-import { EditorType } from "./editor";
+import { EditorType } from "../editor";
 
-function selectObject(editor: EditorType, objectUid: string): EditorType {
+function deleteObject(editor: EditorType): EditorType {
     const { slides, selectedSlideIds } = editor.presentation
-    if (selectedSlideIds.length === 0) return editor
+    if (selectedSlideIds.length == 0) {
+        return editor
+    }
     return {
         ...editor,
         presentation: {
@@ -11,16 +13,16 @@ function selectObject(editor: EditorType, objectUid: string): EditorType {
                 if (slide.uid === selectedSlideIds[0]) {
                     return {
                         ...slide,
-                        selectedObjectIds: [objectUid],
+                        objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
+                        selectedObjectIds: []
                     }
                 }
                 return slide
-            }),
-            selectedSlideIds: [selectedSlideIds[0]],
+            })
         }
     }
 }
 
 export {
-    selectObject
+    deleteObject
 }

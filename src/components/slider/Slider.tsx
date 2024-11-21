@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef, useState } from 'react'
 import styles from './Slider.module.css'
-import { joinStyles } from '../../store/joinStyles'
+import { joinStyles } from '../../store/utils/joinStyles'
 
 type SliderProps = {
     orientation?: "horizontal" | "vertical"

@@ -1,6 +1,6 @@
-import { EditorType } from "./editor";
-import { generateUID } from "./generateUID";
-import { ObjectImage, Position, Size } from "./PresentationType";
+import { EditorType } from "../editor";
+import { generateUID } from "../utils/generateUID";
+import { ObjectImageType, Position, Size } from "../PresentationType";
 
 export type ImageDataType = {
     position: Position,
@@ -15,7 +15,7 @@ function addImageToSlide(editor: EditorType, data: ImageDataType): EditorType
         return editor
     }
     
-    const newImage: ObjectImage = {
+    const newImage: ObjectImageType = {
         uid: generateUID(),
         pos: data.position,
         size: data.size,

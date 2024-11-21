@@ -1,5 +1,5 @@
-import { EditorType } from "./editor";
-import { ObjectType, TransformType } from "./PresentationType";
+import { EditorType } from "../editor";
+import { ObjectType, TransformType } from "../PresentationType";
 
 function transformObject(editor: EditorType, transform: TransformType): EditorType {
     const { slides, selectedSlideIds} = editor.presentation

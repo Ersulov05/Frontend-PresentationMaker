@@ -1,4 +1,4 @@
-import { EditorType } from "./editor";
+import { EditorType } from "../editor";
 
 function translateSlides(editor: EditorType, insertIndex: number): EditorType {
     const { slides, selectedSlideIds} = editor.presentation

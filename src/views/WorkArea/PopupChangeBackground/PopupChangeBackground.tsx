@@ -4,7 +4,7 @@ import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithC
 import { ListChooseColor } from '../../ListChooseColor/ListChooseColor'
 import styles from './PopupChangeBackground.module.css'
 import { BackgroundType } from '../../../store/PresentationType'
-import { BackgroundDataType, changeBackgroundSlide } from '../../../store/changeBackgroundSlide'
+import { BackgroundDataType, changeBackgroundSlide } from '../../../store/slides/changeBackgroundSlide'
 import { dispatch } from '../../../store/editor'
 import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
 

@@ -1,3 +1,4 @@
+import { colorsActions } from "./colorsAction";
 import { renamePresentationActions } from "./namePresentationActions";
 import { scaleActions } from "./scaleActions";
 import { slidesActions } from "./slidesActionCreators";
@@ -5,7 +6,6 @@ import { slidesActions } from "./slidesActionCreators";
 export const ActionCreators = {
     ...slidesActions,
     ...renamePresentationActions,
-    // addColor,
+    ...colorsActions,
     ...scaleActions,
-    // removeSlide,
 };

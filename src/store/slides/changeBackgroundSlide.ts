@@ -1,5 +1,5 @@
-import { EditorType } from "./editor";
-import { BackgroundType } from "./PresentationType";
+import { EditorType } from "../editor";
+import { BackgroundType } from "../PresentationType";
 
 export type BackgroundDataType = {
     background: BackgroundType,

@@ -4,7 +4,7 @@ import { SlideType, ObjectType, BackgroundType } from '../../store/PresentationT
 import Slide from './Slide/Slide.tsx';
 import styles from './WorkArea.module.css';
 import { ListActions, ListComponentsType } from '../../components/listActions/ListActions.tsx';
-import { joinStyles } from '../../store/joinStyles.ts';
+import { joinStyles } from '../../store/utils/joinStyles.ts';
 import { PopupChangeBackground } from './PopupChangeBackground/PopupChangeBackground.tsx';
 
 type OverflowType = {

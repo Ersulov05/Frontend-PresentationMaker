@@ -1,6 +1,6 @@
-import { EditorType } from "./editor";
-import { generateUID } from "./generateUID";
-import { ObjectText, Position, Size } from "./PresentationType";
+import { EditorType } from "../editor";
+import { generateUID } from "../utils/generateUID";
+import { ObjectTextType, Position, Size } from "../PresentationType";
 
 export type TextDataType = {
     position: Position,
@@ -14,7 +14,7 @@ function addTextToSlide(editor: EditorType, data: TextDataType): EditorType
         return editor
     }
     
-    const newText: ObjectText = {
+    const newText: ObjectTextType = {
         uid: generateUID(),
         pos: data.position,
         size: data.size,

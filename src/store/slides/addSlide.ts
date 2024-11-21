@@ -1,6 +1,6 @@
-import { generateUID } from "./generateUID"
-import { SlideType } from "./PresentationType"
-import { SlidesStateType } from "./reducers/slidesReducers"
+import { generateUID } from "../utils/generateUID"
+import { SlideType } from "../PresentationType"
+import { SlidesStateType } from "../reducers/slidesReducers"
 
 
 function addSlide(state: SlidesStateType): SlidesStateType {

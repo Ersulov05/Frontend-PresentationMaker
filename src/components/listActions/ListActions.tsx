@@ -1,8 +1,8 @@
 import { CSSProperties } from "react"
 import _style from './ListActions.module.css'
-import { joinStyles } from "../../store/joinStyles"
+import { joinStyles } from "../../store/utils/joinStyles"
 import { Button, ButtopProps } from "../buttonWithList/Button"
-import { generateUID } from "../../store/generateUID"
+import { generateUID } from "../../store/utils/generateUID"
 
 type BaseComponent = ButtopProps
 

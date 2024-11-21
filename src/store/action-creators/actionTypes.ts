@@ -1,3 +1,6 @@
+import { ObjectImageType, ObjectTextType, TransformType } from "../PresentationType"
+import { BackgroundDataType } from "../slides/changeBackgroundSlide"
+
 export enum ActionType {
     ADD_SLIDE = "ADD_SLIDE",
     RENAME_PRESENTATION = "RENAME_PRESENTATION",
@@ -6,7 +9,16 @@ export enum ActionType {
     ADD_SCALE = "ADD_SCALE",
     SUB_SCALE = "SUB_SCALE",
     DELETE_SLIDES = "DELETE_SLIDES",
-    SELECT_SLIDE = "SELECT_SLIDE"
+    DELETE_OBJECTS = "DELETE_OBJECTS",
+    SELECT_SLIDE = "SELECT_SLIDE",
+    SELECT_OBJECT = "SELECT_OBJECT",
+    TRANSFORM_OBJECT = "TRANSFORM_OBJECT",
+    TARNSLATE_SLIDES = "TRANSLATE_SLIDES",
+    ADD_TEXT_OBJECT = "ADD_TEXT_OBJECT",
+    ADD_IMAGE_OBJECT = "ADD_IMAGE_OBJECT",
+    CHANGE_BACKGROUND = "CHANGE_BACKGROUND",
+    ADD_OBJECT_TO_SELECTION = "ADD_OBJECT_TO_SELECTION",
+    ADD_SLIDE_TO_SELECTION = "ADD_SLIDE_TO_SELECTION"
 }
 
 export interface AddSlideAction {
@@ -17,9 +29,48 @@ export interface DeleteSlidesAction {
     type: ActionType.DELETE_SLIDES
 }
 
+export interface DeleteObjectsAction {
+    type: ActionType.DELETE_OBJECTS
+}
+
 export interface SelectSlideAction {
     type: ActionType.SELECT_SLIDE,
     payload: string
+}
+
+export interface SelectObjectAction {
+    type: ActionType.SELECT_OBJECT,
+    payload: string
+}
+
+export interface AddObjectToSelectionAction {
+    type: ActionType.ADD_OBJECT_TO_SELECTION,
+    payload: string
+}
+
+export interface AddSlideToSelectionAction {
+    type: ActionType.ADD_SLIDE_TO_SELECTION,
+    payload: string
+}
+
+export interface AddTextObjectAction {
+    type: ActionType.ADD_TEXT_OBJECT,
+    payload: ObjectTextType
+}
+
+export interface AddImageObjectAction {
+    type: ActionType.ADD_IMAGE_OBJECT,
+    payload: ObjectImageType
+}
+
+export interface TransformObjectsAction {
+    type: ActionType.TRANSFORM_OBJECT,
+    payload: TransformType
+}
+
+export interface TranslateSlidesAction {
+    type: ActionType.TARNSLATE_SLIDES,
+    payload: number
 }
 
 export interface RenamePresentationAction {
@@ -45,8 +96,31 @@ export interface ChangeScaleAction {
     payload: number
 }
 
-export type SlidesAction = AddSlideAction | DeleteSlidesAction | SelectSlideAction
-export type PresentationNameAction = RenamePresentationAction
+export interface ChangeBackgroundAction {
+    type: ActionType.CHANGE_BACKGROUND,
+    payload: BackgroundDataType
+}
+
+export type SlidesAction = 
+    AddSlideAction 
+    | AddTextObjectAction
+    | AddImageObjectAction
+    | DeleteSlidesAction 
+    | DeleteObjectsAction
+    | SelectSlideAction 
+    | SelectObjectAction
+    | AddObjectToSelectionAction
+    | AddSlideToSelectionAction
+    | ChangeBackgroundAction
+    | TransformObjectsAction
+    | TranslateSlidesAction
+export type NamePresentationAction = RenamePresentationAction
 export type ColorsAction = AddColorAction
-export type ScaleAction = ChangeScaleAction | AddScaleAction | SubScaleAction
-export type ActionCreatorsType = SlidesAction | PresentationNameAction | ColorsAction | ScaleAction
+export type ScaleAction = 
+    ChangeScaleAction
+    | AddScaleAction
+    | SubScaleAction
+export type ActionCreatorsType = 
+    SlidesAction 
+    | NamePresentationAction 
+    | ColorsAction

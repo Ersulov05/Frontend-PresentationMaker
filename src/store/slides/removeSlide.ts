@@ -1,4 +1,4 @@
-import { EditorType } from "./editor"
+import { EditorType } from "../editor"
 function removeSlide(editor: EditorType): EditorType{
     const { slides, selectedSlideIds } = editor.presentation
     if (selectedSlideIds.length === 0) {

@@ -1,4 +1,4 @@
-import { EditorType } from "./editor";
+import { EditorType } from "../editor";
 
 function renamePresentation(editor: EditorType, name: string) {
     return {

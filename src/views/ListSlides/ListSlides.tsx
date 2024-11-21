@@ -6,7 +6,7 @@ import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 import { useDragAndDrop } from '../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
-import { translateSlides } from '../../store/translateSlides.ts';
+import { translateSlides } from '../../store/slides/translateSlides.ts';
 import { useAppActions } from '../../store/reducers/reducers.ts';
 
 type SlidesProps = {

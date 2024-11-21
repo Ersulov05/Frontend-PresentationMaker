@@ -1,5 +1,5 @@
 import { ActionType, ScaleAction } from "../action-creators/actionTypes"
-import { addScale, changeScale, subScale } from "../changeScale"
+import { addScale, changeScale, subScale } from "../presentation/changeScale"
 
 const scaleReducer = (state: number = 1, action: ScaleAction) => {
     switch (action.type) {
