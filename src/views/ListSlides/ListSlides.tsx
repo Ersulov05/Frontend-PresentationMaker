@@ -1,13 +1,13 @@
 import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { dispatch } from '../../store/editor.ts';
 import { BackgroundType, SlideType } from '../../store/PresentationType.ts'
-import { selectSlide } from '../../store/selectSlide.ts';
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 import { useDragAndDrop } from '../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
 import { translateSlides } from '../../store/translateSlides.ts';
+import { useAppActions } from '../../store/reducers/reducers.ts';
 
 type SlidesProps = {
     slides: SlideType[],
@@ -26,6 +26,7 @@ function ListSlides({
     const slidesDragRef = useRef<HTMLDivElement | null>(null);
     const [listSlidesCoords, setListSlidesCoords] = useState({x: 0, y: 0}) 
     const [insertIndex, setInsertIndex] = useState<number | null>(null);
+    const { selectSlide } = useAppActions()
 
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
     const orderedSelectedSlides = selectedSlides.sort((a, b) => {
@@ -88,10 +89,6 @@ function ListSlides({
         }  
     }, [dragSlide.dragging]);
 
-    function onSelectSlide(slideUid: string) {
-        dispatch(selectSlide, slideUid)
-    }
-
     const slideStyles: CSSProperties = {
         width: WIDTH_SLIDE * scale + "px",
         height: HEIGHT_SLIDE * scale + "px"
@@ -115,8 +112,6 @@ function ListSlides({
                                 scale={scale}
                                 key={slide.uid} 
                                 slide={slide} 
-                                onClick={() => onSelectSlide(slide.uid)}
-                                isSelected={selectedSlideIds.includes(slide.uid)}
                                 style={{
                                     ...slideStyles,
                                     pointerEvents: "none"
@@ -156,7 +151,7 @@ function ListSlides({
                     key={slide.uid} 
                     slide={slide} 
                     scale={scale}
-                    onClick={() => onSelectSlide(slide.uid)}
+                    onClick={() => selectSlide(slide.uid)}
                     isSelected={selectedSlideIds.includes(slide.uid)}
                     style={slideStyles}
                     background={

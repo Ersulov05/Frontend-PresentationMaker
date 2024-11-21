@@ -1,4 +1,4 @@
-import { ActionType, ColorsAction } from "../actionTypes"
+import { ActionType, ColorsAction } from "../action-creators/actionTypes"
 
 const colors: string[] = [
     '#000000',

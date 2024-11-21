@@ -1,43 +1,23 @@
-import { EditorType } from "./editor";
-
 const MAX_SCALE: number = 2;
 const MIN_SCALE: number = 0.5;
 const STEP_CHANGE_SCALE: number = 0.2;
 
-function addScale(editor: EditorType): EditorType
+function addScale(currentScale: number): number
 {
-    const scale = Math.round((editor.presentation.scale + STEP_CHANGE_SCALE) * 100) / 100
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            scale: Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
-        }
-    }
+    const scale = Math.round((currentScale + STEP_CHANGE_SCALE) * 100) / 100
+    return Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
 }
 
-function subScale(editor: EditorType): EditorType
+function subScale(currentScale: number): number
 {
-    const scale = Math.round((editor.presentation.scale - STEP_CHANGE_SCALE) * 100) / 100
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            scale: Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
-        }
-    }
+    const scale = Math.round((currentScale - STEP_CHANGE_SCALE) * 100) / 100
+    return Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
 }
 
-function changeScale(editor: EditorType, newScale: number)
+function changeScale(newScale: number)
 {
     const scale = Math.round((newScale) * 100) / 100
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            scale: Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
-        }
-    }
+    return Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
 }
 
 export {

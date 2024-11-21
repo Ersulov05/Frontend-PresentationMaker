@@ -21,8 +21,8 @@ const SlidesDrag = forwardRef<HTMLDivElement, SlidesDragProps>(({
     if (slides.length < 0) {
         return null
     }
-    const countPreviewSlides = 3
-    const offset = 5
+    const countPreviewSlides = 2
+    const offset = 7
     const previewSlides = slides.slice(0, countPreviewSlides)
 
     const containerStyles: CSSProperties = {
@@ -41,6 +41,7 @@ const SlidesDrag = forwardRef<HTMLDivElement, SlidesDragProps>(({
                     key={slide.uid}
                     scale={scale}
                     slide={slide}
+                    isSelected={true}
                     style={{
                         ...style, 
                         position:"absolute",

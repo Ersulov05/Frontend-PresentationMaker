@@ -1,12 +1,8 @@
-import { dispatch, EditorType } from './store/editor.ts'
+import { dispatch } from './store/editor.ts'
 import { ListSlides } from './views/ListSlides/ListSlides.tsx';
 import styles from './App.module.css';
 import { WorkArea } from './views/WorkArea/WorkArea.tsx';
-import { addSlide } from './store/addSlide.ts';
-import { removeSlide } from './store/removeSlide.ts';
 import { TextField } from './components/textField/TextField.tsx';
-import { renamePresentation } from './store/renamePresentation.ts';
-import { addScale, changeScale, subScale } from './store/changeScale.ts';
 import { NumberField } from './components/numberField/NumberField.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
 import { BackgroundDataType, changeBackgroundSlide } from './store/changeBackgroundSlide.ts';
@@ -16,45 +12,26 @@ import { addImageToSlide, ImageDataType } from './store/addImageToSlide.ts';
 import { useState } from 'react';
 import { saveEditorToFile } from './services/saveFile.ts';
 import { loadEditorFromFile } from './services/loadFile.ts';
-import { useAppSelector } from './store/reducers/reducers.ts';
-
-// type AppProps = {
-//     editor: EditorType; // Определяем тип для пропсов
-// }
+import { useAppActions, useAppSelector } from './store/reducers/reducers.ts';
 
 function App() {
-    // const { presentation } = editor;
+    const { 
+        addSlide, 
+        deleteSlides, 
+        renamePresentation,
+        addScale,
+        subScale,
+        changeScale,
+    } = useAppActions()
+
     const slidesState = useAppSelector(state => state.slides)
     const scale = useAppSelector(state => state.scale)
     const colors = useAppSelector(state => state.colors)
-    const name = useAppSelector(state => state.title)
+    const name = useAppSelector(state => state.name)
     const slides = slidesState.slides
     const selectedSlideIds = slidesState.selectedSlideIds
 
     const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
-    function onRenamePresentation(name: string) {
-        dispatch(renamePresentation, name)
-    }
-
-    function onAddSlide() {
-        dispatch(addSlide)
-    }
-
-    function onRemoveSlide() {
-        dispatch(removeSlide)
-    }
-
-    function onAddScale() {
-        dispatch(addScale)
-    }
-
-    function onSubScale() {
-        dispatch(subScale)
-    }
-
-    function onChangeScale(newScale: number) {
-        dispatch(changeScale, newScale)
-    }
 
     function onChangeBackgroundSlide() {
         const data: BackgroundDataType = {
@@ -107,7 +84,7 @@ function App() {
                 <h1>{name}</h1>
                 <TextField 
                     value={name}
-                    onChange={(value) => onRenamePresentation(value)}
+                    onChange={(value) => renamePresentation(value)}
                 />
 
                 <input  
@@ -119,16 +96,16 @@ function App() {
                 <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
                     Save
                 </button>
-                <button onClick={onAddSlide} style={{ marginBottom: '20px' }}>
+                <button onClick={addSlide} style={{ marginBottom: '20px' }}>
                     Add Slide
                 </button>
-                <button onClick={onRemoveSlide} style={{ marginBottom: '20px' }}>
+                <button onClick={deleteSlides} style={{ marginBottom: '20px' }}>
                     Remove Slide
                 </button>
-                <button onClick={onAddScale} style={{ marginBottom: '20px' }}>
+                <button onClick={addScale} style={{ marginBottom: '20px' }}>
                     Add Scale
                 </button>
-                <button onClick={onSubScale} style={{ marginBottom: '20px' }}>
+                <button onClick={subScale} style={{ marginBottom: '20px' }}>
                     Sub Scale
                 </button>
                 <button onClick={onChangeBackgroundSlide} style={{ marginBottom: '20px' }}>
@@ -153,7 +130,7 @@ function App() {
                 
                 <NumberField 
                     value={scale.toString()} 
-                    onChange={(value) => onChangeScale(value)} 
+                    onChange={(value) => changeScale(value)} 
                     isFloat={true}
                     limit={{
                         minValue: 0.5,

@@ -1,22 +1,20 @@
-import { EditorType } from "./editor"
+import { SlidesStateType } from "./reducers/slidesReducers"
 
-function selectSlide(editor: EditorType, slideUid: string): EditorType {
-    const { presentation } = editor
+function selectSlide(state: SlidesStateType, slideUid: string): SlidesStateType {
+    const { slides } = state
+
     return {
-        ...editor,
-        presentation: {
-            ...presentation,
-            slides: presentation.slides.map(slide => {
-                if (slide.uid === slideUid) {
-                    return {
-                        ...slide,
-                        selectedObjectIds: [],
-                    }
+        ...state,
+        slides: slides.map(slide => {
+            if (slide.uid === slideUid) {
+                return {
+                    ...slide,
+                    selectedObjectIds: [],
                 }
-                return slide
-            }),
-            selectedSlideIds: [slideUid],
-        }
+            }
+            return slide
+        }),
+        selectedSlideIds: [slideUid]
     }
 }
 

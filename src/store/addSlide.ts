@@ -1,9 +1,9 @@
 import { generateUID } from "./generateUID"
 import { SlideType } from "./PresentationType"
-import { InitialSlidesStateType } from "./reducers/slidesReducers"
+import { SlidesStateType } from "./reducers/slidesReducers"
 
 
-function addSlide(state: InitialSlidesStateType): InitialSlidesStateType {
+function addSlide(state: SlidesStateType): SlidesStateType {
     const { slides, selectedSlideIds } = state
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
     const lastSelectedIndex = selectedSlides.length > 0

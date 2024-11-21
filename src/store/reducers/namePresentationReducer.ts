@@ -1,15 +1,9 @@
-import { ActionType, PresentationNameAction } from "../actionTypes"
-import { SlideType } from "../PresentationType"
-
-export type InitialSlidesStateType = {
-    slides: SlideType[],
-    selectedSlideIds: string[],
-}
+import { ActionType, PresentationNameAction } from "../action-creators/actionTypes"
 
 const namePresentationReducer = (state: string = "New Presentation", action: PresentationNameAction) => {
     switch (action.type) {
         case ActionType.RENAME_PRESENTATION:
-            return state
+            return action.payload
         default: 
             return state 
     }
