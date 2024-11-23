@@ -1,11 +1,9 @@
-import { dispatch } from './store/editor.ts'
 import { ListSlides } from './views/ListSlides/ListSlides.tsx';
 import styles from './App.module.css';
 import { WorkArea } from './views/WorkArea/WorkArea.tsx';
 import { TextField } from './components/textField/TextField.tsx';
 import { NumberField } from './components/numberField/NumberField.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
-import { BackgroundDataType, changeBackgroundSlide } from './store/slides/changeBackgroundSlide.ts';
 import { useState } from 'react';
 import { saveEditorToFile } from './services/saveFile.ts';
 import { loadEditorFromFile } from './services/loadFile.ts';
@@ -34,16 +32,6 @@ function App() {
     const selectedSlideIds = slidesState.selectedSlideIds
 
     const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
-
-    function onChangeBackgroundSlide() {
-        const data: BackgroundDataType = {
-            background: {
-                color: "#888888",
-                type: "solid",
-            },
-        }
-        dispatch(changeBackgroundSlide, data)
-    }
 
     function onAddTextToSlide() {
         const data: TextDataType = {
@@ -105,9 +93,6 @@ function App() {
                 </button>
                 <button onClick={subScale} style={{ marginBottom: '20px' }}>
                     Sub Scale
-                </button>
-                <button onClick={onChangeBackgroundSlide} style={{ marginBottom: '20px' }}>
-                    change background
                 </button>
                 <button onClick={onAddTextToSlide} style={{ marginBottom: '20px' }}>
                     add Text
