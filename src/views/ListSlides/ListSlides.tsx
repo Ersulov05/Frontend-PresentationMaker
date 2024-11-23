@@ -1,12 +1,10 @@
 import { CSSProperties, useEffect, useRef, useState } from 'react';
-import { dispatch } from '../../store/editor.ts';
 import { BackgroundType, SlideType } from '../../store/PresentationType.ts'
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 import { useDragAndDrop } from '../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
-import { translateSlides } from '../../store/slides/translateSlides.ts';
 import { useAppActions } from '../../store/reducers/reducers.ts';
 
 type SlidesProps = {
@@ -26,7 +24,7 @@ function ListSlides({
     const slidesDragRef = useRef<HTMLDivElement | null>(null);
     const [listSlidesCoords, setListSlidesCoords] = useState({x: 0, y: 0}) 
     const [insertIndex, setInsertIndex] = useState<number | null>(null);
-    const { selectSlide } = useAppActions()
+    const { selectSlide, translateSlides } = useAppActions()
 
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
     const orderedSelectedSlides = selectedSlides.sort((a, b) => {
@@ -81,7 +79,7 @@ function ListSlides({
         if (dragSlide.dragging !== null) {
             if (!dragSlide.dragging) { 
                 if (insertIndex !== null) {
-                    dispatch(translateSlides, insertIndex)
+                    translateSlides(insertIndex)
                 }
                 dragSlide.position.x = 0
                 dragSlide.position.y = 0
@@ -160,7 +158,6 @@ function ListSlides({
                             : null
                     }
                     onDrag={dragSlide.startDrag}
-
                  />
             ))}
         </div>

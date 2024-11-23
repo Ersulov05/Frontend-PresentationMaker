@@ -1,4 +1,6 @@
-import { ObjectImageType, ObjectTextType, TransformType } from "../PresentationType"
+import { ImageDataType } from "../objects/addImageToSlide"
+import { TextDataType } from "../objects/addTextToSlide"
+import { TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 import { 
     ActionType, 
@@ -8,6 +10,7 @@ import {
     AddSlideToSelectionAction, 
     AddTextObjectAction, 
     ChangeBackgroundAction, 
+    DeleteObjectsAction, 
     DeleteSlidesAction,
     SelectObjectAction,
     SelectSlideAction,
@@ -24,6 +27,12 @@ const addSlide = (): AddSlideAction => {
 const deleteSlides = (): DeleteSlidesAction => {
     return {
         type: ActionType.DELETE_SLIDES
+    }
+}
+
+const deleteObjects = (): DeleteObjectsAction => {
+    return {
+        type: ActionType.DELETE_OBJECTS
     }
 }
 
@@ -55,14 +64,14 @@ const addSlideToSelection = (slideUid: string): AddSlideToSelectionAction => {
     }
 }
 
-const addTextObject = (textObject: ObjectTextType): AddTextObjectAction => {
+const addTextObject = (textObject: TextDataType): AddTextObjectAction => {
     return {
         type: ActionType.ADD_TEXT_OBJECT,
         payload: textObject
     }
 }
 
-const addImageObject = (imageObject: ObjectImageType): AddImageObjectAction => {
+const addImageObject = (imageObject: ImageDataType): AddImageObjectAction => {
     return {
         type: ActionType.ADD_IMAGE_OBJECT,
         payload: imageObject
@@ -93,6 +102,7 @@ const changeBackground = (backgroundData: BackgroundDataType): ChangeBackgroundA
 export const slidesActions = {
     addSlide,
     deleteSlides,
+    deleteObjects,
     selectSlide,
     selectObject,
     addImageObject,

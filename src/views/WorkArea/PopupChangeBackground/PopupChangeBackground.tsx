@@ -4,9 +4,9 @@ import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithC
 import { ListChooseColor } from '../../ListChooseColor/ListChooseColor'
 import styles from './PopupChangeBackground.module.css'
 import { BackgroundType } from '../../../store/PresentationType'
-import { BackgroundDataType, changeBackgroundSlide } from '../../../store/slides/changeBackgroundSlide'
-import { dispatch } from '../../../store/editor'
+import { BackgroundDataType } from '../../../store/slides/changeBackgroundSlide'
 import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
+import { useAppActions } from '../../../store/reducers/reducers'
 
 type PopupChangeBackgroundProps = {
     onClose: () => void,
@@ -22,6 +22,7 @@ function PopupChangeBackground({
     background,
 }: PopupChangeBackgroundProps)
 {
+    const { changeBackground } = useAppActions()
     const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
     const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
     function onApplyToAllHandler() {
@@ -46,7 +47,7 @@ function PopupChangeBackground({
                 background: currentBackground,
                 all: all,
             }
-            dispatch(changeBackgroundSlide, data)
+            changeBackground(data)
         }
         onCloseHandler()
     }

@@ -1,6 +1,6 @@
-import { EditorType } from "../editor";
 import { generateUID } from "../utils/generateUID";
 import { ObjectImageType, Position, Size } from "../PresentationType";
+import { SlidesStateType } from "../reducers/slidesReducers";
 
 export type ImageDataType = {
     position: Position,
@@ -8,11 +8,11 @@ export type ImageDataType = {
     src: string
 }
 
-function addImageToSlide(editor: EditorType, data: ImageDataType): EditorType
+function addImageToSlide(state: SlidesStateType, data: ImageDataType): SlidesStateType
 {
-    const { slides, selectedSlideIds } = editor.presentation
+    const { slides, selectedSlideIds } = state
     if (selectedSlideIds.length == 0) {
-        return editor
+        return state
     }
     
     const newImage: ObjectImageType = {
@@ -24,20 +24,17 @@ function addImageToSlide(editor: EditorType, data: ImageDataType): EditorType
     }
 
     return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: slides.map(slide => {
-                if (slide.uid === selectedSlideIds[0]) {
-                    return {
-                        ...slide,
-                        objects: [...slide.objects, newImage],
-                        selectedObjectIds: [newImage.uid]
-                    }
+        ...state,
+        slides: slides.map(slide => {
+            if (slide.uid === selectedSlideIds[0]) {
+                return {
+                    ...slide,
+                    objects: [...slide.objects, newImage],
+                    selectedObjectIds: [newImage.uid]
                 }
-                return slide
-            })
-        }
+            }
+            return slide
+        })
     }
 }
 

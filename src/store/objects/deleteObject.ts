@@ -1,28 +1,25 @@
-import { EditorType } from "../editor";
+import { SlidesStateType } from "../reducers/slidesReducers";
 
-function deleteObject(editor: EditorType): EditorType {
-    const { slides, selectedSlideIds } = editor.presentation
+function deleteObjects(state: SlidesStateType): SlidesStateType {
+    const { slides, selectedSlideIds } = state
     if (selectedSlideIds.length == 0) {
-        return editor
+        return state
     }
     return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: slides.map(slide => {
-                if (slide.uid === selectedSlideIds[0]) {
-                    return {
-                        ...slide,
-                        objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
-                        selectedObjectIds: []
-                    }
+        ...state,
+        slides: slides.map(slide => {
+            if (slide.uid === selectedSlideIds[0]) {
+                return {
+                    ...slide,
+                    objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
+                    selectedObjectIds: []
                 }
-                return slide
-            })
-        }
+            }
+            return slide
+        })
     }
 }
 
 export {
-    deleteObject
+    deleteObjects
 }

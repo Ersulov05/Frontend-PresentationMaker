@@ -1,4 +1,6 @@
-import { ObjectImageType, ObjectTextType, TransformType } from "../PresentationType"
+import { ImageDataType } from "../objects/addImageToSlide"
+import { TextDataType } from "../objects/addTextToSlide"
+import { TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 
 export enum ActionType {
@@ -55,12 +57,12 @@ export interface AddSlideToSelectionAction {
 
 export interface AddTextObjectAction {
     type: ActionType.ADD_TEXT_OBJECT,
-    payload: ObjectTextType
+    payload: TextDataType
 }
 
 export interface AddImageObjectAction {
     type: ActionType.ADD_IMAGE_OBJECT,
-    payload: ObjectImageType
+    payload: ImageDataType
 }
 
 export interface TransformObjectsAction {

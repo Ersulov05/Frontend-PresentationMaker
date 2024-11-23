@@ -1,31 +1,29 @@
-import { EditorType } from "../editor";
 import { BackgroundType } from "../PresentationType";
+import { SlidesStateType } from "../reducers/slidesReducers";
 
 export type BackgroundDataType = {
     background: BackgroundType,
     all?: boolean
 }
 
-function changeBackgroundSlide(editor: EditorType, data: BackgroundDataType): EditorType
+function changeBackgroundSlide(state: SlidesStateType, data: BackgroundDataType): SlidesStateType
 {
-    const { slides, selectedSlideIds } = editor.presentation
+    const { slides, selectedSlideIds } = state
     if (selectedSlideIds.length === 0) {
-        return editor
+        return state
     }
+
     return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: slides.map(slide => {
-                if (slide.uid === selectedSlideIds[0] || data.all) {
-                    return {
-                        ...slide,
-                        background: data.background
-                    }
+        ...state,
+        slides: slides.map(slide => {
+            if (slide.uid === selectedSlideIds[0] || data.all) {
+                return {
+                    ...slide,
+                    background: data.background
                 }
-                return slide
-            })
-        }
+            }
+            return slide
+        })
     }
 }
 

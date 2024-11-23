@@ -1,17 +1,17 @@
-import { EditorType } from "../editor";
 import { generateUID } from "../utils/generateUID";
 import { ObjectTextType, Position, Size } from "../PresentationType";
+import { SlidesStateType } from "../reducers/slidesReducers";
 
 export type TextDataType = {
     position: Position,
     size: Size,
 }
 
-function addTextToSlide(editor: EditorType, data: TextDataType): EditorType
+function addTextToSlide(state: SlidesStateType, data: TextDataType): SlidesStateType
 {
-    const { slides, selectedSlideIds } = editor.presentation
+    const { slides, selectedSlideIds } = state
     if (selectedSlideIds.length == 0) {
-        return editor
+        return state
     }
     
     const newText: ObjectTextType = {
@@ -32,20 +32,17 @@ function addTextToSlide(editor: EditorType, data: TextDataType): EditorType
     }
 
     return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: slides.map(slide => {
-                if (slide.uid === selectedSlideIds[0]) {
-                    return {
-                        ...slide,
-                        objects: [...slide.objects, newText],
-                        selectedObjectIds: [newText.uid]
-                    }
+        ...state,
+        slides: slides.map(slide => {
+            if (slide.uid === selectedSlideIds[0]) {
+                return {
+                    ...slide,
+                    objects: [...slide.objects, newText],
+                    selectedObjectIds: [newText.uid]
                 }
-                return slide
-            })
-        }
+            }
+            return slide
+        })
     }
 }
 

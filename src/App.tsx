@@ -6,13 +6,12 @@ import { TextField } from './components/textField/TextField.tsx';
 import { NumberField } from './components/numberField/NumberField.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
 import { BackgroundDataType, changeBackgroundSlide } from './store/slides/changeBackgroundSlide.ts';
-import { addTextToSlide, TextDataType } from './store/objects/addTextToSlide.ts';
-import { deleteObject } from './store/objects/deleteObject.ts';
-import { addImageToSlide, ImageDataType } from './store/objects/addImageToSlide.ts';
 import { useState } from 'react';
 import { saveEditorToFile } from './services/saveFile.ts';
 import { loadEditorFromFile } from './services/loadFile.ts';
 import { useAppActions, useAppSelector } from './store/reducers/reducers.ts';
+import { TextDataType } from './store/objects/addTextToSlide.ts';
+import { ImageDataType } from './store/objects/addImageToSlide.ts';
 
 function App() {
     const { 
@@ -22,6 +21,9 @@ function App() {
         addScale,
         subScale,
         changeScale,
+        deleteObjects,
+        addImageObject,
+        addTextObject,
     } = useAppActions()
 
     const slidesState = useAppSelector(state => state.slides)
@@ -54,7 +56,7 @@ function App() {
                 height: 100,
             }
         }
-        dispatch(addTextToSlide, data)
+        addTextObject(data)
     }
 
     function onAddImageToSlide() {
@@ -69,11 +71,7 @@ function App() {
             },
             src: '/image/react.svg'
         }
-        dispatch(addImageToSlide, data)
-    }
-
-    function onDeleteObject() {
-        dispatch(deleteObject)
+        addImageObject(data)
     }
 
     const selectedSlide = slides.find(slide => slide.uid === selectedSlideIds[0]);
@@ -117,7 +115,7 @@ function App() {
                 <button onClick={onAddImageToSlide} style={{ marginBottom: '20px' }}>
                     add Image
                 </button>
-                <button onClick={onDeleteObject} style={{ marginBottom: '20px' }}>
+                <button onClick={deleteObjects} style={{ marginBottom: '20px' }}>
                     delete Object
                 </button>
                 {/* <Button 

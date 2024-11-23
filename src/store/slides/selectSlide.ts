@@ -18,6 +18,24 @@ function selectSlide(state: SlidesStateType, slideUid: string): SlidesStateType 
     }
 }
 
+function addSlideToSelection(state: SlidesStateType, slideUid: string): SlidesStateType {
+    const { selectedSlideIds } = state
+    if (selectedSlideIds.includes(slideUid)) {
+        if (selectedSlideIds.length == 1) {
+            return state
+        }
+        return {
+            ...state,
+            selectedSlideIds: selectedSlideIds.filter(uid => uid != slideUid)
+        }
+    }
+    return {
+        ...state,
+        selectedSlideIds: [slideUid, ...selectedSlideIds]
+    }
+}
+
 export {
-    selectSlide
+    selectSlide,
+    addSlideToSelection
 }

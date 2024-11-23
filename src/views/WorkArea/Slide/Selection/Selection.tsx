@@ -2,11 +2,10 @@ import { CSSProperties, useEffect } from "react"
 import { joinStyles } from "../../../../store/utils/joinStyles"
 import styles from "./Selection.module.css"
 import { useDragAndDrop } from "../../../hooks/useDragAndDrop"
-import { dispatch } from "../../../../store/editor"
-import { transformObjects } from "../../../../store/objects/transformObject"
 import { ObjectType, TransformType } from "../../../../store/PresentationType"
 import ImageObject from "../ImageObject/ImageObject"
 import TextObject from "../TextObject/TextObject"
+import { useAppActions } from "../../../../store/reducers/reducers"
 
 type SelectionProps = {
     transform: TransformType
@@ -24,6 +23,7 @@ function Selection({
     const leftDownPoint = useDragAndDrop();
     const rightDownPoint = useDragAndDrop();
     const drag = useDragAndDrop();
+    const { transformObjects } = useAppActions()
 
     function saveTransformObjects() {
         const transform_: TransformType = {
@@ -36,7 +36,7 @@ function Selection({
                 height: transform.size.height + dragHeight/scale
             }
         }
-        dispatch(transformObjects, transform_)
+        transformObjects(transform_)
     }
 
     useEffect(() => {
