@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Profile{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <!-- <title>Catalog</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/profile.js"></script>
+{% endblock %}
+
+{% block content %}
+{% include  'pizzeria/header.html.twig' with {'user': user} %}
+
+<main class="main">
+    <div class="profile-block">
+        <div class="profile-block__left">
+            {% if user.getImagePath %}
+            <img class="profile-block__image" src="/images/user/{{ user.getImagePath}}" onerror="this.src='/images/user/user.svg'" alt="user image">
+            {% else %}
+            <img class="profile-block__image" src="/images/user/user.svg" alt="user image">
+            {% endif%}
+            
+            <a class="profile-block__button-change" href="/profile/change">Change Profile</a>
+            <button class="profile-block__button-quit" href="/api/logout">Quit</button>
+        </div>
+        <div class="profile-block__right">
+            <h1 class="profile-block__name">{{ user.getFirstName }} {{ user.getLastName }}<span class="profile-block__points">{{ user.getPoints }} руб</span></h1>
+            <h2 class="profile-block__subtitle">Contact Info</h2>
+            <div class="profile-block__contact-info">
+                <h3 class="profile-block__contact-title">Email:<span class="profile-block__email">{{ user.getEmail }}</span></h3>
+                <h3 class="profile-block__contact-title">Phone:<span class="profile-block__phone">{{ user.getPhone }}</span></h3>
+            </div>
+            <h2 class="profile-block__subtitle">History of orders</h2>
+            <ul class="history-of-orders">
+                {% if (user.getOrders | length) > 0 %}
+                    <li class="order">
+                        <p class="order__summ">Сумма</p>
+                        <p class="order__address">Delivery Address</p>
+                        <p class="order__date">Order Date</p>
+                        <p class="order__complete">Complete</p>
+                    </li>
+                    {% for order in user.getOrders %}
+                    {% include  'pizzeria/order_item.html.twig' with {'order': order} %}
+                    {% endfor %}
+                {% else %}
+                <div class="history-of-orders__no-hisory">No order history</div>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock %}

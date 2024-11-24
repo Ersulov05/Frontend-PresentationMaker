@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Profile Change{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/profile_change.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/profile_change.js"></script>
+{% endblock %}
+
+{% block content %}
+{% include  'pizzeria/header.html.twig' with {'user': user} %}
+
+<main class="main">
+    <div class="profile-block">
+        <h1 class="profile-block__name">{{ user.getFirstName }} {{ user.getLastName }}<span class="profile-block__points">{{ user.getPoints }} руб</span></h1>
+        <div class="profile-block__change">
+            <section class="profile-block__change-image">
+                <h2 class="profile-block__subtitle">Image</h2>                
+                <label for="load-user-image" class="profile-block__image-label">
+                    {% if user.getImagePath %}
+                    <img id="preview-user-image" style='width: 100%; padding: 0;' src="/images/user/{{ user.getImagePath }}" onerror="this.src='/images/user/user.svg'" alt="Выберите файл" class="profile-block__image-preview">
+                    <p class="profile-block__image-text" style="display: none;">Upload</p>
+                    {% else %}
+                    <img id="preview-user-image" style="border-radius: 0;" src="/images/user/user.svg" alt="Выберите файл" class="profile-block__image-preview">
+                    <p class="profile-block__image-text">Upload</p>
+                    {% endif %}
+                    
+                    <input id="load-user-image" type="file" class="profile-block__image-input" accept="image/png, image/jpeg">
+                </label>
+                <button class="profile-block__button-delete-image">Delete Image</button>
+            </section>
+            <section class="profile-block__input-change-and-buttons">
+                <div class="profile-block__input-change">
+                    <div class="profile-block__change-contact-info">
+                        <h2 class="profile-block__subtitle">Contact Info</h2>
+                        <div class="profile-block__contact-info">                        
+                            <label for="" class="profile-block__label-form">First Name</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-first-name" type="text" class="profile-block__input-text" maxlength="255" placeholder=" " value="{{ user.getFirstName }}">
+                                <p id="input-first-name-critical" class="profile-block__input-text-critical hidden">Password is required.</p>
+                            </div>
+                            <label for="" class="profile-block__label-form">Last Name</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-last-name" type="text" class="profile-block__input-text" maxlength="255" placeholder=" " value="{{ user.getLastName }}">
+                                <p id="input-last-name-critical" class="profile-block__input-text-critical hidden">Password is required.</p>
+                            </div>
+                            <label for="" class="profile-block__label-form">Email</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-email" type="text" class="profile-block__input-text" maxlength="255" placeholder=" " value="{{ user.getEmail }}">
+                                <p id="input-email-critical" class="profile-block__input-text-critical hidden">Email is required.</p>
+                            </div>
+        
+                            <label for="" class="profile-block__label-form">Phone</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-phone" type="text" class="profile-block__input-text" maxlength="255" placeholder=" " value="{{ user.getPhone }}">
+                                <p id="input-phone-critical" class="profile-block__input-text-critical hidden">Password is required.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-block__change-password">                
+                        <h2 class="profile-block__subtitle">Password</h2>
+                        <div class="profile-block__password-info">
+                            <label for="" class="profile-block__label-form">Password</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-password" type="password" class="profile-block__input-text" maxlength="255" placeholder=" ">
+                                <p id="input-password-critical" class="profile-block__input-text-critical hidden">Password is required.</p>
+                                <img class="profile-block__password-eye" src="/images/eye.svg" alt="eye password">
+                            </div>
+                            <label for="" class="profile-block__label-form">New Password</label>
+                            <div class="profile-block__form-item-block">
+                                <input id="form-new-password" type="password" class="profile-block__input-text" maxlength="255" placeholder=" ">
+                                <p id="input-new-password-critical" class="profile-block__input-text-critical hidden">New Password is required.</p>
+                                <img class="profile-block__password-eye" src="/images/eye.svg" alt="eye password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-block__buttons">
+                    <button class="profile-block__button-save">Save Change</button>
+                    <a class="profile-block__button-cancel" href="/profile">Cancel Change</a>
+                </div>
+            </section>    
+        </div>
+    </div>
+</main>
+{% endblock %}

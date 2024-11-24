@@ -1,0 +1,100 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Pizza{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/pizza.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/pizza.js"></script>
+{% endblock %}
+
+{% block content %}
+{% include  'pizzeria/header.html.twig' with {'user': user} %}
+
+<main class="main">
+    <div class="pizza-block">
+        <div class="pizza">
+            <img class="pizza__image" src="/images/pizza/{{ pizza.getPizzaImagePath }}" onerror="this.src='/images/pizza/pizza_upload.svg'" alt="pizza">
+            <p class="pizza__description">{{ pizza.getPizzaDescription }}</p>
+        </div>
+        <div class="pizza-info" data-pizza-id="{{ pizza.getId }}" data-pizza-price="{{ pizza.getPizzaPrice }}">
+            <h1 class="pizza-info__name">Pizza {{ pizza.getPizzaName }}</h1>
+            <h2 class="pizza-info__title">Состав пиццы</h2>    
+            <ul class="pizza-info__composition-list">
+                {% for composition in pizza.getComposition %}
+                    {% include  'pizzeria/ingredient.html.twig' with {'ingredient': composition.getIngredient}%}
+                {% endfor %}
+            </ul>
+            <h2 class="pizza-info__title">Пищевая ценность на 100 г</h2>
+            <ul class="pizza-info__food-value-list">
+                <li class="pizza-info__value-item">
+                    <div class="pizza-info__name-value">Энерг. ценность</div>
+                    <div class="pizza-info__value">178 ккал</div>
+                </li>
+                <li class="pizza-info__value-item">
+                    <div class="pizza-info__name-value">Белки</div>
+                    <div class="pizza-info__value">8.2 г</div>
+                </li>
+                <li class="pizza-info__value-item">
+                    <div class="pizza-info__name-value">Жиры</div>
+                    <div class="pizza-info__value">7.5 г</div>
+                </li>
+                <li class="pizza-info__value-item">
+                    <div class="pizza-info__name-value">Углеводы</div>
+                    <div class="pizza-info__value">19.3 г</div>
+                </li>
+            </ul>
+            <h2 class="pizza-info__title">Тесто</h2>
+            <div class="pizza-info__dough-block">
+                <div data-dough="standard" class="pizza-info__dough pizza-info__dough_selected">standard</div>
+                <div data-dough="thin" class="pizza-info__dough">thin</div>
+            </div>
+            <h2 class="pizza-info__title">Размер</h2>
+            <ul class="pizza-info__diametr-list">
+                <li data-diameter="20" class="pizza-info__diameter-item pizza-info__diameter-item_selected">
+                    <div class="pizza-info__diameter" data-diameter="20" data-price="{{ pizza.getPizzaPrice // 2.1}}">20 cm</div>
+                    <p class="pizza-info__gramm" data-gramm="">590 г</p>
+                    <p class="pizza-info__price" data-price="{{ pizza.getPizzaPrice // 1.2}}" data-count="1">{{ pizza.getPizzaPrice // 2.1 }}₽</p>
+                </li>
+                <li data-diameter="30" class="pizza-info__diameter-item">
+                    <div class="pizza-info__diameter" data-diameter="30" data-price="{{ pizza.getPizzaPrice}}">30 cm</div>
+                    <p class="pizza-info__gramm" data-gramm="">590 г</p>
+                    <p class="pizza-info__price" data-price="{{ pizza.getPizzaPrice }}" data-count="1">{{ pizza.getPizzaPrice }}₽</p>
+                </li>
+                <li data-diameter="45" class="pizza-info__diameter-item">
+                    <div class="pizza-info__diameter" data-diameter="45" data-price="{{ pizza.getPizzaPrice * 2.1 // 1}}">45 cm</div>
+                    <p class="pizza-info__gramm" data-gramm="">590 г</p>
+                    <p class="pizza-info__price" data-price="{{ pizza.getPizzaPrice * 1.2 // 1}}" data-count="1">{{ pizza.getPizzaPrice * 2.1 // 1 }}₽</p>
+                </li>
+            </ul>
+            <h2 class="pizza-info__title">Итог</h2>
+            <div class="pizza-info__itog">
+                <div class="pizza-info__data">
+                    <div class="pizza-info__price-gramm-block">
+                        <p class="pizza-info__itog-gramm" data-gramm="">590 г</p>
+                        <p class="pizza-info__itog-price" data-price="{{ pizza.getPizzaPrice // 2.1}}" data-count="1">{{ pizza.getPizzaPrice // 2.1 }}₽</p>
+                    </div>
+                    <div class="pizza-info__count-block">
+                        <div class="pizza-info__count-sub">-</div>
+                        <div class="pizza-info__count">1</div>
+                        <div class="pizza-info__count-add">+</div>
+                    </div>  
+                </div>
+                <button class="pizza-info__button-in-basket" data-diameter="20" data-dough="standard" data-count="1" data-user-id="{{ user.getId }}">In basket</button>
+                {% if user.getIsAdmin %}
+                <button class="pizza-info__button-delete">Delete Pizza</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

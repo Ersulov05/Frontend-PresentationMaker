@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Add pizza{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/add_pizza.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/add_pizza.js"></script>
+{% endblock %}
+
+{% block content %}
+<header class="header">
+    <div class="top-bar">
+        <img class="top-bar__logo" src="/images/pizzeria_logo_black.svg" alt="pizzeria logo">
+        <nav class="top-bar__navigation">
+            <ul class="top-bar__navigation-list">
+                <li class="top-bar__navigation-item">
+                    <a class="top-bar__navigation-link" href="/catalog">
+                        <img class="top-bar__navigation-image" src="/images/eye.svg" alt="">
+                        <p class="top-bar__navigation-text">Catalog</p>
+                    </a>
+                </li>
+                <li class="top-bar__navigation-item">
+                    <a class="top-bar__navigation-link" href="/profile">
+                        <img class="top-bar__navigation-image" src="/images/eye.svg" alt="">
+                        <p class="top-bar__navigation-text">Profile</p>
+                    </a>
+                </li>
+                <li class="top-bar__navigation-item">
+                    <a class="top-bar__navigation-link" href="/basket">
+                        <img class="top-bar__navigation-image" src="/images/eye.svg" alt="">
+                        <p class="top-bar__navigation-text">Basket</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div> 
+</header>
+
+<main class="main">
+    <div class="pizza-block">
+        <div class="pizza">
+            <label for="load-pizza-image" class="pizza__image-label">
+                <img id="preview-pizza-image" src="/images/pizza/pizza_upload.svg" alt="Выберите файл" class="pizza__image-preview">
+                <p class="pizza__image-text">Upload</p>
+                <input id="load-pizza-image" type="file" class="pizza__image-input" accept="image/png, image/jpeg">
+            </label>
+        </div>
+        <div class="pizza-info">
+            <h1 class="pizza-info__name">Add Pizza</h1>
+            <div class="pizza__input-data">
+                <div class="pizza__name-block">
+                    <h2 class="pizza-info__subtitle">Name</h2>   
+                    <input id="form-pizza-name" type="text" class="pizza-info__input" placeholder="Pepperoni">
+                </div>
+                <div class="pizza__price-block">
+                    <h2 class="pizza-info__subtitle">Price</h2>
+                    <input id="form-pizza-price" type="text" class="pizza-info__input" placeholder="590">
+                </div>
+            </div>
+            
+            
+
+            <h2 class="pizza-info__subtitle">Composition</h2>    
+            
+            <ul class="pizza-info__composition">
+                {% for ingredient in ingredients %}
+                    {% include  'pizzeria/add_pizza_ingredient.html.twig' with {'ingredient': ingredient}%}
+                {% endfor %}
+                <!-- <li class="ingredient">
+                    <label for="load-ingredient-image" class="ingredient__image-label">
+                        <img id="preview-ingredient-image" src="/images/eye.svg" alt="Выберите файл" class="ingredient__image-preview">
+                        <input id="load-ingredient-image" type="file" class="ingredient__image-input" accept="image/png, image/jpeg">
+                    </label>
+                    <input id="form-ingredient-calorie" type="text" class="ingredient__input-calorie" placeholder="Calorie">
+                    <input id="form-ingredient-name" type="text" class="ingredient__input-name" placeholder="cucumber">
+                </li> -->
+            </ul>
+            <h2 class="pizza-info__subtitle">Description</h2> 
+            <textarea id="form-pizza-description" class="pizza__textarea" name="content" id="publish-content__textarea" placeholder="Type anything you want ..." rows="7"></textarea>
+            <button class="pizza-info__button-add-to-catalog">Add to catalog</button>
+        </div>
+    </div>
+</main>
+{% endblock %}

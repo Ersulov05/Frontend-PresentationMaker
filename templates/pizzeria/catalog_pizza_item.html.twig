@@ -1,0 +1,27 @@
+<li class="pizza" data-pizza-price="{{pizza.getPizzaPrice}}" data-pizza-id="{{ pizza.getId }}">
+    <a class="pizza__link" href="/pizza{{ pizza.getId }}">
+        <img class="pizza__image" src="/images/pizza/{{ pizza.getPizzaImagePath }}" onerror="this.src='/images/pizza/pizza_upload.svg'" alt="pizza">
+        <h2 class="pizza__name">Pizza {{ pizza.getPizzaName }}</h2>
+        <p class="pizza__description">{{ pizza.getPizzaDescription}}</p>                
+    </a>
+    <div class="pizza__settings-block">
+        <div class="pizza__dough-block">
+            <div data-name="standard" class="pizza__dough pizza__dough_selected">standard</div>
+            <div data-name="thin" class="pizza__dough">thin</div>
+        </div>
+        <div class="pizza__diameter-block">
+            <div class="pizza__diameter pizza__diameter_selected" data-diameter="20" data-price="{{ pizza.getPizzaPrice // 2.1}}">20 cm</div>
+            <div class="pizza__diameter" data-diameter="30" data-price="{{ pizza.getPizzaPrice}}">30 cm</div>
+            <div class="pizza__diameter" data-diameter="45" data-price="{{ pizza.getPizzaPrice * 2.1 // 1}}">45 cm</div>
+        </div>
+    </div>
+    <div class="pizza__info-block">
+        <p class="pizza__price" data-price="{{ pizza.getPizzaPrice // 2.1}}" data-count="1">{{ pizza.getPizzaPrice // 2.1}}₽</p> 
+        <div class="pizza__count-block">
+            <div class="pizza__count-sub">-</div>
+            <div class="pizza__count">1</div>
+            <div class="pizza__count-add">+</div>
+        </div>   
+    </div>
+    <button class="pizza__button-in-basket" data-diameter="20" data-dough="standard" data-count="1" data-pizza-id="{{ pizza.getId }}">In basket</button>
+</li>

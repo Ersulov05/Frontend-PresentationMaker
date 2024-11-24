@@ -1,0 +1,246 @@
+* 
+{
+    margin: 0;
+    padding: 0;
+}
+
+.header
+{
+   background-color: aquamarine;
+}
+.top-bar
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.top-bar__navigation
+{
+    height: max-content;
+}
+
+.top-bar__navigation-list
+{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+.top-bar__navigation-item
+{
+    
+}
+.top-bar__navigation-link
+{
+    display: block;
+    padding: 0 20px;
+    text-decoration: none;
+    position: relative;
+}
+.top-bar__navigation-text
+{
+    font: 400 18px/30px Oxygen, sans-serif;
+    color: rgba(46, 46, 46, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.top-bar__navigation-image
+{
+    margin: 0 auto;
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+.main
+{
+    padding: 0 40px;
+}
+
+.profile-block
+{
+    max-width: 1440px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+}
+
+.profile-block__left
+{
+    width: 30%;
+    padding: 20px;
+}
+
+.profile-block__image
+{
+    width: 100%;
+    border-radius: 30px;
+    border: 2px dashed rgba(200, 200, 200, 1);
+}
+
+.profile-block__button-change, .profile-block__button-quit
+{
+    width: 100%;
+    display: block;
+    border: none;
+    background-color: orange;
+    font: 500 34px/22px Oxygen, sans-serif;
+    padding: 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: black;
+    box-sizing: border-box;
+    text-align: center;
+}
+.profile-block__button-quit{
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}
+.profile-block__button-change:active, .profile-block__button-quit:active
+{
+    scale: 0.95;
+    transition: all ease 0.2s;
+}
+
+.profile-block__right
+{
+    width: 70%;
+    padding: 20px;
+}
+
+.profile-block__name
+{
+    font: 700 55px/45px Oxygen, sans-serif;
+    display: flex;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.profile-block__points
+{
+    font: 400 24px/35px Oxygen, sans-serif;
+    padding: 0 10px;
+    background-color: rgba(220, 220, 220, 1);
+    border-radius: 10px;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.profile-block__subtitle
+{
+    font: 600 30px/35px Oxygen, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+
+.profile-block__contact-info
+{
+    border-radius: 30px;
+    border: 2px dashed rgba(200, 200, 200, 1);
+    padding: 10px 20px;
+}
+
+.profile-block__contact-title
+{
+    font: 500 24px/35px Oxygen, sans-serif;
+}
+
+.profile-block__email
+{
+    font: 400 20px/30px Oxygen, sans-serif;
+    padding: 0 10px;
+}
+
+.profile-block__phone
+{
+    font: 400 20px/30px Oxygen, sans-serif;
+    padding: 0 10px;
+}
+
+.history-of-orders
+{
+    border-radius: 30px;
+    border: 2px dashed rgba(200, 200, 200, 1);
+    display: flex;
+    padding: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+.history-of-orders__no-hisory
+{
+    margin: 0 auto;
+    font: 400 24px/35px Oxygen, sans-serif;
+}
+
+
+
+.top-bar__basket-count
+{
+    width: max-content;
+    height: 16px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    text-align: center;
+    font: 400 14px/16px Oxygen, sans-serif;
+}
+
+
+
+.orders-list{
+    width: 100%;
+    list-style: none;
+    border-radius: 30px;
+    border: 2px dashed rgba(200, 200, 200, 1);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.order
+{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(220, 220, 220, 1);
+    border-bottom: 1px solid black;
+    padding: 5px 15px;
+    border-radius: 10px;
+    margin: 2px 0;
+    align-items: center;
+    /* height: max-content; */
+}
+
+.order__summ
+{
+    height: 100%;
+    width: 70%;
+    border-right: 1px solid black;
+    text-align: center;
+    font: 400 18px/22px Oxygen, sans-serif;
+}
+
+.order__address, .order__date
+{
+    width: 100%;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    text-align: center;
+    font: 400 18px/22px Oxygen, sans-serif;
+}
+
+.order__complete
+{
+    width: 70%;
+    border-left: 1px solid black;
+    text-align: center;
+    font: 400 18px/22px Oxygen, sans-serif;
+}
+

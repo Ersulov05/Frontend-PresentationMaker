@@ -1,0 +1,27 @@
+<li class="pizza" data-pizza-id="{{ pizza.getId }}" data-pizza-count="{{ basket.getPizzaCount }}"
+data-pizza-price="{{ pizza.getPizzaPrice }}" data-pizza-dough="{{ basket.getPizzaDough }}"
+data-pizza-diameter="{{ basket.getPizzaDiameter }}">
+    <p class="pizza__name">Pizza {{ pizza.getPizzaName }}</p>
+    <div class="split-line"></div>
+    <p class="pizza__diameter">{{ basket.getPizzaDiameter }} cm</p>
+    <p class="pizza__dough">{{ basket.getPizzaDough }}</p>
+    <p class="pizza__gramm">590 г</p>
+    <div class="pizza__count"> 
+        <div class="pizza__count-block">
+            <div class="pizza__count-sub">-</div>
+            <div class="pizza__count-value" data-count="{{ basket.getPizzaCount }}">{{ basket.getPizzaCount }}</div>
+            <div class="pizza__count-add">+</div>
+        </div>   
+        <button class="pizza__button-save hidden-button">Save</button>
+    </div>
+    {% if basket.getPizzaDiameter == 45 %}
+        <p class="pizza__price" data-price="{{ pizza.getPizzaPrice * 2.1 // 1 }}">{{ pizza.getPizzaPrice * 2.1 // 1 * basket.getPizzaCount }} ₽</p>
+    {% endif %}
+    {% if basket.getPizzaDiameter == 30 %}
+        <p class="pizza__price" data-price="{{ pizza.getPizzaPrice }}">{{ pizza.getPizzaPrice * basket.getPizzaCount }} ₽</p>
+    {% endif %}
+    {% if basket.getPizzaDiameter == 20 %}
+        <p class="pizza__price" data-price="{{ pizza.getPizzaPrice // 2.1 }}">{{ pizza.getPizzaPrice // 2.1 * basket.getPizzaCount }} ₽</p>
+    {% endif %}
+    <div class="pizza__button"><button class="pizza__button-delete" >Delete</button></div>
+</li>

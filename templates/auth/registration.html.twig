@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+
+{% block head %}
+    {# <link rel="stylesheet" href="style.css"/> #}
+    
+    <meta charset="utf-8">
+    <meta name="description" content="login">
+    <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/auth.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/registration.js"></script>
+{% endblock %}
+{% block title %}Registration{% endblock %}
+{% block content %}
+
+<main class="main">
+    <div class="logo-block">
+        <img class="logo-block__logo" src="/images/pizzeria_logo.svg" alt="escape authors logo">
+        <div class="logo-block__description">Log in to start creating</div>
+    </div>
+    <div class="login-block">
+        <h1 class="login-block__title">Registration</h1>
+        
+        <div class="critical hidden">
+            <img class="critical__image hidden" src="/images/alert-circle.svg" alt="alert circle">
+            <p class="critical__description hidden">Please, enter correct values.</p>
+        </div>       
+        
+        <label for="" class="login-block__label-form">Email</label>
+        <div class="login-block__form-item-block">
+            <input id="form-email" type="text" class="login-block__input-text" maxlength="255" placeholder=" ">
+            <p id="input-email-critical" class="login-block__input-text-critical hidden">Email is required.</p>
+        </div>
+
+        <label for="" class="login-block__label-form">Phone</label>
+        <div class="login-block__form-item-block">
+            <input id="form-phone" type="text" class="login-block__input-text" maxlength="255" placeholder=" ">
+            <p id="input-phone-critical" class="login-block__input-text-critical hidden">Password is required.</p>
+        </div>
+        <label for="" class="login-block__label-form">Password</label>
+        <div class="login-block__form-item-block">
+            <input id="form-password" type="password" class="login-block__input-text" maxlength="255" placeholder=" ">
+            <p id="input-password-critical" class="login-block__input-text-critical hidden">Password is required.</p>
+            <img class="login-block__password-eye" src="./images/eye.svg" alt="eye password">
+        </div>
+        <label for="" class="login-block__label-form">First Name</label>
+        <div class="login-block__form-item-block">
+            <input id="form-first-name" type="text" class="login-block__input-text" maxlength="255" placeholder=" ">
+            <p id="input-first-name-critical" class="login-block__input-text-critical hidden">Password is required.</p>
+        </div>
+        <label for="" class="login-block__label-form">Last Name</label>
+        <div class="login-block__form-item-block">
+            <input id="form-last-name" type="text" class="login-block__input-text" maxlength="255" placeholder=" ">
+            <p id="input-last-name-critical" class="login-block__input-text-critical hidden">Password is required.</p>
+        </div>
+        <div class="login-block__auth">
+            <button class="login-block__login-button">Register</button>
+            <a class="login-block__auth-link" href="/login">Log In</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

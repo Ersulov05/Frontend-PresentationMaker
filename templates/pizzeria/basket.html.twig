@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Basket{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/basket.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/basket.js"></script>
+{% endblock %}
+
+{% block content %}
+{% include  'pizzeria/header.html.twig' with {'user': user} %}
+
+<main class="main">
+    <div class="container">
+        <h2 class="container__subtitle">Basket</h2> 
+        <ul class="basket__list">
+            {% if (user.getBasket | length) > 0 %}
+                <li class="pizza" style="background-color: rgba(200, 200, 200, 1);">
+                    <p class="pizza__name title">Pizza Name</p>
+                    <p class="pizza__diameter title">Diameter</p>
+                    <p class="pizza__dough title">Dough</p>
+                    <p class="pizza__count title">Gramm</p>
+                    <p class="pizza__gramm title">Count</p>
+                    <p class="pizza__price title">Price</p>
+                    <p class="pizza__button title">Delete</p>
+                </li>
+                {% for basket in user.getBasket %}
+                    {% include  'pizzeria/basket_item.html.twig' with {'basket': basket, 'pizza': basket.getPizza }%}
+                {% endfor %}
+            {% else %}
+                <div class="history-of-orders__no-hisory">The basket is empty</div>
+            {% endif %}
+            
+        </ul>
+        <h2 class="container__subtitle">Order</h2> 
+        <div class="order">
+            <div class="order__form-item-block">
+                <label for="" class="order__label-form">Delivery address</label>
+                <input id="form-delivery-addres" type="text" class="order__input-text" maxlength="255" placeholder=" ">
+                <p id="input-delivery-address-critical" class="order__input-text-critical hidden">Place Order is required.</p>
+            </div>
+            <button class="order__button-send">Make an order</button>
+        </div>
+    </div>    
+</main>
+{% endblock %}

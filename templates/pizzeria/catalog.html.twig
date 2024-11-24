@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Catalog{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <meta charset="utf-8">
+    <meta name="description" content="catalog">
+    <!-- <title>Catalog</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/catalog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oxygen:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <script defer src="/js/catalog.js"></script>
+{% endblock %}
+
+{% block content %}
+{% include  'pizzeria/header.html.twig' with {'user': user} %}
+<main class="main">
+    <div class="attracting-block">
+
+    </div>
+    <div class="filter">
+
+    </div>
+    <ul class="pizza-list">
+        {% for pizza in pizza_list %}
+            {% include  'pizzeria/catalog_pizza_item.html.twig' with {'pizza': pizza} %}
+        {% endfor %}
+        {% if user.getIsAdmin %}
+        <li class="pizza__add">
+            <a class="pizza__link-add" href="/add/pizza">
+                <img class="pizza__image" src="/images/pizza/plus.svg" onerror="this.src='/images/pizza/pepperoni.jpg'" alt="pizza">             
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</main>
+{% endblock %}

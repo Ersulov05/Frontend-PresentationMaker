@@ -1,0 +1,21 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Entity\User" table="user">
+         <id name="userId" type="integer" column="user_id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="userFirstName" type="string" column="user_first_name" length="255"/>
+        <field name="userLastName" type="string" column="user_last_name" length="255"/>
+        <field name="userPoints" type="integer" column="user_points"/>
+        <field name="userIsAdmin" type="boolean" column="user_is_admin"/>
+        <field name="userEmail" type="string" column="user_email" length="255" unique="true"/>
+        <field name="userPhone" type="string" column="user_phone" length="255" nullable="true" unique="true"/>
+        <field name="userPassword" type="string" column="user_password" length="255"/>
+        <field name="userImagePath" type="string" column="user_image_path" length="255" nullable="true"/>
+        <one-to-many field="basket" target-entity="Basket" mapped-by="user"/>
+        <one-to-many field="orders" target-entity="Order" mapped-by="user"/>
+    </entity>
+</doctrine-mapping>

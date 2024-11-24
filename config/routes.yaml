@@ -1,0 +1,104 @@
+index:
+   path: /
+   methods: GET
+   controller: App\Controller\AuthController::index
+
+
+auth_login:
+   path: /login
+   methods: GET
+   controller: App\Controller\AuthController::login
+
+auth_registration:
+   path: /registration
+   methods: GET
+   controller: App\Controller\AuthController::registration
+
+
+api_login:
+    path: /api/login
+    methods: POST
+    controller: App\Controller\AuthController::loginApi
+
+api_registration:
+    path: /api/registration
+    methods: POST
+    controller: App\Controller\AuthController::registrationApi
+
+api_logout:
+    path: /api/logout
+    methods: GET
+    controller: App\Controller\AuthController::logoutApi
+
+api_add_pizza_to_basket:
+    path: /api/add_pizza_to_basket
+    methods: POST
+    controller: App\Controller\UserController::addPizzaToBasket
+
+api_update_pizza_to_basket:
+    path: /api/update_pizza_to_basket
+    methods: POST
+    controller: App\Controller\UserController::updatePizzaToBasket
+
+api_delete_pizza_from_basket:
+    path: /api/delete_pizza_from_basket
+    methods: POST
+    controller: App\Controller\UserController::deletePizzaFromBasket  
+
+api_add_pizza:
+    path: /api/pizza/add
+    methods: POST
+    controller: App\Controller\PizzaController::addPizzaApi
+
+api_delete_pizza:
+    path: /api/pizza/delete
+    methods: POST
+    controller: App\Controller\PizzaController::deletePizzaApi
+
+api_add_order:
+    path: /api/order/add
+    methods: POST
+    controller: App\Controller\OrderController::addOrderApi    
+
+api_add_ingredient_to_pizza:
+    path: /api/add_ingredient_to_pizza
+    methods: POST
+    controller: App\Controller\PizzaController::addIngredientToPizzaApi
+
+api_update_user:
+    path: /api/user_update
+    methods: POST
+    controller: App\Controller\UserController::userUpdateApi
+
+
+
+
+show_add_pizza:
+    path: /add/pizza
+    controller: App\Controller\PizzaController::showAddPizzaPage
+    methods: GET
+
+show_catalog:
+    path: /catalog
+    controller: App\Controller\PizzaController::showCatalogPage
+    methods: GET
+
+show_pizza:
+    path: /pizza{pizzaId}
+    controller: App\Controller\PizzaController::showPizza
+    methods: GET
+
+show_basket:
+    path: /basket
+    controller: App\Controller\UserController::showBasket
+    methods: GET
+
+show_profile:
+    path: /profile
+    controller: App\Controller\UserController::showProfile
+    methods: GET
+
+show_change_profile:
+    path: /profile/change
+    controller: App\Controller\UserController::showProfileChange
+    methods: GET

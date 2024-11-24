@@ -1,0 +1,14 @@
+<li class="order" data-order-id="{{ order.getOrderId }}">
+    {% set summ = 0 %}
+    {% for orderedPizza in order.getOrderedPizzas %}
+        {% set summ = summ +  (orderedPizza.getPizzaCount * orderedPizza.getPizzaPrice) %}
+    {% endfor %}
+    <p class="order__summ">{{ summ }}₽</p>
+    <p class="order__address">{{ order.getDeliveryAddres }}</p>
+    <p class="order__date">{{ order.getDate }}</p>
+    {% if order.getIsComplete %}
+    <p class="order__complete">Completed</p>
+    {% else %}
+    <p class="order__complete">Unfulfilled</p>
+    {% endif %}
+</li>

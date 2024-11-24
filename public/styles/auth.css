@@ -1,0 +1,246 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: url('../images/auth_background.jpeg') rgba(66, 70, 73, 0.4);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-repeat:no-repeat;
+    padding: 0 20px;
+}
+.main 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 1120px;
+    min-height: calc(100vh - 40px);
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+
+.logo-block
+{
+    width: 380px;
+    padding: 0 10px;
+    padding-bottom: 50px;
+}
+
+.logo-block__description
+{
+    font: 400 17px/25px Oxygen, sans-serif;
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
+
+}
+
+.login-block
+{
+    max-width: 480px;
+    /*height: 560px;*/
+    width: 100%;
+    background: white;
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+.login-block__title
+{
+    font: 400 34px/40px Lora, sans-serif;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+
+
+.critical {
+    /* display: none; */
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background: rgba(255, 235, 234, 1);
+    border-left: 2px solid rgba(232, 105, 97, 1);
+    border-radius: 15px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    transition: all ease 300ms;
+}
+
+.critical__image {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    transition: all ease 300ms;
+}
+
+.critical__description {
+    font: 400 14px/20px Oxygen, sans-serif;
+    text-align: left;
+    transition: all ease 300ms;
+}
+
+
+
+.login-block__label-form
+{
+    position: relative;
+    display: block;
+    /* margin-bottom: 5px; */
+    font: 400 12px/16px Oxygen, sans-serif;
+    text-align: left;
+    max-width: 480px;
+    width: max-content;
+    color: rgba(122, 122, 122, 1);
+    left: 22px;
+    bottom: -8px;
+    z-index: 1;
+    background: white;
+    padding: 0px 5px;
+
+}
+
+.login-block__form-item-block 
+{
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.login-block__password-eye
+{
+    position: absolute;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+}
+
+.login-block__input-text
+{
+    max-width: 480px;
+    width: 100%;
+    background: rgba(247, 247, 247, 1);
+    border: none;
+    border: 1px solid rgba(46, 46, 46, 1);
+    border-radius: 15px;
+    font: 400 16px/24px Oxygen, sans-serif;
+    text-align: left;
+    color: rgba(46, 46, 46, 1);
+    padding: 8px 35px 8px 16px;
+    outline: none;
+    box-sizing: border-box;  
+}
+
+.login-block__input-text:placeholder-shown {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+
+.login-block__input-text:focus
+{
+    background: rgba(255, 255, 255, 1);
+    border-bottom: 2px solid rgba(46, 46, 46, 1);
+}
+
+.login-block__input-text-invalid 
+{
+    border: 1px solid rgba(232, 105, 97, 1);
+}
+
+.login-block__input-text-critical
+{
+    /* display: none; */
+    margin-top: 4px;
+    font: 400 12px/16px Oxygen, sans-serif;
+    text-align: left;
+    color: rgba(232, 105, 97, 1);
+    transition: all ease 300ms;
+    padding-left: 12px;
+}
+
+.login-block__auth
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 20px;
+}
+
+.login-block__login-button
+{
+    background: rgba(221, 120, 63, 1);
+    font: 400 16px/24px Oxygen, sans-serif;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    width: 105px;
+    height: 48px;
+    border: 2px solid transparent;
+    border-radius: 3px;
+    transition: all ease 0.28s;
+    /* margin-top: 10px; */
+}
+
+.login-block__auth-link
+{
+    font: 400 16px/24px Oxygen, sans-serif;
+    text-decoration: none;
+    color: rgba(46, 46, 46, 1);
+    transition: all ease 2s;
+}
+
+
+.login-block__auth-link:hover{
+    text-decoration: underline;
+}
+
+.login-block__login-button:hover {
+    opacity: 0.8;
+}
+
+.login-block__login-button:active {
+    transform: scale(0.87);
+    opacity: 1;
+}
+.login-block__login-button:disabled {
+    transform: scale(1);
+    opacity: 0.6;
+}
+
+
+@media screen and (min-width: 1200px)
+    {
+        .main 
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        max-width: 1120px;
+        min-height: calc(100vh - 40px);
+        padding: 20px 9% 20px 15%;
+        margin: 0 auto;
+    }
+
+    .login-block
+    {
+        max-width: 480px;
+        /* height: 560px; */
+        width: 100%;
+        background: white;
+        padding: 35px;
+        box-sizing: border-box;
+    }
+}
+
+.hidden
+{
+    margin: 0;
+    padding: 0;
+    height: 0;
+    color: transparent;
+    background-color: transparent;
+}

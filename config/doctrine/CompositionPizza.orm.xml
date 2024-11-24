@@ -1,0 +1,18 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Entity\CompositionPizza" table="composition_pizza">
+        <id name="pizzaId" type="integer" column="pizza_id"/>
+        <id name="ingredientId" type="integer" column="ingredient_id"/>
+        <field name="ingredientGramm" type="integer" column="ingredient_gramm"/>
+
+        <many-to-one field="pizza" target-entity="Pizza" inversed-by="composition">
+            <join-column name="pizza_id" referenced-column-name="pizza_id"/>
+        </many-to-one>
+        <many-to-one field="ingredient" target-entity="Ingredient" inversed-by="composition">
+            <join-column name="ingredient_id" referenced-column-name="ingredient_id"/>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
