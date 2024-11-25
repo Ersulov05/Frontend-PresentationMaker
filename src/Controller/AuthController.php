@@ -58,7 +58,17 @@ class AuthController extends AbstractController
 
     public function index(): Response {
         //return $this->render('/auth/login.html.twig'); 
-        return $this->redirectToRoute('auth_login', [], Response::HTTP_SEE_OTHER);
+
+        // return $this->redirectToRoute('auth_login', [], Response::HTTP_SEE_OTHER);
+
+        return $this->render('base_react.html.twig');
+        // return $this->render('react/index.html.twig', [
+        //     'title' => 'Page ' . $id,
+        //     'symfony_data' => [
+        //         'pageId' => $id,
+        //         'userRole' => $this->getUser() ? $this->getUser()->getRoles() : [],
+        //     ],
+        // ]);
     }
 
     public function loginApi(): Response{
