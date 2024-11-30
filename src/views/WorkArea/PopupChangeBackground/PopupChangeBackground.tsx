@@ -6,11 +6,11 @@ import styles from './PopupChangeBackground.module.css'
 import { BackgroundType } from '../../../store/PresentationType'
 import { BackgroundDataType } from '../../../store/slides/changeBackgroundSlide'
 import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
-import { useAppActions } from '../../../store/reducers/reducers'
+import { useAppActions } from '../../hooks/useAppActions'
+import useAppSelector from '../../hooks/useAppSelector'
 
 type PopupChangeBackgroundProps = {
     onClose: () => void,
-    colors: string[],
     background: BackgroundType,
     onGetBackground?: (backgraund: BackgroundType | null) => void
 }
@@ -18,11 +18,12 @@ type PopupChangeBackgroundProps = {
 function PopupChangeBackground({
     onClose,
     onGetBackground,
-    colors,
     background,
 }: PopupChangeBackgroundProps)
 {
     const { changeBackground } = useAppActions()
+    const colors = useAppSelector(editor => editor.colors)
+    
     const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
     const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
     function onApplyToAllHandler() {

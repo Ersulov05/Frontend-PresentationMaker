@@ -5,10 +5,10 @@ import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../../store/constants.ts'
 import TextObject from './TextObject/TextObject.tsx';
 import ImageObject from './ImageObject/ImageObject.tsx';
 import { Selection } from './Selection/Selection.tsx';
+import useAppSelector from '../../hooks/useAppSelector.ts';
 
 type SlideProps = {
     slide: SlideType;
-    isSelected?: boolean;
     style?: CSSProperties;
     onClick?: () => void;
     scale: number;
@@ -51,8 +51,7 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
 }
 
 function Slide({ 
-    slide, 
-    isSelected = false, 
+    slide,
     style = {}, 
     scale,
     onClick,
@@ -60,8 +59,9 @@ function Slide({
 }: SlideProps)
 {
     const parentRef = useRef<HTMLDivElement | null>(null); 
-
-    const backgroundStyle = tempBackground 
+    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
+    // const isSelected = selectedSlideIds.includes(slide.uid)
+    const backgroundStyle = tempBackground
         ? tempBackground.type === "solid"
             ? { backgroundColor: tempBackground.color }
             : { backgroundImage: `url(${tempBackground.src})`, 
@@ -79,12 +79,12 @@ function Slide({
         height: `${ scale * HEIGHT_SLIDE }px`,
         ...style
     }
-    const selectedObjects = slide.objects.filter(object => slide.selectedObjectIds.includes(object.uid))
+    const selectedObjects = slide.objects.filter(object => selectedObjectIds.includes(object.uid))
     const globalSelectedTransform = getGlobalSelectionObject(selectedObjects)
-    const noSelectedObjects = slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid))
+    const noSelectedObjects = slide.objects.filter(object => !selectedObjectIds.includes(object.uid))
     return (
         <div ref={parentRef} 
-            className={`${styles.slide} ${isSelected ? styles.slideSelected : ''}`}
+            className={`${styles.slide}`}
             onClick={onClick}
             style={slideStyles}
         >
@@ -95,14 +95,12 @@ function Slide({
                         key={object.uid} 
                         object={object} 
                         scale={scale} 
-                        isSelected={slide.selectedObjectIds.includes(object.uid)}
                     />
                     : <ImageObject 
                         key={object.uid} 
                         object={object} 
                         scale={scale}
-                        isSelected={slide.selectedObjectIds.includes(object.uid)}
-                        />
+                    />
             ))}
             {selectedObjects.length > 0 && (
                 <Selection 

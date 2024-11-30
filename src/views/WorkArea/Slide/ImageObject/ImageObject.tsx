@@ -1,22 +1,25 @@
 import { ObjectImageType as ObjectType } from '../../../../store/PresentationType.ts';
 import styles from './ImageObject.module.css';
 import { joinStyles } from '../../../../store/utils/joinStyles.ts';
-import { useAppActions } from '../../../../store/reducers/reducers.ts';
+
+import useAppSelector from '../../../hooks/useAppSelector.ts';
+import { useAppActions } from '../../../hooks/useAppActions.ts';
 
 interface ObjectProps {
     object: ObjectType; 
     scale: number;
-    isSelected?: boolean;
+    selected?: boolean;
 }
 
 function ImageObject({ 
     object, 
     scale,
-    isSelected = false,
+    selected = false,
 }: ObjectProps)
 {
     const { selectObject } = useAppActions()
-
+    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
+    const isSelected = selectedObjectIds.includes(object.uid) && selected
     return (
         <img
             className={joinStyles(styles.image, isSelected ? styles.select : '')} 

@@ -1,17 +1,17 @@
 import { generateUID } from "../utils/generateUID";
 import { ObjectTextType, Position, Size } from "../PresentationType";
-import { SlidesStateType } from "../reducers/slidesReducers";
+import { EditorType } from "../redux/EditorType";
 
 export type TextDataType = {
     position: Position,
     size: Size,
 }
 
-function addTextToSlide(state: SlidesStateType, data: TextDataType): SlidesStateType
-{
-    const { slides, selectedSlideIds } = state
+function addTextToSlide(editor: EditorType, data: TextDataType): EditorType {
+    const { slides } = editor.presentation
+    const { selectedSlideIds } = editor.selection
     if (selectedSlideIds.length == 0) {
-        return state
+        return editor
     }
     
     const newText: ObjectTextType = {
@@ -32,17 +32,23 @@ function addTextToSlide(state: SlidesStateType, data: TextDataType): SlidesState
     }
 
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === selectedSlideIds[0]) {
-                return {
-                    ...slide,
-                    objects: [...slide.objects, newText],
-                    selectedObjectIds: [newText.uid]
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: slides.map(slide => {
+                if (slide.uid === selectedSlideIds[0]) {
+                    return {
+                        ...slide,
+                        objects: [...slide.objects, newText],
+                    }
                 }
-            }
-            return slide
-        })
+                return slide
+            })
+        },
+        selection: {
+            ...editor.selection,
+            selectedObjectIds: [newText.uid]
+        }
     }
 }
 

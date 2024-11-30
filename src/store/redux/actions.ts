@@ -20,7 +20,8 @@ export enum ActionType {
     ADD_IMAGE_OBJECT = "ADD_IMAGE_OBJECT",
     CHANGE_BACKGROUND = "CHANGE_BACKGROUND",
     ADD_OBJECT_TO_SELECTION = "ADD_OBJECT_TO_SELECTION",
-    ADD_SLIDE_TO_SELECTION = "ADD_SLIDE_TO_SELECTION"
+    ADD_SLIDE_TO_SELECTION = "ADD_SLIDE_TO_SELECTION",
+    SET_EDITOR = "SET_EDITOR",
 }
 
 export interface AddSlideAction {
@@ -126,3 +127,4 @@ export type ActionCreatorsType =
     SlidesAction 
     | NamePresentationAction 
     | ColorsAction
+export type EditorAction = ActionCreatorsType

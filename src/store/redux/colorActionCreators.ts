@@ -1,7 +1,7 @@
 import { 
     ActionType, 
     AddColorAction, 
-} from "./actionTypes"
+} from "./actions"
 
 const addColor = (color: string): AddColorAction => {
     return {
@@ -10,6 +10,6 @@ const addColor = (color: string): AddColorAction => {
     }
 }
 
-export const colorsActions = {
+export {
     addColor
 }

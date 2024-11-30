@@ -1,9 +1,7 @@
-
-
 import { 
     ActionType, 
     RenamePresentationAction
-} from "./actionTypes"
+} from "./actions"
 
 const renamePresentation = (name: string): RenamePresentationAction => {
     return {
@@ -12,6 +10,6 @@ const renamePresentation = (name: string): RenamePresentationAction => {
     }
 }
 
-export const renamePresentationActions = {
+export {
     renamePresentation
 }

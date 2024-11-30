@@ -3,7 +3,7 @@ import {
     AddScaleAction, 
     ChangeScaleAction, 
     SubScaleAction
-} from "./actionTypes"
+} from "./actions"
 
 const addScale = (): AddScaleAction => {
     return {
@@ -24,7 +24,7 @@ const changeScale = (scale: number): ChangeScaleAction => {
     }
 }
 
-export const scaleActions = {
+export {
     addScale,
     subScale,
     changeScale,

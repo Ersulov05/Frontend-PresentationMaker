@@ -1,10 +1,11 @@
 import { generateUID } from "../utils/generateUID"
 import { SlideType } from "../PresentationType"
-import { SlidesStateType } from "../reducers/slidesReducers"
+import { EditorType } from "../redux/EditorType"
 
 
-function addSlide(state: SlidesStateType): SlidesStateType {
-    const { slides, selectedSlideIds } = state
+function addSlide(editor: EditorType): EditorType {
+    const { slides } = editor.presentation
+    const { selectedSlideIds } = editor.selection
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
     const lastSelectedIndex = selectedSlides.length > 0
         ? slides.findIndex(slide => slide.uid === selectedSlides[selectedSlides.length - 1].uid)
@@ -22,9 +23,15 @@ function addSlide(state: SlidesStateType): SlidesStateType {
         ? [...slides.slice(0, lastSelectedIndex + 1), newSlide, ...slides.slice(lastSelectedIndex + 1)]
         : [...slides, newSlide]
     return {
-        ...state,
-        slides: newSlides,
-        selectedSlideIds: [newSlide.uid]  
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides,
+        },
+        selection: {
+            ...editor.selection,
+            selectedSlideIds: [newSlide.uid]
+        }
     }
 }
 

@@ -1,21 +1,24 @@
 import { joinStyles } from '../../../../store/utils/joinStyles.ts';
 import { ObjectTextType as ObjectType } from '../../../../store/PresentationType.ts';
 import styles from './TextObject.module.css';
-import { useAppActions } from '../../../../store/reducers/reducers.ts';
+import { useAppActions } from '../../../hooks/useAppActions.ts';
+import useAppSelector from '../../../hooks/useAppSelector.ts';
 
 interface ObjectProps {
     object: ObjectType;
     scale: number;
-    isSelected?: boolean;
+    selected?: boolean;
 }
 
 function TextObject({ 
     object, 
     scale,
-    isSelected = false,
+    selected = true,
 }: ObjectProps)
 {
     const { selectObject } = useAppActions()
+    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
+    const isSelected = selectedObjectIds.includes(object.uid) && selected
 
     return (
         <div className={joinStyles(styles.textArea, isSelected ? styles.select : '')} 

@@ -57,12 +57,10 @@ export type SlideType = {
     uid: string
     background: BackgroundType
     objects: ObjectType[]
-    selectedObjectIds: string[]
 }
 
-export type Presentation = {
+export type PresentationType = {
     name: string
     slides: SlideType[]
-    selectedSlideIds: string[]
     scale: number
 }

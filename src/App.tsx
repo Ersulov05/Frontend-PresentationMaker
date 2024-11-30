@@ -5,31 +5,28 @@ import { TextField } from './components/textField/TextField.tsx';
 import { NumberField } from './components/numberField/NumberField.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
 import { useState } from 'react';
-import { saveEditorToFile } from './services/saveFile.ts';
-import { loadEditorFromFile } from './services/loadFile.ts';
-import { useAppActions, useAppSelector } from './store/reducers/reducers.ts';
+// import { saveEditorToFile } from './services/saveFile.ts';
+// import { loadEditorFromFile } from './services/loadFile.ts';
 import { TextDataType } from './store/objects/addTextToSlide.ts';
 import { ImageDataType } from './store/objects/addImageToSlide.ts';
+import useAppSelector from './views/hooks/useAppSelector.ts';
+import { useAppActions } from './views/hooks/useAppActions.ts';
 
 function App() {
     const { 
-        addSlide, 
+        addSlide,
         deleteSlides, 
-        renamePresentation,
-        addScale,
-        subScale,
-        changeScale,
         deleteObjects,
         addImageObject,
         addTextObject,
+        renamePresentation,
     } = useAppActions()
 
-    const slidesState = useAppSelector(state => state.slides)
-    const scale = useAppSelector(state => state.scale)
-    const colors = useAppSelector(state => state.colors)
-    const name = useAppSelector(state => state.name)
-    const slides = slidesState.slides
-    const selectedSlideIds = slidesState.selectedSlideIds
+    const presentation = useAppSelector(editor => editor.presentation)
+    const slides = useAppSelector(editor => editor.presentation.slides)
+    const name = presentation.name
+    const selectedSlideIds = useAppSelector(editor => editor.selection.selectedSlideIds)
+    const scale = presentation.scale
 
     const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
 
@@ -73,27 +70,27 @@ function App() {
                     onChange={(value) => renamePresentation(value)}
                 />
 
-                <input  
+                {/* <input  
                     type="file"
                     accept=".json"
                     onChange={loadEditorFromFile}
                     style={{ marginBottom: '20px' }}
-                />
-                <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
+                /> */}
+                {/* <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
                     Save
-                </button>
+                </button> */}
                 <button onClick={addSlide} style={{ marginBottom: '20px' }}>
                     Add Slide
                 </button>
                 <button onClick={deleteSlides} style={{ marginBottom: '20px' }}>
                     Remove Slide
                 </button>
-                <button onClick={addScale} style={{ marginBottom: '20px' }}>
+                {/* <button onClick={addScale} style={{ marginBottom: '20px' }}>
                     Add Scale
                 </button>
                 <button onClick={subScale} style={{ marginBottom: '20px' }}>
                     Sub Scale
-                </button>
+                </button> */}
                 <button onClick={onAddTextToSlide} style={{ marginBottom: '20px' }}>
                     add Text
                 </button>
@@ -113,7 +110,7 @@ function App() {
                 
                 <NumberField 
                     value={scale.toString()} 
-                    onChange={(value) => changeScale(value)} 
+                    // onChange={(value) => changeScale(value)} 
                     isFloat={true}
                     limit={{
                         minValue: 0.5,
@@ -124,21 +121,17 @@ function App() {
             <main
                 className={styles.main}
             >
-                <ListSlides 
-                    slides={ slides }
-                    selectedSlideIds={ selectedSlideIds }
+                <ListSlides
                     tempBackground={ tempBackground }
                 />
                 <WorkArea 
                     slide={selectedSlide} 
                     scale={scale}
-                    colors={colors}
                     onGetTempBackground={setTempBackground}
                     tempBackground={tempBackground}
                 />
             </main>
             <footer className={styles.footer}>
-
             </footer>
         </>
     )

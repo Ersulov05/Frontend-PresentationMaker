@@ -5,7 +5,8 @@ import { useDragAndDrop } from "../../../hooks/useDragAndDrop"
 import { ObjectType, TransformType } from "../../../../store/PresentationType"
 import ImageObject from "../ImageObject/ImageObject"
 import TextObject from "../TextObject/TextObject"
-import { useAppActions } from "../../../../store/reducers/reducers"
+import { useAppActions } from "../../../hooks/useAppActions"
+
 
 type SelectionProps = {
     transform: TransformType
@@ -153,7 +154,7 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale} 
-                                isSelected={false}
+                                selected={false}
                             />
                         );
                     case 'image':
@@ -162,7 +163,7 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale}
-                                isSelected={false}
+                                selected={false}
                             />
                         );
                     default:

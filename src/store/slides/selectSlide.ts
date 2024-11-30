@@ -1,37 +1,35 @@
-import { SlidesStateType } from "../reducers/slidesReducers"
+import { EditorType } from "../redux/EditorType"
 
-function selectSlide(state: SlidesStateType, slideUid: string): SlidesStateType {
-    const { slides } = state
-
+function selectSlide(editor: EditorType, slideUid: string): EditorType {
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === slideUid) {
-                return {
-                    ...slide,
-                    selectedObjectIds: [],
-                }
-            }
-            return slide
-        }),
-        selectedSlideIds: [slideUid]
+        ...editor,
+        selection: {
+            selectedSlideIds: [slideUid],
+            selectedObjectIds: []
+        }
     }
 }
 
-function addSlideToSelection(state: SlidesStateType, slideUid: string): SlidesStateType {
-    const { selectedSlideIds } = state
+function addSlideToSelection(editor: EditorType, slideUid: string): EditorType {
+    const { selectedSlideIds } = editor.selection
     if (selectedSlideIds.includes(slideUid)) {
         if (selectedSlideIds.length == 1) {
-            return state
+            return editor
         }
         return {
-            ...state,
-            selectedSlideIds: selectedSlideIds.filter(uid => uid != slideUid)
+            ...editor,
+            selection: {
+                selectedSlideIds: selectedSlideIds.filter(uid => uid != slideUid),
+                selectedObjectIds: []
+            }
         }
     }
     return {
-        ...state,
-        selectedSlideIds: [slideUid, ...selectedSlideIds]
+        ...editor,
+        selection: {
+            selectedSlideIds: [slideUid, ...selectedSlideIds],
+            selectedObjectIds: []
+        }
     }
 }
 

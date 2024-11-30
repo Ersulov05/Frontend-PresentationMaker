@@ -1,20 +1,24 @@
-import { SlidesStateType } from "../reducers/slidesReducers";
+import { EditorType } from "../redux/EditorType";
 
-function translateSlides(state: SlidesStateType, insertIndex: number): SlidesStateType {
-    const { slides, selectedSlideIds} = state
+function translateSlides(editor: EditorType, insertIndex: number): EditorType {
+    const { slides } = editor.presentation
+    const { selectedSlideIds } = editor.selection
     if (selectedSlideIds.length === 0) {
-        return state
+        return editor
     }
     const changedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
     if (insertIndex >= -1 && insertIndex < changedSlides.length) {
         const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
         changedSlides.splice(insertIndex + 1, 0, ...selectedSlides)
     } else {
-        return state
+        return editor
     }
     return {
-        ...state,
-        slides: changedSlides
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: changedSlides
+        }
     } 
 }
 

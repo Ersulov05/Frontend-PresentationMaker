@@ -1,22 +1,29 @@
-import { SlidesStateType } from "../reducers/slidesReducers";
+import { EditorType } from "../redux/EditorType";
 
-function deleteObjects(state: SlidesStateType): SlidesStateType {
-    const { slides, selectedSlideIds } = state
+function deleteObjects(editor: EditorType): EditorType {
+    const { slides } = editor.presentation
+    const { selectedSlideIds } = editor.selection
     if (selectedSlideIds.length == 0) {
-        return state
+        return editor
     }
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === selectedSlideIds[0]) {
-                return {
-                    ...slide,
-                    objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
-                    selectedObjectIds: []
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: slides.map(slide => {
+                if (slide.uid === selectedSlideIds[0]) {
+                    return {
+                        ...slide,
+                        objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
+                    }
                 }
-            }
-            return slide
-        })
+                return slide
+            })
+        },
+        selection: {
+            ...editor.selection,
+            selectedObjectIds: []
+        }
     }
 }
 

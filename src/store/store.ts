@@ -1,8 +1,8 @@
-import { createStore } from 'redux' 
-import { rootReducer } from './reducers/reducers'
+// import { createStore } from 'redux' 
+// import { rootReducer } from './reducers/reducers'
 
-const store = createStore(rootReducer)
+// const store = createStore(rootReducer)
 
-export {
-    store
-}
+// export {
+//     store
+// }

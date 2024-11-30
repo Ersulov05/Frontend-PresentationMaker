@@ -36,7 +36,6 @@ function calculateOverflow(objects: ObjectType[]): OverflowType
 type SlideProps = {
     slide?: SlideType,
     scale: number,
-    colors: string[],
     onGetTempBackground: (backgraund: BackgroundType | null) => void,
     tempBackground: BackgroundType | null,
 }
@@ -44,7 +43,6 @@ type SlideProps = {
 function WorkArea({ 
     slide, 
     scale, 
-    colors,
     onGetTempBackground,
     tempBackground,
 }: SlideProps)
@@ -129,7 +127,6 @@ function WorkArea({
             {openPopupChangeBackground && (
                 <PopupChangeBackground 
                     onClose={() => setOpenPopupChangeBackground(false)}
-                    colors={colors}
                     background={slide.background}
                     onGetBackground={onGetTempBackground}
                 />

@@ -1,46 +1,35 @@
-import { SlidesStateType } from "../reducers/slidesReducers";
+import { EditorType } from "../redux/EditorType";
 
-function selectObject(state: SlidesStateType, objectUid: string): SlidesStateType {
-    const { slides, selectedSlideIds } = state
-    if (selectedSlideIds.length === 0) return state
+function selectObject(editor: EditorType, objectUid: string): EditorType {
+    const { selectedSlideIds } = editor.selection
+    if (selectedSlideIds.length === 0) return editor
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === selectedSlideIds[0]) {
-                return {
-                    ...slide,
-                    selectedObjectIds: [objectUid],
-                }
-            }
-            return slide
-        }),
-        selectedSlideIds: [selectedSlideIds[0]],
+        ...editor,
+        selection: {
+            ...editor.selection,
+            selectedObjectIds: [objectUid],
+            selectedSlideIds: [selectedSlideIds[0]],
+        }
     }
 }
 
-function addObjectToSelection(state: SlidesStateType, objectUid: string): SlidesStateType {
-    const { slides, selectedSlideIds } = state
+function addObjectToSelection(editor: EditorType, objectUid: string): EditorType {
+    const { selectedSlideIds, selectedObjectIds } = editor.selection
     if (selectedSlideIds.length === 0) {
-        return state
+        return editor
     }
+
+    const newSelectedObjectIds = (selectedObjectIds.includes(objectUid))
+        ? selectedObjectIds.filter(uid => uid != objectUid)
+        : [objectUid, ...selectedObjectIds]
+
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === selectedSlideIds[0])
-            {
-                if (slide.selectedObjectIds.includes(objectUid)) {
-                    return {
-                        ...slide,
-                        selectedObjectIds: slide.selectedObjectIds.filter(uid => uid != objectUid)
-                    }
-                }
-                return {
-                    ...slide,
-                    selectedObjectIds: [objectUid, ...slide.selectedObjectIds]
-                }
-            }
-            return slide
-        })
+        ...editor,
+        selection: {
+            ...editor.selection,
+            selectedObjectIds: newSelectedObjectIds,
+            selectedSlideIds: [selectedSlideIds[0]]
+        }
     }
 }
 

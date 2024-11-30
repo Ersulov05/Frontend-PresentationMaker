@@ -1,30 +1,29 @@
 import { CSSProperties, useEffect, useRef, useState } from 'react';
-import { BackgroundType, SlideType } from '../../store/PresentationType.ts'
+import { BackgroundType } from '../../store/PresentationType.ts'
 import styles from './ListSlides.module.css';
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 import { useDragAndDrop } from '../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
-import { useAppActions } from '../../store/reducers/reducers.ts';
+import { useAppActions } from '../hooks/useAppActions.ts';
+import useAppSelector from '../hooks/useAppSelector.ts';
 
 type SlidesProps = {
-    slides: SlideType[],
-    selectedSlideIds: string[],
     tempBackground: BackgroundType | null,
 }
 
 function ListSlides({ 
-    slides, 
-    selectedSlideIds,
     tempBackground,
-}: SlidesProps)
-{
+}: SlidesProps) {
+    const { selectSlide, translateSlides } = useAppActions()
+    const slides = useAppSelector(editor => editor.presentation.slides)
+    const selectedSlideIds = useAppSelector(editor => editor.selection.selectedSlideIds)
+
     const dragSlide = useDragAndDrop()
     const listSlidesRef = useRef<HTMLDivElement | null>(null);
     const slidesDragRef = useRef<HTMLDivElement | null>(null);
     const [listSlidesCoords, setListSlidesCoords] = useState({x: 0, y: 0}) 
     const [insertIndex, setInsertIndex] = useState<number | null>(null);
-    const { selectSlide, translateSlides } = useAppActions()
 
     const selectedSlides = slides.filter(slide => selectedSlideIds.includes(slide.uid))
     const orderedSelectedSlides = selectedSlides.sort((a, b) => {

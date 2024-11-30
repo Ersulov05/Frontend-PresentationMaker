@@ -1,37 +1,5 @@
-import { EditorType } from "../editor";
 import { ObjectType, TransformType } from "../PresentationType";
-import { SlidesStateType } from "../reducers/slidesReducers";
-
-function transformObject(editor: EditorType, transform: TransformType): EditorType {
-    const { slides, selectedSlideIds} = editor.presentation
-    if (selectedSlideIds.length === 0) {
-        return editor
-    }
-    return {
-        ...editor,
-        presentation: {
-            ...editor.presentation,
-            slides: slides.map(slide => {
-                if (slide.uid === selectedSlideIds[0] && slide.selectedObjectIds.length > 0) {
-                    return {
-                        ...slide,
-                        objects: slide.objects.map(object => {
-                            if (object.uid === slide.selectedObjectIds[0]) {
-                                return {
-                                    ...object,
-                                    pos: transform.position,
-                                    size: transform.size
-                                }
-                            }
-                            return object
-                        })
-                    }
-                }
-                return slide
-            })
-        }
-    }
-}
+import { EditorType } from "../redux/EditorType";
 
 function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType {
     if (selectedObjects.length === 0) {
@@ -68,50 +36,53 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
     }
 }
 
-function transformObjects(state: SlidesStateType, transform: TransformType): SlidesStateType {
-    const { slides, selectedSlideIds} = state
-    if (selectedSlideIds.length === 0) {
-        return state
+function transformObjects(editor: EditorType, transform: TransformType): EditorType {
+    const { slides } = editor.presentation
+    const { selectedSlideIds, selectedObjectIds } = editor.selection
+    if (selectedSlideIds.length === 0 || selectedObjectIds.length == 0) {
+        return editor
     }
     const selectedSlideIndex = slides.findIndex(slide => slide.uid === selectedSlideIds[0])
-    const { objects, selectedObjectIds } = slides[selectedSlideIndex]
-    if (selectedObjectIds.length == 0) {
-        return state
-    }
+    const { objects } = slides[selectedSlideIndex]
+
     const selectedObjects = objects.filter(object => selectedObjectIds.includes(object.uid))
     const globalSelectedTransform = getGlobalSelectionObject(selectedObjects)
     const widthScale = transform.size.width / globalSelectedTransform.size.width
     const heightScale = transform.size.height / globalSelectedTransform.size.height
     return {
-        ...state,
-        slides: slides.map(slide => {
-            if (slide.uid === selectedSlideIds[0] && slide.selectedObjectIds.length > 0) {
-                return {
-                    ...slide,
-                    objects: slide.objects.map(object => {
-                        if (selectedObjectIds.includes(object.uid)) {
-                            return {
-                                ...object,
-                                pos: {
-                                    x: (object.pos.x - globalSelectedTransform.position.x) * widthScale + transform.position.x,
-                                    y: (object.pos.y - globalSelectedTransform.position.y) * heightScale + transform.position.y
-                                },
-                                size: {
-                                    width: object.size.width * widthScale,
-                                    height: object.size.height * heightScale
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: slides.map(slide => {
+                if (slide.uid === selectedSlideIds[0] && selectedObjectIds.length > 0) {
+                    return {
+                        ...slide,
+                        objects: slide.objects.map(object => {
+                            if (selectedObjectIds.includes(object.uid)) {
+                                return {
+                                    ...object,
+                                    pos: {
+                                        x: (object.pos.x - globalSelectedTransform.position.x) * widthScale + transform.position.x,
+                                        y: (object.pos.y - globalSelectedTransform.position.y) * heightScale + transform.position.y
+                                    },
+                                    size: {
+                                        width: object.size.width * widthScale,
+                                        height: object.size.height * heightScale
+                                    }
                                 }
-                            }
-                        } 
-                        return object
-                    })
+                            } 
+                            return object
+                        })
+                    }
                 }
-            }
-            return slide
-        })
+                return slide
+            })
+        }
+        
     }
 }
 
 export {
-    transformObject,
+    // transformObject,
     transformObjects
 }
