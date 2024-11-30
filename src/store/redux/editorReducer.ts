@@ -46,6 +46,8 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
                     name: action.payload
                 }
             }
+        case ActionType.SET_EDITOR:
+            return action.payload
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)
         // case ActionType.ADD_SCALE:

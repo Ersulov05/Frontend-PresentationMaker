@@ -2,6 +2,7 @@ import { ImageDataType } from "../objects/addImageToSlide"
 import { TextDataType } from "../objects/addTextToSlide"
 import { TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
+import { EditorType } from "./EditorType"
 
 export enum ActionType {
     ADD_SLIDE = "ADD_SLIDE",
@@ -104,6 +105,11 @@ export interface ChangeBackgroundAction {
     payload: BackgroundDataType
 }
 
+export interface SetEditorAction {
+    type: ActionType.SET_EDITOR,
+    payload: EditorType
+}
+
 export type SlidesAction = 
     AddSlideAction 
     | AddTextObjectAction
@@ -127,4 +133,5 @@ export type ActionCreatorsType =
     SlidesAction 
     | NamePresentationAction 
     | ColorsAction
+    | SetEditorAction
 export type EditorAction = ActionCreatorsType

@@ -5,13 +5,13 @@ import App from './App';
 // import { getEditor, addEditorChangeHandler } from './store/editor'
 import './index.css'
 import { store } from './store/redux/store';
-
+import { initHistory } from './store/utils/history.ts';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!); // Обязательно проверьте, что элемент существует
 
 root.render(
     <Provider store={store}>
-        <App/>
+        <App history={initHistory(store)}/>
     </Provider>
 );
 
