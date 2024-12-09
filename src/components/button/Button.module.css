@@ -4,18 +4,20 @@
     cursor: pointer;
 }
 
-.buttonDafault {
+.buttonDefault {
     width: fit-content;
     height: fit-content;
     padding: 5px;
     margin: 1px;
+    margin-inline: 5px;
     background-color: blueviolet;
+    border-radius: 5px;
 }
 
-.buttonDafault:hover {
+.buttonDefault:hover {
     opacity: 0.9;
 }
 
-.buttonDafault:active {
+.buttonDefault:active {
     opacity: 0.8;
 }

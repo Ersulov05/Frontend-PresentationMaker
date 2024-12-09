@@ -14,7 +14,7 @@ type SlideProps = {
     background?: BackgroundType | null
 }
 
-function PreviewSlide({ 
+function PreviewSlide({
     slide, 
     isSelected = false, 
     scale = 1,
@@ -73,6 +73,7 @@ function PreviewSlide({
             ref={parentRef}
             className={`${styles.slide} ${isSelected ? styles.slideSelected : ''}`}
             data-at="slide"
+            data-uid={slide.uid}
             style={slideStyles}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}

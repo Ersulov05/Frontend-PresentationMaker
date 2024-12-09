@@ -31,6 +31,26 @@ function ListSlides({
     });
     const noSelectedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
     const scale = 0.18
+    
+    const scrollToSelectedSlide = () => {
+        const selectedSlideUid = selectedSlideIds[0];
+        if (selectedSlideUid) {
+            const selectedElement = document.querySelector(`div[data-uid="${selectedSlideUid}"]`);
+            if (selectedElement) {
+                selectedElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'nearest',
+                });
+            }
+        }
+    };
+
+    useEffect(() => {
+        scrollToSelectedSlide();
+    }, [selectedSlideIds]);
+
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -106,6 +126,7 @@ function ListSlides({
                     return (
                         <>
                             <PreviewSlide
+                                data-uid={slide.uid}
                                 scale={scale}
                                 key={slide.uid} 
                                 slide={slide} 

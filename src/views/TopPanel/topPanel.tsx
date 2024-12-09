@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NumberField } from '../../components/numberField/NumberField'
 import { TextField } from '../../components/textField/TextField'
 import { ImageDataType } from '../../store/objects/addImageToSlide'
@@ -7,6 +7,7 @@ import { useAppActions } from '../hooks/useAppActions'
 import useAppSelector from '../hooks/useAppSelector'
 import styles from './topPanel.module.css'
 import { HistoryContext } from '../hooks/historyContext'
+import { Button } from '../../components/button/Button'
 
 function TopPanel() {
     const scale = useAppSelector(editor => editor.presentation.scale)
@@ -22,6 +23,22 @@ function TopPanel() {
         setEditor,
     } = useAppActions()
     
+    const handleKeyDown = (event: KeyboardEvent) => {
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        if ((isMac ? event.metaKey : event.ctrlKey) && event.key === 'z') {
+            onUndo()
+        } else if ((isMac ? event.metaKey : event.ctrlKey) && event.key === 'y') {
+            onRedo()
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [])
+
     function onAddTextToSlide() {
         const data: TextDataType = {
             position: {
@@ -50,7 +67,6 @@ function TopPanel() {
         }
         addImageObject(data)
     }
-
 
     const history = React.useContext(HistoryContext)
 
@@ -85,10 +101,10 @@ function TopPanel() {
             {/* <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
                 Save
             </button> */}
-
-            <button onClick={onUndo} style={{ marginBottom: '20px' }}>
+            <Button onClick={onUndo} value={"Undo"}></Button>
+            {/* <button onClick={onUndo} style={{ marginBottom: '20px' }}>
                 Undo
-            </button>
+            </button> */}
             <button onClick={onRedo} style={{ marginBottom: '20px' }}>
                 Redo
             </button>
