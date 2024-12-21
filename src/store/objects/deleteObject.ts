@@ -2,8 +2,8 @@ import { EditorType } from "../redux/EditorType";
 
 function deleteObjects(editor: EditorType): EditorType {
     const { slides } = editor.presentation
-    const { selectedSlideIds } = editor.selection
-    if (selectedSlideIds.length == 0) {
+    const { selectedSlideIds, selectedObjectIds } = editor.selection
+    if (selectedSlideIds.length == 0 || selectedObjectIds.length == 0) {
         return editor
     }
     return {
@@ -14,7 +14,7 @@ function deleteObjects(editor: EditorType): EditorType {
                 if (slide.uid === selectedSlideIds[0]) {
                     return {
                         ...slide,
-                        objects: slide.objects.filter(object => !slide.selectedObjectIds.includes(object.uid)),
+                        objects: slide.objects.filter(object => !selectedObjectIds.includes(object.uid)),
                     }
                 }
                 return slide

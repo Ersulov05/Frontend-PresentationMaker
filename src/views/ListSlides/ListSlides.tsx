@@ -30,7 +30,7 @@ function ListSlides({
         return selectedSlideIds.indexOf(b.uid) - selectedSlideIds.indexOf(a.uid);
     });
     const noSelectedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
-    const scale = 0.18
+    const scale = 0.155
     
     const scrollToSelectedSlide = () => {
         const selectedSlideUid = selectedSlideIds[0];

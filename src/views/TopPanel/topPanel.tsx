@@ -22,22 +22,6 @@ function TopPanel() {
         renamePresentation,
         setEditor,
     } = useAppActions()
-    
-    const handleKeyDown = (event: KeyboardEvent) => {
-        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-        if ((isMac ? event.metaKey : event.ctrlKey) && event.key === 'z') {
-            onUndo()
-        } else if ((isMac ? event.metaKey : event.ctrlKey) && event.key === 'y') {
-            onRedo()
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [])
 
     function onAddTextToSlide() {
         const data: TextDataType = {
@@ -101,7 +85,7 @@ function TopPanel() {
             {/* <button onClick={() => saveEditorToFile("data")} style={{ marginBottom: '20px' }}>
                 Save
             </button> */}
-            <Button onClick={onUndo} value={"Undo"}></Button>
+            <Button onClick={onUndo}>Undo</Button>
             {/* <button onClick={onUndo} style={{ marginBottom: '20px' }}>
                 Undo
             </button> */}

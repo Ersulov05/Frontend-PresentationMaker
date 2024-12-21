@@ -1,4 +1,5 @@
 .header
 {
     height: var(--top-panel-height);
+    overflow: hidden;
 }

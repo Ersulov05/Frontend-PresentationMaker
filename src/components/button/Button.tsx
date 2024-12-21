@@ -5,20 +5,25 @@ import styles from './Button.module.css'
 
 export type ButtopProps = {
     onClick?: () => void
-    value?: string
     className?: string
     style?: CSSProperties
     valueLocationHorizontal?: "center" | "left" | "right"
     valueLocationVertical?: "center" | "top" | "bottom"
+    children?: React.ReactNode
+    border?: number
+    width?: number
+
 }
 
 function Button({ 
     className = undefined, 
-    style = {}, 
-    value = "", 
+    style = {},
     onClick, 
     valueLocationHorizontal = 'center', 
     valueLocationVertical = 'center',
+    children,
+    border,
+    width,
  }: ButtopProps) {
     const buttonStyles: CSSProperties = {
         justifyContent: valueLocationHorizontal === 'left' ? 'flex-start' 
@@ -27,6 +32,8 @@ function Button({
         alignItems: valueLocationVertical === 'top' ? 'flex-start' 
                         : valueLocationVertical === 'bottom' ? 'flex-end' 
                         : 'center',
+        paddingInline: `${border ?? 0}px`,
+        width:`${width}px`,
     }
 
     return (
@@ -35,9 +42,7 @@ function Button({
             style={{ ...style, ...buttonStyles }} 
             onClick={onClick}         
         >
-            <div>
-                {value}
-            </div>
+            {children}
         </div>       
     );
 }

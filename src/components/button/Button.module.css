@@ -1,7 +1,9 @@
 .button {
-    display: inline-flex;
+    display: flex;
     user-select: none;
     cursor: pointer;
+    width: fit-content;
+    height: fit-content;
 }
 
 .buttonDefault {
@@ -14,10 +16,11 @@
     border-radius: 5px;
 }
 
-.buttonDefault:hover {
+.button:hover {
     opacity: 0.9;
 }
 
-.buttonDefault:active {
+.button:active {
     opacity: 0.8;
+    transform: scale(0.9);
 }

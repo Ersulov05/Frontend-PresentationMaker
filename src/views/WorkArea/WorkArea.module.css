@@ -4,13 +4,20 @@
     flex-grow: 0;
     display: grid;
     place-items: center;
-    background-color: white;
+    /* background-color: white; */
     width: calc(100vw - var(--slide-list-width));
+    width: calc(100% - var(--slide-list-width));
     height: calc(100vh - var(--top-panel-height));
+    height: 100%;
     overflow-x: scroll;
     overflow-y: scroll;
-    border-left: solid var(--dark-gray) 1px;
-    border-top: solid var(--dark-gray) 1px;
+    border: solid var(--color-light-gray) 1px;
+    /* border-left: solid var(--color-light-gray) 1px;
+    border-top: solid var(--color-light-gray) 1px;
+    border-right: solid var(--color-light-gray) 1px; */
+    margin-inline-end: 5px;
+    margin-inline-start: 2px;
+    border-radius: 7px;
     box-sizing: border-box;
 }
 
