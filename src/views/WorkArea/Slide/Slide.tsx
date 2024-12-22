@@ -60,7 +60,6 @@ function Slide({
 {
     const parentRef = useRef<HTMLDivElement | null>(null); 
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
-    // const isSelected = selectedSlideIds.includes(slide.uid)
     const backgroundStyle = tempBackground
         ? tempBackground.type === "solid"
             ? { backgroundColor: tempBackground.color }

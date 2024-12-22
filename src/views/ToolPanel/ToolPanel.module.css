@@ -63,3 +63,7 @@
     box-sizing: border-box;
 }
 
+.hiddenContainer {
+    overflow: hidden;
+    height: 0;
+}

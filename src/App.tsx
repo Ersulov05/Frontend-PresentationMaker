@@ -2,7 +2,7 @@ import { ListSlides } from './views/ListSlides/ListSlides.tsx';
 import styles from './App.module.css';
 import { WorkArea } from './views/WorkArea/WorkArea.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import useAppSelector from './views/hooks/useAppSelector.ts';
 
 import { HistoryType } from './store/utils/history.ts';
@@ -81,7 +81,6 @@ const MainContent = () => {
                 <Button onClick={() => searchImageAsync(imageName)}>search</Button>
                 {images.map(image => (
                     <Icon iconSrc={image.url} size={70} key={image.id}/>
-                    // <img src={image.url}/>
                 ))}
             </SidePopap>}
         </main>

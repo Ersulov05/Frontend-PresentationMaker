@@ -6,13 +6,31 @@ import { useAppActions } from '../hooks/useAppActions'
 import styles from './ToolPanel.module.css'
 import { ImageDataType } from '../../store/objects/addImageToSlide'
 import { TextDataType } from '../../store/objects/addTextToSlide'
-import React, { useEffect } from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { HistoryContext } from '../hooks/historyContext'
 import { useToolContext } from '../context/toolContext'
+import useAppSelector from '../hooks/useAppSelector'
+import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide'
+import { useGeneratePDF } from '../hooks/useGeneratePDF'
 
 type ToolPanelProps = {
     setOpenedSidePopap?: () => void
 }
+
+const HiddenContainer = forwardRef<HTMLDivElement>((_, ref) => {
+    const slides = useAppSelector(editor => editor.presentation.slides);
+
+    return (
+        <div 
+            className={styles.hiddenContainer}
+            ref={ref}
+        >
+            {slides.map(slide => (
+                <PreviewSlide slide={slide} key={'hidden' + slide.uid} />
+            ))}
+        </div>
+    );
+});
 
 function ToolPanel({}: ToolPanelProps) 
 {
@@ -86,83 +104,101 @@ function ToolPanel({}: ToolPanelProps)
         }
     }
     const { togglePopup } = useToolContext() || {};
+
+    const { generatePDFs, isGeneratePDF, status } = useGeneratePDF();
+
+    const handleGeneratePDF = async () => {
+        const result = await generatePDFs(hiddenContainerRef);
+        if (status) {
+            console.log("PDF успешно создан!");
+        } else {
+            console.log("Произошла ошибка при создании PDF.");
+        }
+    };
+
+    const hiddenContainerRef = useRef<HTMLDivElement>(null)
+
     return (
-        <div className={styles.container}>
-            <div className={styles.toolPanel}>
-                <div className={styles.slideButtonsContainer}>
-                    <Button 
-                        onClick={addSlide}
-                        className={styles.addSlideButton}
-                    >
-                        <Icon iconSrc={"/image/iconPlus.svg"} size={30}/>
-                    </Button>
-                    <Button 
-                        onClick={addSlide}
-                        className={styles.addSlideButton}
-                    >
-                        <Icon iconSrc={"/image/iconCopySlide.svg"} size={30}/>
-                    </Button>
-                    <Button 
-                        onClick={deleteSlides}
-                        className={styles.addSlideButton}
-                        border={3}
-                    >
-                        <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
-                    </Button>
-                    <Button 
-                        onClick={onAddTextToSlide}
-                        className={styles.addSlideButton}
-                    >
-                        <Text>Тemplate</Text>
-                    </Button>
-                </div>
-                <Strip orientation={"vertical"}/>
-                <div className={styles.undoRedoContainer}>
-                    <Button 
-                        onClick={onUndo}
-                        className={styles.addSlideButton}
-                        border={5}
-                    >
-                        <Icon iconSrc={"/image/iconUndoRedo.svg"} size={20}/>
-                    </Button>
-                    <Button 
-                        onClick={onRedo}
-                        className={styles.addSlideButton}
-                        border={5}
-                    >
-                        <Icon iconSrc={"/image/iconUndoRedo.svg"} size={20} style={{transform: "scale(-1, 1)"}}/>
-                    </Button>
-                </div>
-                <Strip orientation={"vertical"}/>
-                <div className={styles.objectButtonsContainer}>
-                    <Button 
-                        onClick={onAddTextToSlide}
-                        className={styles.toolButton}
-                    >
-                        <Text>Т</Text>
-                    </Button>
-                    <Button 
-                        onClick={togglePopup}
-                        className={styles.addSlideButton}
-                    >
-                        <Icon iconSrc={"/image/iconImage.svg"} size={30} className={styles.iconPlus}/>
-                    </Button>
-                    <Button 
-                        onClick={deleteObjects}
-                        className={styles.addSlideButton}
-                        border={3}
-                    >
-                        <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
-                    </Button>
-                    <Button 
-                        onClick={onAddTextToSlide}
-                        className={styles.addSlideButton}
-                    >
-                        <Text>Scale</Text>
-                    </Button>
+        <>
+            <div className={styles.container}>
+                <div className={styles.toolPanel}>
+                    <div className={styles.slideButtonsContainer}>
+                        <Button 
+                            onClick={addSlide}
+                            className={styles.addSlideButton}
+                        >
+                            <Icon iconSrc={"/image/iconPlus.svg"} size={30}/>
+                        </Button>
+                        <Button 
+                            onClick={addSlide}
+                            className={styles.addSlideButton}
+                        >
+                            <Icon iconSrc={"/image/iconCopySlide.svg"} size={30}/>
+                        </Button>
+                        <Button 
+                            onClick={deleteSlides}
+                            className={styles.addSlideButton}
+                            border={3}
+                        >
+                            <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
+                        </Button>
+                        <Button 
+                            onClick={onAddTextToSlide}
+                            className={styles.addSlideButton}
+                        >
+                            <Text>Тemplate</Text>
+                        </Button>
+                    </div>
+                    <Strip orientation={"vertical"}/>
+                    <div className={styles.undoRedoContainer}>
+                        <Button 
+                            onClick={onUndo}
+                            className={styles.addSlideButton}
+                            border={5}
+                        >
+                            <Icon iconSrc={"/image/iconUndoRedo.svg"} size={20}/>
+                        </Button>
+                        <Button 
+                            onClick={onRedo}
+                            className={styles.addSlideButton}
+                            border={5}
+                        >
+                            <Icon iconSrc={"/image/iconUndoRedo.svg"} size={20} style={{transform: "scale(-1, 1)"}}/>
+                        </Button>
+                    </div>
+                    <Strip orientation={"vertical"}/>
+                    <div className={styles.objectButtonsContainer}>
+                        <Button 
+                            onClick={onAddTextToSlide}
+                            className={styles.toolButton}
+                        >
+                            <Text>Т</Text>
+                        </Button>
+                        <Button 
+                            onClick={togglePopup}
+                            className={styles.addSlideButton}
+                        >
+                            <Icon iconSrc={"/image/iconImage.svg"} size={30} className={styles.iconPlus}/>
+                        </Button>
+                        <Button 
+                            onClick={deleteObjects}
+                            className={styles.addSlideButton}
+                            border={3}
+                        >
+                            <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
+                        </Button>
+                        <Button 
+                            onClick={onAddTextToSlide}
+                            className={styles.addSlideButton}
+                        >
+                            <Text>Scale</Text>
+                        </Button>
+                        <Button onClick={handleGeneratePDF}>Generate PDF</Button>
+                    </div>
                 </div>
             </div>
-        </div>
+            <HiddenContainer ref={hiddenContainerRef}/>
+        </>
     )
 }
 
