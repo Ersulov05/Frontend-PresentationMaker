@@ -213,7 +213,8 @@ const defaultEditor: EditorType = {
         selectedSlideIds: [ '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b', 'b27d7ce8-86c7-4e45-8cbd-79e8fbf8c465', 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465' ],
         selectedObjectIds: []
     },
-    colors: []
+    colors: [],
+    searchedImages: []
 }
 
 export {

@@ -2,7 +2,7 @@ import { ListSlides } from './views/ListSlides/ListSlides.tsx';
 import styles from './App.module.css';
 import { WorkArea } from './views/WorkArea/WorkArea.tsx';
 import { BackgroundType } from './store/PresentationType.ts';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useAppSelector from './views/hooks/useAppSelector.ts';
 
 import { HistoryType } from './store/utils/history.ts';
@@ -13,6 +13,9 @@ import { SidePopap } from './views/SidePopap/SidePopap.tsx';
 import { joinStyles } from './store/utils/joinStyles.ts';
 import { ToolProvider, useToolContext } from './views/context/toolContext.tsx';
 import { TextField } from './components/textField/TextField.tsx';
+import { Button } from './components/button/Button.tsx';
+import { useAppActions } from './views/hooks/useAppActions.ts';
+import { Icon } from './components/icon/Icon.tsx';
 
 type AppProps = {
     history: HistoryType,
@@ -38,13 +41,17 @@ const MainContent = () => {
     const slides = useAppSelector(editor => editor.presentation.slides)
     
     const selectedSlideIds = useAppSelector(editor => editor.selection.selectedSlideIds)
+    const images = useAppSelector(editor => editor.searchedImages)
     const scale = presentation.scale
 
     const [ tempBackground, setTempBackground ] = useState<BackgroundType | null>(null)
 
     const selectedSlide = slides.find(slide => slide.uid === selectedSlideIds[0]);
     const { openedSidePopup, togglePopup} = useToolContext() || {};
-
+    const { 
+        searchImageAsync,
+    } = useAppActions() 
+    const [imageName, setImageName] = useState('')
     return (
         <main className={styles.main}>
             <div className={joinStyles(styles.container, !openedSidePopup && styles.containerFullWidth)}>
@@ -62,6 +69,7 @@ const MainContent = () => {
             {openedSidePopup && 
             <SidePopap onClose={togglePopup}>
                 <TextField
+                    onChange={setImageName}
                     placeholder='поиск'
                     style={{
                         border: 'solid 1px black',
@@ -70,6 +78,11 @@ const MainContent = () => {
                         paddingBlock: '5px'
                     }}
                 />
+                <Button onClick={() => searchImageAsync(imageName)}>search</Button>
+                {images.map(image => (
+                    <Icon iconSrc={image.url} size={70} key={image.id}/>
+                    // <img src={image.url}/>
+                ))}
             </SidePopap>}
         </main>
     );

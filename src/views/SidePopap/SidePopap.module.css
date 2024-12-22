@@ -23,6 +23,10 @@
     border-bottom: solid 1px black;
 }
 
+.content {
+    padding-inline: 10px;
+}
+
 .buttonClose {
     border-radius: 15px;
     width: 40px;

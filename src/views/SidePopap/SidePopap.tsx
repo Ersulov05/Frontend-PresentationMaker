@@ -24,7 +24,9 @@ function SidePopap({
                         <Icon iconSrc="/image/iconKrest.svg" size={40}/>
                     </Button>
                 </div>
-                {children}
+                <div className={styles.content}>
+                    {children}
+                </div>
             </div>
             
         </div>

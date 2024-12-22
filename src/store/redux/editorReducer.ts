@@ -48,6 +48,12 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
             }
         case ActionType.SET_EDITOR:
             return action.payload
+        case ActionType.SET_SEARCHED_IMAGES:
+            console.log('set')
+            return {
+                ...editor,
+                searchedImages: action.payload
+            }
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)
         // case ActionType.ADD_SCALE:
