@@ -1,5 +1,8 @@
 .header
 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: var(--top-panel-height);
     overflow: hidden;
 }

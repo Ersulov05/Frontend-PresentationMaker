@@ -1,0 +1,43 @@
+:root {
+    --top-panel-height: 65px;
+    --tool-panel-height: 48px;
+    --slide-list-width: 180px;
+    --side-popap-width: 350px;
+
+    --dark-gray: #555555;
+
+    --color-light-gray: #d3d3d3;
+    --color-xlight-gray: #eeeeee;
+}
+
+
+.header
+{
+    height: var(--top-panel-height);
+}
+
+.main
+{
+    display: flex;
+    width: 100%;
+    background-color: var(--color-xlight-gray);
+    height: calc(100vh - var(--top-panel-height));
+}
+
+.container 
+{
+    /* width: calc(100vw - var(--side-popap-width)); */
+    width: calc(100% - var(--side-popap-width));
+}
+
+.containerFullWidth
+{
+    width: 100%;
+}
+
+.workContainer 
+{
+    display: flex;
+    width: 100%;
+    height: calc(100vh - var(--top-panel-height) - var(--tool-panel-height));
+}
