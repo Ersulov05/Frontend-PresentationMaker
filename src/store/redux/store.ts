@@ -7,3 +7,5 @@ const store = createStore(editorReducer, applyMiddleware(thunk))
 export {
     store
 }
+
+export type AppDispatch = typeof store.dispatch;
