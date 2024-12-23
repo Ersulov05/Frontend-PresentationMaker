@@ -2,6 +2,7 @@ import { BackgroundDataType } from "../slides/changeBackgroundSlide";
 import { TransformType } from "../PresentationType";
 import { ImageDataType } from "../objects/addImageToSlide";
 import { TextDataType } from "../objects/addTextToSlide";
+import { AppDispatch } from '../../store/redux/store';
 import { 
     ActionType, 
     AddImageObjectAction, 
@@ -108,6 +109,42 @@ const SetSearchedImages = (imagesData: ImageData[]): SetSearchedImagesAction => 
     }
 }
 
+function validateResponseData(data: any): boolean {
+    if (typeof data !== 'object' || data === null) {
+        return false;
+    }
+
+    const results = data.results;
+
+    if (!Array.isArray(results)) {
+        return false;
+    }
+
+    for (const image of results) {
+        if (typeof image !== 'object' || image === null) {
+            return false;
+        }
+
+        const id = image.id;
+        const urls = image.urls;
+        const altDescription = image.alt_description;
+
+        if (typeof id !== 'string') {
+            return false;
+        }
+
+        if (typeof urls !== 'object' || urls === null || typeof urls.thumb !== 'string') {
+            return false;
+        }
+
+        if (typeof altDescription !== 'string') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function remap_Response_To_ImagesData(data: any): ImageData[] {
     return data.map((image: any) => {
         return {
@@ -119,7 +156,7 @@ function remap_Response_To_ImagesData(data: any): ImageData[] {
 }
 
 function searchImageAsync(query: string) {
-    return dispatch => {
+    return (dispatch: AppDispatch) => {
         const path = `https://api.unsplash.com/search/photos/?client_id=zmwbnGEeZXaffnYV41syLUhrxBj98LIcsKqjZSka_is&query=${query}&per_page=10`
         const result = fetch(path)
         result
@@ -130,6 +167,10 @@ function searchImageAsync(query: string) {
                 return response.json();
             })
             .then(data => {
+                if (!validateResponseData(data)) {
+                    console.log('not valid')
+                    return
+                }
                 const images = remap_Response_To_ImagesData(data.results);
                 console.log(images)
                 dispatch(SetSearchedImages(images))
