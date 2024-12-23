@@ -16,6 +16,7 @@ import { TextField } from '../../components/textField/TextField.tsx';
 import { Button } from '../../components/button/Button.tsx';
 import { useAppActions } from '../hooks/useAppActions.ts';
 import { Icon } from '../../components/icon/Icon.tsx';
+import { ImageDataType } from '../../store/objects/addImageToSlide.ts';
 
 type EditorProps = {
     history: HistoryType,
@@ -52,6 +53,33 @@ const MainContent = () => {
         searchImageAsync,
     } = useAppActions() 
     const [imageName, setImageName] = useState('')
+    const [selectedImageId, setSelectedImageId] = useState('')
+
+    const { 
+        addImageObject,
+    } = useAppActions()
+
+    function onAddImage() {
+        if (selectedImageId === '') {
+            return
+        }
+        const image = images.find(image => image.id === selectedImageId)
+        if (image) {
+            const data: ImageDataType = {
+                position: {
+                    x: 10,
+                    y: 10,
+                },
+                size: {
+                    width: 100,
+                    height: 100,
+                },
+                src: image.url
+            }
+            addImageObject(data)
+        }
+    }
+
     return (
         <main className={styles.main}>
             <div className={joinStyles(styles.container, !openedSidePopup && styles.containerFullWidth)}>
@@ -79,9 +107,25 @@ const MainContent = () => {
                     }}
                 />
                 <Button onClick={() => searchImageAsync(imageName)}>search</Button>
-                {images.map(image => (
-                    <Icon iconSrc={image.url} size={70} key={image.id}/>
-                ))}
+                <div className={styles.imagesContainer}>
+                    {images.map(image => (
+                        <div 
+                            key={image.id}
+                            className={styles.image}
+                            onClick={() => setSelectedImageId(image.id)}
+                            style={ image.id == selectedImageId 
+                                ? {
+                                    border: "solid 2px red"
+                                } 
+                                : {}
+                            }
+                        >
+                            <Icon iconSrc={image.url} size={67}/>
+                        </div>
+                    ))}
+                </div>
+                { selectedImageId && <Button onClick={onAddImage}>add Image</Button>}
+                
             </SidePopap>}
         </main>
     );

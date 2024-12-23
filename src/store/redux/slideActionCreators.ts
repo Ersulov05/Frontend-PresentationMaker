@@ -145,14 +145,35 @@ function validateResponseData(data: any): boolean {
     return true;
 }
 
-function remap_Response_To_ImagesData(data: any): ImageData[] {
-    return data.map((image: any) => {
+async function getBase64ByURL(url: string): Promise<string> {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+
+    const blob = await response.blob(); // Получаем blob-объект
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            resolve(reader.result as string); // Возвращаем результат как строку
+        };
+        reader.onerror = () => {
+            reject(new Error('Failed to convert to Base64'));
+        };
+        reader.readAsDataURL(blob); // Читаем blob как Data URL
+    });
+}
+
+async function remap_Response_To_ImagesData(data: any): Promise<ImageData[]> {
+    const imagesPromises = data.map(async (image: any) => {
+        const base64Url = await getBase64ByURL(image.urls.thumb);
         return {
             id: image.id,
-            url: image.urls.thumb,
+            url: base64Url,
             alt: image.alt_description,
         }
     })
+    return Promise.all(imagesPromises);
 }
 
 function searchImageAsync(query: string) {
@@ -166,14 +187,13 @@ function searchImageAsync(query: string) {
                 }
                 return response.json();
             })
-            .then(data => {
+            .then(async data => {
                 if (!validateResponseData(data)) {
                     console.log('not valid')
                     return
                 }
-                const images = remap_Response_To_ImagesData(data.results);
-                console.log(images)
-                dispatch(SetSearchedImages(images))
+                const imagesData = await remap_Response_To_ImagesData(data.results);
+                dispatch(SetSearchedImages(imagesData))
             })
             .catch(() => {})
     }
