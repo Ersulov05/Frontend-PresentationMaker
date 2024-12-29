@@ -7,7 +7,10 @@ type AppProps = {
     history: HistoryType,
 }
 
-function App({history}: AppProps) {
+function App({
+    history
+}: AppProps) {
+    
     return (
         <BrowserRouter>
             <Routes>

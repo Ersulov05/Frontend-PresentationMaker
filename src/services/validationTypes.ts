@@ -1,5 +1,5 @@
-import { EditorType } from "../store/editor"
 import { ObjectType, SlideType } from "../store/PresentationType"
+import { EditorType } from "../store/redux/EditorType"
 
 const validateObjectData = (data: any): data is ObjectType => {
     if (typeof data !== 'object' || data === null) return false
@@ -34,13 +34,12 @@ const validateObjectData = (data: any): data is ObjectType => {
 const validateSlideData = (data: any): data is SlideType => {
     if (typeof data !== 'object' || data === null) return false
 
-    const { uid, background, objects, selectedObjectIds } = data
+    const { uid, background, objects } = data
 
     if (
         typeof uid !== 'string' ||
         !['solid', 'image'].includes(background.type) ||
-        !Array.isArray(objects) ||
-        !Array.isArray(selectedObjectIds)
+        !Array.isArray(objects)
     ) {
         return false
     }
@@ -57,21 +56,41 @@ const validateSlideData = (data: any): data is SlideType => {
 const validateEditorData = (data: any): data is EditorType => {
     if (typeof data !== 'object' || data === null) return false
 
-    const { presentation, colors } = data
+    const { presentation, selection, colors, searchedImages } = data
 
     if (
         typeof presentation !== 'object' ||
+        typeof selection !== 'object' ||
+        selection === null ||
         presentation === null ||
         typeof presentation.name !== 'string' ||
+        typeof presentation.scale !== 'number' ||
         !Array.isArray(presentation.slides) ||
-        !Array.isArray(presentation.selectedSlideIds) ||
-        typeof presentation.scale !== 'number'
+        !Array.isArray(selection.selectedSlideIds) ||
+        !Array.isArray(selection.selectedObjectIds)
     ) {
         return false
     }
 
     for (const slide of presentation.slides) {
         validateSlideData(slide)
+    }
+
+    if (!selection.selectedSlideIds.every((selectedSlideId: string) => typeof selectedSlideId === 'string') ||
+        !selection.selectedObjectIds.every((selectedObjectId: string) => typeof selectedObjectId === 'string')
+    ) {
+        return false
+    }
+
+    if (!Array.isArray(searchedImages) ||
+        !searchedImages.every(image => 
+            typeof image === 'object' && 
+            typeof image.id === 'string' && 
+            typeof image.url === 'string' &&
+            typeof image.alt === 'string'
+        )
+    ) {
+        return false
     }
 
     if (!Array.isArray(colors) || !colors.every(color => typeof color === 'string')) {
