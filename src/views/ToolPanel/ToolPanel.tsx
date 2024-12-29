@@ -105,10 +105,10 @@ function ToolPanel({}: ToolPanelProps)
     }
     const { togglePopup } = useToolContext() || {};
 
-    const { generatePDFs, isGeneratePDF, status } = useGeneratePDF();
+    const { generatePDFs, status } = useGeneratePDF();
 
     const handleGeneratePDF = async () => {
-        const result = await generatePDFs(hiddenContainerRef);
+        await generatePDFs(hiddenContainerRef);
         if (status) {
             console.log("PDF успешно создан!");
         } else {
