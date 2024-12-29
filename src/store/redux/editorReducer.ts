@@ -49,10 +49,22 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
         case ActionType.SET_EDITOR:
             return action.payload
         case ActionType.SET_SEARCHED_IMAGES:
-            console.log('set')
             return {
                 ...editor,
                 searchedImages: action.payload
+            }
+        case ActionType.SET_PRESENTATION:
+            const presentation = action.payload
+            const selectedSlideId = presentation.slides[0]?.uid
+            return {
+                ...editor,
+                presentation: presentation,
+                selection: {
+                    selectedObjectIds: [],
+                    selectedSlideIds: selectedSlideId 
+                        ? [selectedSlideId] 
+                        : []
+                }
             }
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)

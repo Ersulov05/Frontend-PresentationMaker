@@ -198,7 +198,6 @@ function searchImageAsync(query: string) {
             .catch(() => {})
     }
 }
-   
 
 export {
     addSlide,

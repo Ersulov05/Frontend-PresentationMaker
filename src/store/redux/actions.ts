@@ -1,6 +1,6 @@
 import { ImageDataType } from "../objects/addImageToSlide"
 import { TextDataType } from "../objects/addTextToSlide"
-import { TransformType } from "../PresentationType"
+import { PresentationType, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 import { EditorType, ImageData } from "./EditorType"
 
@@ -24,6 +24,7 @@ export enum ActionType {
     ADD_SLIDE_TO_SELECTION = "ADD_SLIDE_TO_SELECTION",
     SET_EDITOR = "SET_EDITOR",
     SET_SEARCHED_IMAGES = "SET_SEARCHED_IMAGES",
+    SET_PRESENTATION = "SET_PRESENTATION",
 }
 
 export interface AddSlideAction {
@@ -111,6 +112,11 @@ export interface SetEditorAction {
     payload: EditorType
 }
 
+export interface SetPresentationAction {
+    type: ActionType.SET_PRESENTATION,
+    payload: PresentationType
+}
+
 export interface SetSearchedImagesAction {
     type: ActionType.SET_SEARCHED_IMAGES,
     payload: ImageData[]
@@ -136,9 +142,13 @@ export type ScaleAction =
     ChangeScaleAction
     | AddScaleAction
     | SubScaleAction
+
+export type PresentationAction = 
+    SetPresentationAction
 export type ActionCreatorsType = 
     SlidesAction 
     | NamePresentationAction 
     | ColorsAction
     | SetEditorAction
+    | PresentationAction
 export type EditorAction = ActionCreatorsType

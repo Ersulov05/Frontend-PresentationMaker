@@ -1,4 +1,4 @@
-import { ObjectType, SlideType } from "../store/PresentationType"
+import { ObjectType, PresentationType, SlideType } from "../store/PresentationType"
 import { EditorType } from "../store/redux/EditorType"
 
 const validateObjectData = (data: any): data is ObjectType => {
@@ -53,27 +53,42 @@ const validateSlideData = (data: any): data is SlideType => {
     return true
 }
 
+const validatePresentationData = (presentation: any): presentation is PresentationType => {
+    if (typeof presentation !== 'object' || presentation === null) {
+        return false
+    }
+
+    if (
+        typeof presentation.name !== 'string' ||
+        typeof presentation.scale !== 'number' ||
+        !Array.isArray(presentation.slides)
+    )
+
+    for (const slide of presentation.slides) {
+        if (!validateSlideData(slide)) {
+            return false
+        }
+    }
+
+    return true
+}
+
 const validateEditorData = (data: any): data is EditorType => {
     if (typeof data !== 'object' || data === null) return false
 
     const { presentation, selection, colors, searchedImages } = data
 
     if (
-        typeof presentation !== 'object' ||
         typeof selection !== 'object' ||
         selection === null ||
-        presentation === null ||
-        typeof presentation.name !== 'string' ||
-        typeof presentation.scale !== 'number' ||
-        !Array.isArray(presentation.slides) ||
         !Array.isArray(selection.selectedSlideIds) ||
         !Array.isArray(selection.selectedObjectIds)
     ) {
         return false
     }
 
-    for (const slide of presentation.slides) {
-        validateSlideData(slide)
+    if (!validatePresentationData(presentation)) {
+        return false
     }
 
     if (!selection.selectedSlideIds.every((selectedSlideId: string) => typeof selectedSlideId === 'string') ||
@@ -103,5 +118,6 @@ const validateEditorData = (data: any): data is EditorType => {
 export {
     validateEditorData,
     validateSlideData,
-    validateObjectData
+    validateObjectData,
+    validatePresentationData
 }

@@ -4,7 +4,6 @@ import { Text } from '../../components/text/Text'
 import { Strip } from '../../components/strip/Strip'
 import { useAppActions } from '../hooks/useAppActions'
 import styles from './ToolPanel.module.css'
-import { ImageDataType } from '../../store/objects/addImageToSlide'
 import { TextDataType } from '../../store/objects/addTextToSlide'
 import React, { forwardRef, useEffect, useRef } from 'react'
 import { HistoryContext } from '../hooks/historyContext'
@@ -38,11 +37,14 @@ function ToolPanel({}: ToolPanelProps)
         addSlide,
         deleteSlides, 
         deleteObjects,
-        addImageObject,
         addTextObject,
         setEditor,
+        importPresentationFromJSON,
+        exportPresentationToJSON,
     } = useAppActions()
     
+    const presentation = useAppSelector(editor => editor.presentation)
+
     function onAddTextToSlide() {
         const data: TextDataType = {
             position: {
@@ -55,21 +57,6 @@ function ToolPanel({}: ToolPanelProps)
             }
         }
         addTextObject(data)
-    }
-
-    function onAddImageToSlide() {
-        const data: ImageDataType = {
-            position: {
-                x: 10,
-                y: 10,
-            },
-            size: {
-                width: 100,
-                height: 100,
-            },
-            src: '/image/react.svg'
-        }
-        addImageObject(data)
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -194,6 +181,8 @@ function ToolPanel({}: ToolPanelProps)
                             <Text>Scale</Text>
                         </Button>
                         <Button onClick={handleGeneratePDF}>Generate PDF</Button>
+                        <input onChange={importPresentationFromJSON} type='file'/>
+                        <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
                     </div>
                 </div>
             </div>

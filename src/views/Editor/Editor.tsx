@@ -51,13 +51,10 @@ const MainContent = () => {
     const { openedSidePopup, togglePopup} = useToolContext() || {};
     const { 
         searchImageAsync,
+        addImageObject,
     } = useAppActions() 
     const [imageName, setImageName] = useState('')
     const [selectedImageId, setSelectedImageId] = useState('')
-
-    const { 
-        addImageObject,
-    } = useAppActions()
 
     function onAddImage() {
         if (selectedImageId === '') {
