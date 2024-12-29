@@ -2,13 +2,6 @@ import { validateEditorData } from "../services/validationTypes"
 import { PresentationType } from "./PresentationType"
 import { EditorType } from "./redux/EditorType"
 
-// const PresentationMin: Presentation = {
-//     name: "My Presentation",
-//     slides: [],
-//     selectedSlideIds: [],
-//     scale: 1,
-// }
-
 const PresentationMax: PresentationType = {
     name: 'New presentation',
     slides: [
@@ -109,7 +102,6 @@ const data = localStorage.getItem('localData')
 if (data) {
     const editorData = JSON.parse(data)
     if (validateEditorData(editorData)) {
-        console.log(11111)
         localEditor = editorData
     }
 }
@@ -126,5 +118,6 @@ const defaultEditor: EditorType = localEditor ??
     }
 
 export {
-    PresentationMax, defaultEditor
+    PresentationMax, 
+    defaultEditor
 }
