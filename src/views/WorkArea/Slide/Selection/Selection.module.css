@@ -1,6 +1,7 @@
 .container {
     border: red solid 2px;
     position: relative;
+    user-select: none;
 }
 
 .leftUp {
@@ -32,10 +33,11 @@
     width: 100%;
     height: 4px;
     background-color: orange;
-    border: solid 5px transparent;
+    border: solid 6px transparent;
     z-index: 1;
     background-clip: padding-box;
     cursor: all-scroll;
+    user-select: none;
 }
 
 .verticalLine {
@@ -43,10 +45,11 @@
     height: 100%;
     width: 4px;
     background-color: orange;
-    border: solid 5px transparent;
+    border: solid 6px transparent;
     z-index: 1;
     background-clip: padding-box;
     cursor: all-scroll;
+    user-select: none;
 }
 
 .left {
@@ -78,4 +81,5 @@
     width: 15px;
     height: 15px;
     z-index: 1;
+    user-select: none;
 }
