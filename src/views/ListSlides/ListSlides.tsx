@@ -15,7 +15,12 @@ type SlidesProps = {
 function ListSlides({ 
     tempBackground,
 }: SlidesProps) {
-    const { selectSlide, translateSlides } = useAppActions()
+    const { 
+        selectSlide, 
+        translateSlides,
+        addSlideToSelection,
+    } = useAppActions()
+    const keys = useAppSelector(editor => editor.keys)
     const slides = useAppSelector(editor => editor.presentation.slides)
     const selectedSlideIds = useAppSelector(editor => editor.selection.selectedSlideIds)
 
@@ -44,13 +49,19 @@ function ListSlides({
                 });
             }
         }
-    };
+    }
+
+    function handleClick(slideUid: string) {
+        if (keys.has('ctrl')) {
+            addSlideToSelection(slideUid)
+            return
+        }
+        selectSlide(slideUid)
+    }
 
     useEffect(() => {
         scrollToSelectedSlide();
     }, [selectedSlideIds]);
-
-
 
     useEffect(() => {
         const handleScroll = () => {
@@ -170,7 +181,7 @@ function ListSlides({
                     key={slide.uid} 
                     slide={slide} 
                     scale={scale}
-                    onClick={() => selectSlide(slide.uid)}
+                    onClick={() => handleClick(slide.uid)}
                     isSelected={selectedSlideIds.includes(slide.uid)}
                     style={slideStyles}
                     background={
