@@ -6,7 +6,7 @@ import { ObjectType, TransformType } from "../../../../store/PresentationType"
 import ImageObject from "../ImageObject/ImageObject"
 import TextObject from "../TextObject/TextObject"
 import { useAppActions } from "../../../hooks/useAppActions"
-
+import { ResizePoint } from "./resizePoint/ResizePoint"
 
 type SelectionProps = {
     transform: TransformType
@@ -19,12 +19,30 @@ function Selection({
     scale,
     selectedObjects,
 }: SelectionProps) {
-    const leftUpPoint = useDragAndDrop();
-    const rightUpPoint = useDragAndDrop();
-    const leftDownPoint = useDragAndDrop();
-    const rightDownPoint = useDragAndDrop();
+    const leftPoint = useDragAndDrop()
+    const rightPoint = useDragAndDrop()
+    const downPoint = useDragAndDrop()
+    const upPoint = useDragAndDrop()
+    const leftUpPoint = useDragAndDrop()
+    const rightUpPoint = useDragAndDrop()
+    const leftDownPoint = useDragAndDrop()
+    const rightDownPoint = useDragAndDrop()
     const drag = useDragAndDrop();
     const { transformObjects } = useAppActions()
+
+    function getDragObject(object: ObjectType): ObjectType {
+        return {
+            ...object,
+            size: {
+                width: object.size.width * widthScale_,
+                height: object.size.height * heightScale_
+            },
+            pos: {
+                x: transform.position.x  + dragX/scale + (object.pos.x - transform.position.x) * widthScale,
+                y: transform.position.y  + dragY/scale + (object.pos.y - transform.position.y) * heightScale
+            }
+        }
+    }
 
     function saveTransformObjects() {
         const transform_: TransformType = {
@@ -41,38 +59,6 @@ function Selection({
     }
 
     useEffect(() => {
-        if (!leftUpPoint.dragging && leftUpPoint.dragging !== null) { 
-            saveTransformObjects()
-            leftUpPoint.position.x = 0
-            leftUpPoint.position.y = 0
-        }   
-    }, [leftUpPoint.dragging]);
-
-    useEffect(() => {
-        if (!rightUpPoint.dragging && rightUpPoint.dragging !== null) {
-            saveTransformObjects()
-            rightUpPoint.position.x = 0
-            rightUpPoint.position.y = 0
-        }   
-    }, [rightUpPoint.dragging]);
-
-    useEffect(() => {
-        if (!leftDownPoint.dragging && leftDownPoint.dragging !== null) {
-            saveTransformObjects()
-            leftDownPoint.position.x = 0
-            leftDownPoint.position.y = 0
-        }   
-    }, [leftDownPoint.dragging]);
-
-    useEffect(() => {
-        if (!rightDownPoint.dragging && rightDownPoint.dragging !== null) {
-            saveTransformObjects()
-            rightDownPoint.position.x = 0
-            rightDownPoint.position.y = 0
-        }   
-    }, [rightDownPoint.dragging]);
-
-    useEffect(() => {
         if (!drag.dragging && drag.dragging !== null) {
             saveTransformObjects()
             drag.position.x = 0
@@ -80,10 +66,10 @@ function Selection({
         }   
     }, [drag.dragging]);
 
-    const dragX = leftUpPoint.position.x + leftDownPoint.position.x + drag.position.x
-    const dragY = leftUpPoint.position.y + rightUpPoint.position.y + drag.position.y
-    const dragWidth = rightUpPoint.position.x - leftUpPoint.position.x - leftDownPoint.position.x + rightDownPoint.position.x
-    const dragHeight = - rightUpPoint.position.y - leftUpPoint.position.y + leftDownPoint.position.y + rightDownPoint.position.y
+    const dragX = leftUpPoint.position.x + leftDownPoint.position.x + drag.position.x + leftPoint.position.x
+    const dragY = leftUpPoint.position.y + rightUpPoint.position.y + drag.position.y + upPoint.position.y
+    const dragWidth = rightUpPoint.position.x - leftUpPoint.position.x - leftDownPoint.position.x + rightDownPoint.position.x - leftPoint.position.x + rightPoint.position.x
+    const dragHeight = - rightUpPoint.position.y - leftUpPoint.position.y + leftDownPoint.position.y + rightDownPoint.position.y - upPoint.position.y + downPoint.position.y
 
     const widthScale = (dragWidth + transform.size.width) / transform.size.width;
     const heightScale = (dragHeight + transform.size.height) / transform.size.height;
@@ -101,7 +87,8 @@ function Selection({
         <>
             <div 
                 className={styles.container}
-                style={selectStyles}>
+                style={selectStyles}
+            >
                 <div
                     className={joinStyles(styles.verticalLine, styles.left)}
                     onMouseDown={drag.startDrag}>
@@ -118,35 +105,51 @@ function Selection({
                     className={joinStyles(styles.horizontalLine, styles.bottom)}
                     onMouseDown={drag.startDrag}>
                 </div>
-                <div 
+
+                <ResizePoint 
+                    className={joinStyles(styles.left, styles.point)}
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={leftPoint}
+                />
+                <ResizePoint 
+                    className={joinStyles(styles.right, styles.point)}
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={rightPoint}
+                />
+                <ResizePoint 
+                    className={joinStyles(styles.bottom, styles.point)}
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={downPoint}
+                />
+                <ResizePoint 
+                    className={joinStyles(styles.top, styles.point)}
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={upPoint}
+                />
+
+                <ResizePoint 
                     className={joinStyles(styles.leftUp, styles.point)}
-                    onMouseDown={leftUpPoint.startDrag}>
-                </div>
-                <div 
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={leftUpPoint}
+                />
+                <ResizePoint 
                     className={joinStyles(styles.rightUp, styles.point)}
-                    onMouseDown={rightUpPoint.startDrag}>
-                </div>
-                <div 
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={rightUpPoint}
+                />
+                <ResizePoint 
                     className={joinStyles(styles.leftDown, styles.point)}
-                    onMouseDown={leftDownPoint.startDrag}>
-                </div>
-                <div 
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={leftDownPoint}
+                />
+                <ResizePoint 
                     className={joinStyles(styles.rightDown, styles.point)}
-                    onMouseDown={rightDownPoint.startDrag}>
-                </div>
+                    saveTransformObjects={saveTransformObjects}
+                    dragPoint={rightDownPoint}
+                />
             </div>
             {selectedObjects.map(object => {
-                const dragObject: ObjectType = {
-                    ...object,
-                    size: {
-                        width: object.size.width * widthScale_,
-                        height: object.size.height * heightScale_
-                    },
-                    pos: {
-                        x: transform.position.x  + dragX/scale + (object.pos.x - transform.position.x) * widthScale,
-                        y: transform.position.y  + dragY/scale + (object.pos.y - transform.position.y) * heightScale
-                    }
-                }
+                const dragObject: ObjectType = getDragObject(object)
                 switch (dragObject.type) {
                     case 'text':
                         return (

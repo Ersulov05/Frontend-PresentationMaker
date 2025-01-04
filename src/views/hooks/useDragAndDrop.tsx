@@ -48,13 +48,27 @@ function useDragAndDrop(saveDrag?: () => void) {
         })
     };
 
+    const resetDrag = () => {
+        setPosition({
+            x: 0,
+            y: 0,
+        })
+        setOffset({
+            x: 0,
+            y: 0,
+        });
+    }
+
     return {
         position,
         offset,
         dragging,
         startDrag,
         endDrag,
+        resetDrag,
     };
 }
+
+export type UseDragAndDropType = ReturnType<typeof useDragAndDrop>;
 
 export { useDragAndDrop };
