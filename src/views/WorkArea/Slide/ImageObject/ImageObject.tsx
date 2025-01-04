@@ -6,9 +6,9 @@ import useAppSelector from '../../../hooks/useAppSelector.ts';
 import { useAppActions } from '../../../hooks/useAppActions.ts';
 
 interface ObjectProps {
-    object: ObjectType; 
-    scale: number;
-    selected?: boolean;
+    object: ObjectType 
+    scale: number
+    selected?: boolean
 }
 
 function ImageObject({ 
@@ -17,7 +17,20 @@ function ImageObject({
     selected = false,
 }: ObjectProps)
 {
-    const { selectObject } = useAppActions()
+    const keys = useAppSelector(editor => editor.keys)
+
+    function handleClick() {
+        if (keys.has('ctrl')) {
+            addObjectToSelection(object.uid)
+            return
+        }
+        selectObject(object.uid)
+    }
+
+    const { 
+        selectObject,
+        addObjectToSelection,
+    } = useAppActions()
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
     const isSelected = selectedObjectIds.includes(object.uid) && selected
     return (
@@ -31,7 +44,7 @@ function ImageObject({
                 width: `${object.size.width*scale}px`,
                 height: `${object.size.height*scale}px`,
             }}
-            onClick={() => selectObject(object.uid)}
+            onClick={handleClick}
         />
     )
 }

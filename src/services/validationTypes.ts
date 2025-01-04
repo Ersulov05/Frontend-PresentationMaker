@@ -1,5 +1,5 @@
 import { ObjectType, PresentationType, SlideType } from "../store/PresentationType"
-import { EditorType } from "../store/redux/EditorType"
+import { EditorType, KeyCodeType } from "../store/redux/EditorType"
 
 const validateObjectData = (data: any): data is ObjectType => {
     if (typeof data !== 'object' || data === null) return false
@@ -76,7 +76,16 @@ const validatePresentationData = (presentation: any): presentation is Presentati
 const validateEditorData = (data: any): data is EditorType => {
     if (typeof data !== 'object' || data === null) return false
 
-    const { presentation, selection, colors, searchedImages } = data
+    const { presentation, selection, colors, searchedImages} = data
+    let { keys } = data
+
+    if (!Array.isArray(keys) && !(keys instanceof Set)) {
+        return false
+    }
+
+    if (Array.isArray(keys)) {
+        keys = new Set<KeyCodeType>(keys)
+    }
 
     if (
         typeof selection !== 'object' ||
@@ -112,8 +121,18 @@ const validateEditorData = (data: any): data is EditorType => {
         return false
     }
 
+    if (!(keys instanceof Set) || !Array.from(keys).every(key => isValidKeyCode(key))) {
+        console.log('/---/')
+        return false;
+    }
+
     return true
 }
+
+const isValidKeyCode = (key: unknown): key is KeyCodeType => {
+    return key === 'ctrl' || key === 'alt' || key === 'shift';
+}
+
 
 export {
     validateEditorData,

@@ -11,9 +11,12 @@ export type ImageData = {
     alt: string
 }
 
+export type KeyCodeType = 'ctrl' | 'alt' | 'shift'
+
 export type EditorType = {
     presentation: PresentationType
     selection: SelectionType
     colors: string[]
     searchedImages: ImageData[]
+    keys: Set<KeyCodeType>
 }

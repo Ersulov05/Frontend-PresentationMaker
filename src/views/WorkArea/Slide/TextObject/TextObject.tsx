@@ -5,9 +5,9 @@ import { useAppActions } from '../../../hooks/useAppActions.ts';
 import useAppSelector from '../../../hooks/useAppSelector.ts';
 
 interface ObjectProps {
-    object: ObjectType;
-    scale: number;
-    selected?: boolean;
+    object: ObjectType
+    scale: number
+    selected?: boolean
 }
 
 function TextObject({ 
@@ -16,13 +16,27 @@ function TextObject({
     selected = true,
 }: ObjectProps)
 {
-    const { selectObject } = useAppActions()
+
+    const keys = useAppSelector(editor => editor.keys)
+
+    function handleClick() {
+        if (keys.has('ctrl')) {
+            addObjectToSelection(object.uid)
+            return
+        }
+        selectObject(object.uid)
+    }
+
+    const { 
+        selectObject,
+        addObjectToSelection,
+     } = useAppActions()
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
     const isSelected = selectedObjectIds.includes(object.uid) && selected
 
     return (
         <div className={joinStyles(styles.textArea, isSelected ? styles.select : '')} 
-            onClick={() => selectObject(object.uid)}
+            onClick={handleClick}
             style={{
                 top: `${(object.pos.y)*scale}px`,
                 left: `${(object.pos.x)*scale}px`,

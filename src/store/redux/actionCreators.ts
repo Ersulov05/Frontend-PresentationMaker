@@ -5,6 +5,7 @@ import * as ColorActionCreators from './colorActionCreators'
 import * as namePresentationActionCreators from './namePresentationActionCreators'
 import * as PresentationActionCreators from './presentationActionCreators'
 import * as ImportExportActionCreators from './importExportActionCreators'
+import * as KeysActionCreators from './keysActionCreators'
 
 
 export default {
@@ -15,4 +16,5 @@ export default {
     ...ColorActionCreators,
     ...namePresentationActionCreators,
     ...ImportExportActionCreators,
+    ...KeysActionCreators,
 }

@@ -93,7 +93,7 @@ function Slide({
                     ? <TextObject 
                         key={object.uid} 
                         object={object} 
-                        scale={scale} 
+                        scale={scale}
                     />
                     : <ImageObject 
                         key={object.uid} 

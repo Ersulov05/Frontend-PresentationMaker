@@ -1,4 +1,4 @@
-import { EditorType } from "./EditorType";
+import { EditorType, KeyCodeType } from "./EditorType";
 import { ActionType, EditorAction } from "./actions";
 import { defaultEditor } from "../data";
 import { addSlide } from "../slides/addSlide";
@@ -65,6 +65,20 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
                         ? [selectedSlideId] 
                         : []
                 }
+            }
+        case ActionType.ADD_KEY_TO_SET_KEYS:
+            const newKeys: Set<KeyCodeType> = new Set(editor.keys)
+            newKeys.add(action.payload)
+            return {
+                ...editor,
+                keys: newKeys,
+            }
+        case ActionType.REMOVE_KEY_TO_SET_KEYS:
+            const remainsKeys: Set<KeyCodeType> = new Set(editor.keys)
+            remainsKeys.delete(action.payload)
+            return {
+                ...editor,
+                keys: remainsKeys,
             }
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)

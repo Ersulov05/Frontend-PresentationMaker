@@ -2,7 +2,7 @@ import { ListSlides } from '../ListSlides/ListSlides.tsx';
 import styles from './Editor.module.css';
 import { WorkArea } from '../WorkArea/WorkArea.tsx';
 import { BackgroundType } from '../../store/PresentationType.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAppSelector from '../hooks/useAppSelector.ts';
 
 import { HistoryType } from '../../store/utils/history.ts';
@@ -76,6 +76,34 @@ const MainContent = () => {
             addImageObject(data)
         }
     }
+
+
+    const {
+        addKeyToSetKeys,
+        removeKeyToSetKeys,
+    } = useAppActions()
+    
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.ctrlKey) {
+            addKeyToSetKeys('ctrl')
+        }
+    }
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+        if (!event.ctrlKey) {
+            removeKeyToSetKeys('ctrl')
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keyup', handleKeyUp)
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('keyup', handleKeyUp)
+        };
+    }, [])
+
 
     return (
         <main className={styles.main}>

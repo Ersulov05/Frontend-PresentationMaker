@@ -2,7 +2,7 @@ import { ImageDataType } from "../objects/addImageToSlide"
 import { TextDataType } from "../objects/addTextToSlide"
 import { PresentationType, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
-import { EditorType, ImageData } from "./EditorType"
+import { EditorType, ImageData, KeyCodeType } from "./EditorType"
 
 export enum ActionType {
     ADD_SLIDE = "ADD_SLIDE",
@@ -25,6 +25,8 @@ export enum ActionType {
     SET_EDITOR = "SET_EDITOR",
     SET_SEARCHED_IMAGES = "SET_SEARCHED_IMAGES",
     SET_PRESENTATION = "SET_PRESENTATION",
+    ADD_KEY_TO_SET_KEYS = "ADD_KEY_TO_SET_KEYS",
+    REMOVE_KEY_TO_SET_KEYS = "REMOVE_KEY_TO_SET_KEYS"
 }
 
 export interface AddSlideAction {
@@ -122,6 +124,16 @@ export interface SetSearchedImagesAction {
     payload: ImageData[]
 }
 
+export interface AddKeyToSetKeysAction {
+    type: ActionType.ADD_KEY_TO_SET_KEYS,
+    payload: KeyCodeType
+}
+
+export interface RemoveKeyToSetKeysAction {
+    type: ActionType.REMOVE_KEY_TO_SET_KEYS,
+    payload: KeyCodeType
+}
+
 export type SlidesAction = 
     AddSlideAction 
     | AddTextObjectAction
@@ -145,10 +157,14 @@ export type ScaleAction =
 
 export type PresentationAction = 
     SetPresentationAction
+export type KeysAction = 
+    AddKeyToSetKeysAction
+    | RemoveKeyToSetKeysAction
 export type ActionCreatorsType = 
     SlidesAction 
     | NamePresentationAction 
     | ColorsAction
     | SetEditorAction
     | PresentationAction
+    | KeysAction
 export type EditorAction = ActionCreatorsType
