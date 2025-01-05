@@ -7,15 +7,9 @@ import { ImageDataType } from "../../store/objects/addImageToSlide"
 import { useAppActions } from "../hooks/useAppActions"
 import useAppSelector from "../hooks/useAppSelector"
 import styles from './ImagesPopup.module.css'
+import { Text } from "../../components/text/Text"
 
-type ImagesPopupProps = {
-
-}
-
-function ImagesPopup({
-
-}: ImagesPopupProps) {
-
+function SearchedImages() {
     const { 
         searchImageAsync,
         addImageObject,
@@ -46,39 +40,76 @@ function ImagesPopup({
             addImageObject(data)
         }
     }
+
+    return (
+        <>
+            <div className={styles.searchContainer}>
+                <TextField
+                    onChange={setImageName}
+                    placeholder='поиск'
+                    className={styles.searchField}
+                />
+                <Button 
+                    onClick={() => searchImageAsync(imageName)}
+                    border={10}
+                >
+                    search
+                </Button>
+            </div>
+            <div className={styles.imagesContainer}>
+                <div className={styles.images}>
+                    {images.length === 0
+                        ? <Text>Ничего не найдено</Text>
+                        : images.map(image => (
+                            <Icon
+                                key={image.id}
+                                className={styles.image}
+                                iconSrc={image.url} 
+                                size={132}
+                                onClick={() => setSelectedImageId(image.id)}
+                                style={ image.id == selectedImageId 
+                                    ? { border: "solid 2px red" } 
+                                    : { border: "solid 2px black" }
+                                }
+                            />
+                        ))
+                    }
+                </div>
+            </div>
+            <div className={styles.buttonContainer}>
+                {selectedImageId && 
+                    <Button 
+                        onClick={onAddImage}
+                        border={10}
+                    >
+                        add Image
+                    </Button>
+                }
+            </div>
+            
+        </>
+    )
+}
+
+function SourceImages() {
+    return (
+        <div>
+
+        </div>
+    )
+}
+
+function ImagesPopup() {
+    const [selectButton, setSelectButton] = useState('поиск')
     
     return (
         <>
-            <SliderButtons buttons={["поиск", "источник"]}/>
-            <TextField
-                onChange={setImageName}
-                placeholder='поиск'
-                style={{
-                    border: 'solid 1px black',
-                    margin: '10px',
-                    paddingInline: '10px',
-                    paddingBlock: '5px'
-                }}
+            <SliderButtons
+                onSelect={setSelectButton}
+                buttons={["поиск", "источник"]}
             />
-            <Button onClick={() => searchImageAsync(imageName)}>search</Button>
-            <div className={styles.imagesContainer}>
-                {images.map(image => (
-                    <div 
-                        key={image.id}
-                        className={styles.image}
-                        onClick={() => setSelectedImageId(image.id)}
-                        style={ image.id == selectedImageId 
-                            ? {
-                                border: "solid 2px red"
-                            } 
-                            : {}
-                        }
-                    >
-                        <Icon iconSrc={image.url} size={67}/>
-                    </div>
-                ))}
-            </div>
-            { selectedImageId && <Button onClick={onAddImage}>add Image</Button>}
+            {selectButton === "поиск" && <SearchedImages />}
+            {selectButton === "источник" && <SourceImages />}
         </>
     )
 }

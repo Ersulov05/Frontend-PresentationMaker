@@ -7,6 +7,7 @@ type IconProps = {
     className?: string
     style?: CSSProperties
     size?: number
+    onClick?: () => void
 }
 
 function Icon({
@@ -14,6 +15,7 @@ function Icon({
     className,
     style,
     size = 20,
+    onClick,
 }: IconProps) {
     let iconSizeStyle: CSSProperties = {
         width: `${size}px`,
@@ -21,6 +23,7 @@ function Icon({
     }
     return (
         <img
+            onClick={onClick}
             className={joinStyles(className, styles.icon)}
             style={{
                 ...iconSizeStyle,
