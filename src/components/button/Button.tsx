@@ -13,6 +13,7 @@ export type ButtopProps = {
     border?: number
     width?: number
     height?: number
+    disabled?: boolean
 }
 
 function Button({ 
@@ -25,6 +26,7 @@ function Button({
     border,
     width,
     height,
+    disabled = false,
  }: ButtopProps) {
     const buttonStyles: CSSProperties = {
         justifyContent: valueLocationHorizontal === 'left' ? 'flex-start' 
@@ -40,8 +42,14 @@ function Button({
 
     return (
         <div 
-            className={joinStyles(className ? className : styles.buttonDefault, styles.button)} 
-            style={{ ...style, ...buttonStyles }} 
+            className={joinStyles(
+                className 
+                    ? className 
+                    : styles.buttonDefault, 
+                styles.button,
+                disabled && styles.disabled
+            )} 
+            style={{ ...buttonStyles, ...style }} 
             onClick={onClick}         
         >
             {children}

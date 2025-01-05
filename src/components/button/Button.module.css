@@ -4,14 +4,13 @@
     cursor: pointer;
     width: fit-content;
     height: fit-content;
+    box-sizing: border-box;
 }
 
 .buttonDefault {
     width: fit-content;
     height: fit-content;
     padding: 5px;
-    margin: 1px;
-    margin-inline: 5px;
     background-color: blueviolet;
     border-radius: 5px;
 }
@@ -23,4 +22,9 @@
 .button:active {
     opacity: 0.8;
     transform: scale(0.9);
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: rgb(180, 180, 180);
 }
