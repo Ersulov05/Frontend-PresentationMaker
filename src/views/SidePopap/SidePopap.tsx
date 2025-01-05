@@ -1,13 +1,16 @@
 import { Button } from '../../components/button/Button'
 import { Icon } from '../../components/icon/Icon'
+import { Text } from '../../components/text/Text'
 import styles from './SidePopap.module.css'
 
 type SidePopapProps = {
+    title: string
     children?: React.ReactNode
     onClose?: () => void
 }
 
 function SidePopap({
+    title,
     children,
     onClose,
 }: SidePopapProps) {
@@ -15,8 +18,7 @@ function SidePopap({
         <div className={styles.container}>
             <div className={styles.popap}>
                 <div className={styles.header}>
-                    {/* title, button close */}
-                    <div className={styles.title}></div>
+                    <Text className={styles.title}>{title}</Text>
                     <Button 
                         onClick={onClose} 
                         className={styles.buttonClose}

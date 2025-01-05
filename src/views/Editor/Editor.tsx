@@ -87,7 +87,7 @@ const MainContent = () => {
                 </div>
             </div>
             {openedSidePopup && 
-            <SidePopap onClose={togglePopup}>
+            <SidePopap title={"Images"} onClose={togglePopup}>
                 <ImagesPopup/>
             </SidePopap>}
         </main>
