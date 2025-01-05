@@ -1,0 +1,13 @@
+.sliderButtonsContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.selected {
+    border-bottom: 2px solid black;
+}
