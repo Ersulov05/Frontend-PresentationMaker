@@ -12,7 +12,7 @@ export type ButtopProps = {
     children?: React.ReactNode
     border?: number
     width?: number
-
+    height?: number
 }
 
 function Button({ 
@@ -24,6 +24,7 @@ function Button({
     children,
     border,
     width,
+    height,
  }: ButtopProps) {
     const buttonStyles: CSSProperties = {
         justifyContent: valueLocationHorizontal === 'left' ? 'flex-start' 
@@ -34,6 +35,7 @@ function Button({
                         : 'center',
         paddingInline: `${border ?? 0}px`,
         width:`${width}px`,
+        height: `${height}px`
     }
 
     return (

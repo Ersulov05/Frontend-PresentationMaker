@@ -11,6 +11,7 @@ import { useToolContext } from '../context/toolContext'
 import useAppSelector from '../hooks/useAppSelector'
 import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide'
 import { useGeneratePDF } from '../hooks/useGeneratePDF'
+import { FileInput } from '../../components/fileInput/fileInput'
 
 type ToolPanelProps = {
     setOpenedSidePopap?: () => void
@@ -181,7 +182,13 @@ function ToolPanel({}: ToolPanelProps)
                             <Text>Scale</Text>
                         </Button>
                         <Button onClick={handleGeneratePDF}>Generate PDF</Button>
-                        <input onChange={importPresentationFromJSON} type='file'/>
+                        
+                        <FileInput
+                            id={"importPresentationFromJSON"}
+                            onChange={importPresentationFromJSON}
+                        />
+                        
+                        <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
                         <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
                     </div>
                 </div>
