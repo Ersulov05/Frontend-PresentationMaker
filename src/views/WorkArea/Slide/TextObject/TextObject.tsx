@@ -9,6 +9,7 @@ interface ObjectProps {
     scale: number
     selected?: boolean
     onSetEdited?: (objectUid: string) => void
+    edited?: boolean
 }
 
 function TextObject({ 
@@ -16,20 +17,22 @@ function TextObject({
     scale,
     selected = true,
     onSetEdited,
+    edited,
 }: ObjectProps) {
     const keys = useAppSelector(editor => editor.keys)
 
     function handleClick() {
-        if (onSetEdited) {
-            onSetEdited(object.uid)
-            console.log("edited")
-            return
+        if (!edited) {
+            if (onSetEdited) {
+                onSetEdited(object.uid)
+                return
+            }
+            if (keys.has('ctrl')) {
+                addObjectToSelection(object.uid)
+                return
+            }
+            selectObject(object.uid)
         }
-        if (keys.has('ctrl')) {
-            addObjectToSelection(object.uid)
-            return
-        }
-        selectObject(object.uid)
     }
 
     const { 
