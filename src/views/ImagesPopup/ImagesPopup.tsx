@@ -9,6 +9,7 @@ import useAppSelector from "../hooks/useAppSelector"
 import styles from './ImagesPopup.module.css'
 import { Text } from "../../components/text/Text"
 import { FileInput } from "../../components/fileInput/fileInput"
+import { getBase64ByFile, getBase64ByURL } from "../../store/utils/imageManager"
 
 function SearchedImages() {
     const { 
@@ -78,16 +79,17 @@ function SearchedImages() {
                 </div>
             </div>
             <div className={styles.buttonContainer}>
-                {selectedImageId && 
-                    <Button 
-                        onClick={onAddImage}
-                        border={10}
-                    >
-                        add Image
-                    </Button>
-                }
+                <Button  
+                    onClick={onAddImage}
+                    border={10}
+                    style={{
+                        width: "100%"
+                    }}
+                    disabled={!selectedImageId}
+                >
+                    Добавить картинку
+                </Button>
             </div>
-            
         </>
     )
 }
@@ -101,10 +103,20 @@ function LinkImage({
 }: LinkImageProps) {
     const [imageLink, setImageLink] = useState('')
 
+    function handleLoad(url: string) {
+        getBase64ByURL(url)
+            .then((imageBase64) => {
+                setImageLink(imageBase64)
+            })
+            .catch((error) => {
+                console.error("Ошибка при загрузке изображения:", error);
+            });
+    }
+
     return (
         <div className={styles.linkLoadImageContainer}>
             <TextField
-                onChange={setImageLink}
+                onChange={handleLoad}
                 placeholder='ссылка'
                 className={styles.searchField}
                 style={{
@@ -135,15 +147,6 @@ function LinkImage({
     )
 }
 
-const getBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string)
-        reader.onerror = (error) => reject(error)
-        reader.readAsDataURL(file)
-    });
-};
-
 type SourceImageProps = {
     onLoadImage: (image: string) => void
 }
@@ -156,7 +159,7 @@ function SourceImage({
     function handleLoad(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file && file.type === 'image/png') {
-            getBase64(file)
+            getBase64ByFile(file)
                 .then((imageBase64) => {
                     setLoadImage(imageBase64)
                 })

@@ -20,6 +20,7 @@ import {
     TranslateSlidesAction 
 } from "./actions";
 import { ImageData } from "./EditorType";
+import { getBase64ByURL } from "../utils/imageManager";
 
 const addSlide = (): AddSlideAction => {
     return {
@@ -143,25 +144,6 @@ function validateResponseData(data: any): boolean {
     }
 
     return true;
-}
-
-async function getBase64ByURL(url: string): Promise<string> {
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-
-    const blob = await response.blob(); // Получаем blob-объект
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            resolve(reader.result as string); // Возвращаем результат как строку
-        };
-        reader.onerror = () => {
-            reject(new Error('Failed to convert to Base64'));
-        };
-        reader.readAsDataURL(blob); // Читаем blob как Data URL
-    });
 }
 
 async function remap_Response_To_ImagesData(data: any): Promise<ImageData[]> {
