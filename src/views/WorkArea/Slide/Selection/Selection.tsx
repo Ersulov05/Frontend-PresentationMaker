@@ -179,6 +179,7 @@ function Selection({
                                     ? () => setEditedObject(object.uid)
                                     : undefined
                                 }
+                                edited={edetedObject === object.uid}
                             />
                         );
                     case 'image':
@@ -192,6 +193,7 @@ function Selection({
                                     ? () => setEditedObject(object.uid)
                                     : undefined
                                 }
+                                edited={edetedObject === object.uid}
                             />
                         );
                     default:
