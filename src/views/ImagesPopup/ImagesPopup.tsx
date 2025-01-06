@@ -9,7 +9,7 @@ import useAppSelector from "../hooks/useAppSelector"
 import styles from './ImagesPopup.module.css'
 import { Text } from "../../components/text/Text"
 import { FileInput } from "../../components/fileInput/fileInput"
-import { getBase64ByFile, getBase64ByURL } from "../../store/utils/imageManager"
+import { Base64FormatType, getBase64ByFile, getBase64ByURL, isValidBase64Data } from "../../store/utils/imageManager"
 
 function SearchedImages() {
     const { 
@@ -106,7 +106,17 @@ function LinkImage({
     function handleLoad(url: string) {
         getBase64ByURL(url)
             .then((imageBase64) => {
-                setImageLink(imageBase64)
+                const formats: Base64FormatType[] = [
+                    Base64FormatType.IMAGE_PNG,
+                    Base64FormatType.IMAGE_SVG,
+                    Base64FormatType.IMAGE_JPEG,
+                    Base64FormatType.IMAGE_GIF,
+                ]
+                if (isValidBase64Data(imageBase64, formats)) {
+                    setImageLink(imageBase64)
+                } else {
+                    console.log("неверный тип base64")
+                }
             })
             .catch((error) => {
                 console.error("Ошибка при загрузке изображения:", error);
@@ -161,7 +171,17 @@ function SourceImage({
         if (file && file.type === 'image/png') {
             getBase64ByFile(file)
                 .then((imageBase64) => {
-                    setLoadImage(imageBase64)
+                    const formats: Base64FormatType[] = [
+                        Base64FormatType.IMAGE_PNG,
+                        Base64FormatType.IMAGE_SVG,
+                        Base64FormatType.IMAGE_JPEG,
+                        Base64FormatType.IMAGE_GIF,
+                    ]
+                    if (isValidBase64Data(imageBase64, formats)) {
+                        setLoadImage(imageBase64)
+                    } else {
+                        console.log("неверный тип base64")
+                    }
                 })
                 .catch((error) => {
                     console.error("Ошибка при загрузке изображения:", error);
