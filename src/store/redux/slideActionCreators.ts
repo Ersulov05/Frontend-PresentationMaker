@@ -11,6 +11,7 @@ import {
     AddSlideToSelectionAction, 
     AddTextObjectAction, 
     ChangeBackgroundAction, 
+    ChangeTextObjectAction, 
     DeleteObjectsAction,
     DeleteSlidesAction, 
     SelectObjectAction, 
@@ -72,6 +73,13 @@ const addTextObject = (textObject: TextDataType): AddTextObjectAction => {
     return {
         type: ActionType.ADD_TEXT_OBJECT,
         payload: textObject
+    }
+}
+
+const changeTextObject = (text: string): ChangeTextObjectAction => {
+    return {
+        type: ActionType.CHANGE_TEXT_OBJECT,
+        payload: text
     }
 }
 
@@ -195,4 +203,5 @@ export {
     transformObjects,
     translateSlides,
     searchImageAsync,
+    changeTextObject,
 }

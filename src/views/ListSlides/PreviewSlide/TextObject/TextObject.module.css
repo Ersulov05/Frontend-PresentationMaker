@@ -5,8 +5,17 @@
 
 .text
 {  
+    --local-font-scale: 0.155;
     display: inline-block;
     padding: 0;
     margin: 0;
     line-height: 1;
+
+    width: 100%;
+    white-space: pre-wrap; 
+    word-wrap: break-word;
 }
+/* 
+.text * {
+    font-size: calc(1em * 0.155);
+} */

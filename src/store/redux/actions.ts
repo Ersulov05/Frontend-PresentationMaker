@@ -26,7 +26,8 @@ export enum ActionType {
     SET_SEARCHED_IMAGES = "SET_SEARCHED_IMAGES",
     SET_PRESENTATION = "SET_PRESENTATION",
     ADD_KEY_TO_SET_KEYS = "ADD_KEY_TO_SET_KEYS",
-    REMOVE_KEY_TO_SET_KEYS = "REMOVE_KEY_TO_SET_KEYS"
+    REMOVE_KEY_TO_SET_KEYS = "REMOVE_KEY_TO_SET_KEYS",
+    CHANGE_TEXT_OBJECT = "CHANGE_TEXT_OBJECT",
 }
 
 export interface AddSlideAction {
@@ -134,6 +135,11 @@ export interface RemoveKeyToSetKeysAction {
     payload: KeyCodeType
 }
 
+export interface ChangeTextObjectAction {
+    type: ActionType.CHANGE_TEXT_OBJECT,
+    payload: string
+}
+
 export type SlidesAction = 
     AddSlideAction 
     | AddTextObjectAction
@@ -148,6 +154,7 @@ export type SlidesAction =
     | TransformObjectsAction
     | TranslateSlidesAction
     | SetSearchedImagesAction
+    | ChangeTextObjectAction
 export type NamePresentationAction = RenamePresentationAction
 export type ColorsAction = AddColorAction
 export type ScaleAction = 
