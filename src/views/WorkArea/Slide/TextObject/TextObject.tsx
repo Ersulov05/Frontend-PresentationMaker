@@ -29,7 +29,6 @@ function TextObject({
                 onSetEdited(object.uid)
                 return
             }
-            console.log("select")
             if (keys.has('ctrl')) {
                 addObjectToSelection(object.uid)
                 return
@@ -95,7 +94,6 @@ function TextObject({
            return
         }
         if (object.value !== textValue.current) {
-            console.log("outside")
             changeTextObject(textValue.current)
             textValue.current = object.value
         }
