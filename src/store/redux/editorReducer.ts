@@ -11,6 +11,7 @@ import { addTextToSlide } from "../objects/addTextToSlide";
 import { transformObjects } from "../objects/transformObject";
 import { translateSlides } from "../slides/translateSlides";
 import { changeBackgroundSlide } from "../slides/changeBackgroundSlide";
+import { changeTextObject } from "../objects/changeTextObject";
 
 function editorReducer(editor: EditorType = defaultEditor, action: EditorAction): EditorType {
     switch (action.type) {
@@ -80,6 +81,8 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
                 ...editor,
                 keys: remainsKeys,
             }
+        case ActionType.CHANGE_TEXT_OBJECT:
+            return changeTextObject(editor, action.payload)
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)
         // case ActionType.ADD_SCALE:

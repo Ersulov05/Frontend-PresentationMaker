@@ -102,7 +102,7 @@ function Selection({
                 className={styles.container}
                 style={selectStyles}
             >
-                {!edetedObject && 
+                {!isEditedSelecteon(edetedObject, selectedObjectIds) && 
                     <>
                         <div
                             className={joinStyles(styles.verticalLine, styles.left)}
@@ -176,7 +176,7 @@ function Selection({
                                 scale={scale} 
                                 selected={false}
                                 onSetEdited={selectedObjectIds.length === 1 
-                                    ? () => setEditedObject(object.uid)
+                                    ? setEditedObject
                                     : undefined
                                 }
                                 edited={edetedObject === object.uid}
