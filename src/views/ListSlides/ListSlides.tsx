@@ -35,7 +35,7 @@ function ListSlides({
         return selectedSlideIds.indexOf(b.uid) - selectedSlideIds.indexOf(a.uid);
     });
     const noSelectedSlides = slides.filter(slide => !selectedSlideIds.includes(slide.uid))
-    const scale = 0.155
+    const scale = 0.22
     
     const scrollToSelectedSlide = () => {
         const selectedSlideUid = selectedSlideIds[0];
@@ -92,7 +92,7 @@ function ListSlides({
                     const dataAtValue = child.getAttribute('data-at');
                     if (dataAtValue == "slide") {
                         const rect = child.getBoundingClientRect();
-                        if (currentY > rect.top - rect.height * 0.6) {
+                        if (currentY > rect.top - rect.height * 0.9) {
                             newInsertIndex = slideIndex
                         }
                         slideIndex++

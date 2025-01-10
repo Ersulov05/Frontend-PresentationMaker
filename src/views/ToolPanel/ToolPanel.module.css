@@ -48,6 +48,11 @@
     gap: 5px;
 }
 
+.editButtonsContainer {
+    display: flex;
+    gap: 5px;
+}
+
 .toolButton {
     border-radius: 7px;
     height: 100%;

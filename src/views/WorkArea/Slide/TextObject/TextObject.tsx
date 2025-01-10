@@ -77,7 +77,7 @@ function TextObject({
     useClickOutside({
         onClickOutside: handleBlur,
         ignoreRefs: [textAreaRef],
-        ignoreIds: ["boldButton", "italicButton", "strikeThroughButton"]
+        ignoreIds: ["boldButton", "italicButton", "strikeThroughButton", "changeSizeButton"]
     })
 
     useLayoutEffect(() => {
@@ -115,8 +115,8 @@ function TextObject({
                 color: object.color,
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,  
-                fontSize: `${object.font.size*scale}px`,  
-                lineHeight: `${object.font.lineHeight*scale}px` 
+                //fontSize: `${object.font.size*scale}px`,  
+                //lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >
             {edited 

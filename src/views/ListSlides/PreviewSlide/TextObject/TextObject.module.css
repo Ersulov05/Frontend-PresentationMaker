@@ -1,11 +1,12 @@
 .textArea 
 {
     position: absolute;
+    box-sizing: border-box;
 }
 
 .text
 {  
-    --local-font-scale: 0.155;
+    all: unset;
     display: inline-block;
     padding: 0;
     margin: 0;
@@ -14,8 +15,8 @@
     width: 100%;
     white-space: pre-wrap; 
     word-wrap: break-word;
+    
+    user-select: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
-/* 
-.text * {
-    font-size: calc(1em * 0.155);
-} */

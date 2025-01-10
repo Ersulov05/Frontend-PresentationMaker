@@ -224,15 +224,12 @@ function ToolPanel({}: ToolPanelProps)
                         <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
                         <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
                     </div>
+                    <Strip orientation={"vertical"}/>
                     <div className={styles.editButtonsContainer}>
-                        <Button id={"boldButton"} onClick={toggleBold} border={5}>B</Button>
-                        <button 
-                            id="italicButton"
-                            onClick={() => document.execCommand('italic')}>Курсив</button>
-                        <button 
-                            id="strikeThroughButton"
-                            onClick={() => document.execCommand('strikeThrough')}>Зачеркнутый</button>
-                        <button onClick={() => changeFontSize()}>Другой кегль</button>
+                        <Button id={"boldButton"} onClick={() => document.execCommand('bold')} border={5}>B</Button>
+                        <Button id={"italicButton"} onClick={() => document.execCommand('italic')} border={5}>Курсив</Button>
+                        <Button id={"strikeThroughButton"} onClick={() => document.execCommand('strikeThrough')} border={5}>Зачеркнутый</Button>
+                        <Button id={"changeSizeButton"} onClick={() => changeFontSize()} border={5}>Другой кегль</Button>
                     </div>
                 </div>
             </div>
