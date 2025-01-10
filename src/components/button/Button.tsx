@@ -4,6 +4,7 @@ import { joinStyles } from "../../store/utils/joinStyles"
 import styles from './Button.module.css'
 
 export type ButtopProps = {
+    id?: string
     onClick?: () => void
     className?: string
     style?: CSSProperties
@@ -16,7 +17,8 @@ export type ButtopProps = {
     disabled?: boolean
 }
 
-function Button({ 
+function Button({
+    id,
     className = undefined, 
     style = {},
     onClick, 
@@ -42,6 +44,7 @@ function Button({
 
     return (
         <div 
+            id={id}
             className={joinStyles(
                 className 
                     ? className 

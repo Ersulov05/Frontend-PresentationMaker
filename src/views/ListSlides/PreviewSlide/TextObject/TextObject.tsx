@@ -13,7 +13,7 @@ function TextObject({ object, widthCoef}: ObjectProps)
 
     function getEditedText(text: string): string {
 
-        console.log("text ", text)
+        // console.log("text ", text)
         const container = document.createElement('div');
         container.innerHTML = text
         container.style.display = 'none'
@@ -22,12 +22,12 @@ function TextObject({ object, widthCoef}: ObjectProps)
 
         elements.forEach(element => {
             const computedStyle = window.getComputedStyle(element)
-            console.log(element)
-            console.log(computedStyle)
+            // console.log(element)
+            // console.log(computedStyle)
             const currentFontSize = computedStyle.fontSize
-            console.log("size", currentFontSize)
+            // console.log("size", currentFontSize)
             const numericFontSize = parseFloat(currentFontSize)
-            console.log(numericFontSize)
+            // console.log(numericFontSize)
             const newFontSize = numericFontSize * widthCoef
             element.style.fontSize = `${newFontSize}px`
         })
@@ -35,7 +35,7 @@ function TextObject({ object, widthCoef}: ObjectProps)
         return container.innerHTML
     }
 
-    console.log(getEditedText(object.value))
+    // console.log(getEditedText(object.value))
 
     return (
         <div className={styles.textArea} 

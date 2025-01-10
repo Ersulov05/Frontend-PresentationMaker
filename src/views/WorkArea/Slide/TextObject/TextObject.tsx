@@ -62,31 +62,6 @@ function TextObject({
     //     }
     // }
 
-    function changeFontSize() {
-        const newSize = prompt("Введите размер шрифта (например, '24px'):", "24px");
-        if (newSize) {
-            const selection = window.getSelection();
-            if (selection && selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                const selectedContents = range.cloneContents(); // Клонируем выделенный текст
-    
-                // Создаём новый элемент <span> с нужным размером шрифта
-                const span = document.createElement('span');
-                span.style.fontSize = newSize; // Устанавливаем новый размер шрифта
-                
-                // Удаляем старое содержимое
-                range.deleteContents();
-                
-                // Оборачиваем все выделенные узлы в новый <span>
-                const fragment = document.createDocumentFragment();
-                fragment.appendChild(span);
-                span.appendChild(selectedContents); // Добавляем клонированное содержимое в <span>
-                
-                range.insertNode(fragment); // Вставляем новый фрагмент в документ
-            }
-        }
-    }
-
     const textAreaRef = useRef<HTMLDivElement>(null)
     const textValue = useRef<string>(object.value)
     function handleBlur() {
@@ -144,18 +119,6 @@ function TextObject({
                 lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >
-            <div className={styles.controls}>
-                <button // TODO: Вынести кнопки редактирования текста в toolPanel 
-                    id="boldButton"
-                    onClick={() => document.execCommand('bold')}>Жирный</button>
-                <button 
-                    id="italicButton"
-                    onClick={() => document.execCommand('italic')}>Курсив</button>
-                <button 
-                    id="strikeThroughButton"
-                    onClick={() => document.execCommand('strikeThrough')}>Зачеркнутый</button>
-                <button onClick={() => changeFontSize()}>Другой кегль</button>
-            </div>
             {edited 
                 ? <div 
                     ref={textAreaRef}
@@ -163,9 +126,6 @@ function TextObject({
                     contentEditable={true}
                     suppressContentEditableWarning={true}
                     dangerouslySetInnerHTML={{ __html: object.value }}
-                    style={{
-                        height: "calc(100% - 30px)",
-                    }}
                     onKeyDown={handleKeyDown}
                     onInput={(event) => {
                         textValue.current = event.currentTarget.innerHTML

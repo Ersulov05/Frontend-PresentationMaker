@@ -106,6 +106,39 @@ function ToolPanel({}: ToolPanelProps)
 
     const hiddenContainerRef = useRef<HTMLDivElement>(null)
 
+
+    function changeFontSize() {
+        const newSize = prompt("Введите размер шрифта (например, '24px'):", "24px");
+        if (newSize) {
+            const selection = window.getSelection();
+            if (selection && selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const selectedContents = range.cloneContents(); // Клонируем выделенный текст
+                const elements = selectedContents.childNodes;
+                console.log("clon: ", elements)
+
+                for (let i = 0; i < elements.length; i++) {
+                    const element = elements[i];
+                    console.log(element); 
+                }
+    
+                // Создаём новый элемент <span> с нужным размером шрифта
+                const span = document.createElement('span');
+                span.style.fontSize = newSize; // Устанавливаем новый размер шрифта
+                
+                // Удаляем старое содержимое
+                range.deleteContents();
+                
+                // Оборачиваем все выделенные узлы в новый <span>
+                const fragment = document.createDocumentFragment();
+                fragment.appendChild(span);
+                span.appendChild(selectedContents); // Добавляем клонированное содержимое в <span>
+                
+                range.insertNode(fragment); // Вставляем новый фрагмент в документ
+            }
+        }
+    }
+
     return (
         <>
             <div className={styles.container}>
@@ -191,12 +224,72 @@ function ToolPanel({}: ToolPanelProps)
                         <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
                         <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
                     </div>
+                    <div className={styles.editButtonsContainer}>
+                        <Button id={"boldButton"} onClick={toggleBold} border={5}>B</Button>
+                        <button 
+                            id="italicButton"
+                            onClick={() => document.execCommand('italic')}>Курсив</button>
+                        <button 
+                            id="strikeThroughButton"
+                            onClick={() => document.execCommand('strikeThrough')}>Зачеркнутый</button>
+                        <button onClick={() => changeFontSize()}>Другой кегль</button>
+                    </div>
                 </div>
             </div>
             <HiddenContainer ref={hiddenContainerRef}/>
         </>
     )
 }
+
+function toggleBold() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+
+    const range = selection.getRangeAt(0);
+    const selectedContents = range.cloneContents(); // Клонируем выделенный текст
+
+    // Проверяем, обернут ли выделенный текст в <strong>
+    let isBold = false;
+    const tempDiv = document.createElement('div');
+    tempDiv.appendChild(selectedContents);
+    
+    // Проверяем наличие тега <strong>
+    const strongElements = tempDiv.querySelectorAll('strong');
+    if (strongElements.length > 0) {
+        isBold = true; // Если есть <strong>, значит текст уже жирный
+    }
+
+    // Создаем новый элемент <strong> или убираем его
+    if (!isBold) {
+        // Создаем новый элемент <strong>
+        const strong = document.createElement('strong');
+        strong.appendChild(selectedContents);
+
+        // Удаляем старое содержимое и вставляем новый <strong>
+        range.deleteContents(); 
+        range.insertNode(strong);
+        
+        // Сбрасываем выделение
+        selection.removeAllRanges();
+        selection.addRange(range); // Восстанавливаем выделение
+    } else {
+        // Убираем <strong>, если текст уже жирный
+        strongElements.forEach(strong => {
+            const parent = strong.parentNode;
+            if (parent) {
+                while (strong.firstChild) {
+                    parent.insertBefore(strong.firstChild, strong);
+                }
+                parent.removeChild(strong);
+            }
+        });
+        
+        // Сбрасываем выделение
+        selection.removeAllRanges();
+        selection.addRange(range); // Восстанавливаем выделение
+    }
+}
+
 
 export {
     ToolPanel,
