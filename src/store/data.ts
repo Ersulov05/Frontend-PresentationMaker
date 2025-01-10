@@ -13,6 +13,7 @@ const PresentationMax: PresentationType = {
                 uid: 'a8fa7818-7232-4981-b369-1b8fcced8d5f',
                 pos: { x: 0, y: 0 },
                 size: { width: 50, height: 50 },
+                rotation: 0,
                 src: '/image/Test.svg',
                 type: 'image'
                 },
@@ -20,6 +21,7 @@ const PresentationMax: PresentationType = {
                 uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
                 pos: { x: 50, y: 50 },
                 size: { width: 50, height: 50 },
+                rotation: 0,
                 value: 'text',
                 font: {
                     style: 'normal',
@@ -42,6 +44,7 @@ const PresentationMax: PresentationType = {
                 uid: 'a4764091-6cf2-4b5a-a586-ede15a722b86',
                 pos: { x: -100, y: 100 },
                 size: { width: 100, height: 100 },
+                rotation: 0,
                 src: '/image/react.svg',
                 type: 'image'
                 },
@@ -49,6 +52,7 @@ const PresentationMax: PresentationType = {
                 uid: '25f6059b-42ca-40c9-95be-0502cd0844b2',
                 pos: { x: 0, y: 100 },
                 size: { width: 100, height: 100 },
+                rotation: 0,
                 value: 'Тут текст',
                 font: {
                     style: 'italic',
@@ -71,6 +75,7 @@ const PresentationMax: PresentationType = {
                 uid: 'a7fa7818-7232-4981-b369-1b8fcced8d5f',
                 pos: { x: 0, y: 0 },
                 size: { width: 50, height: 50 },
+                rotation: 0,
                 src: '/image/Test.svg',
                 type: 'image'
                 },
@@ -78,6 +83,7 @@ const PresentationMax: PresentationType = {
                 uid: '41fd75e3-2abc-4b14-a02b-31740e2774d2',
                 pos: { x: 50, y: 50 },
                 size: { width: 50, height: 50 },
+                rotation: 0,
                 value: 'text',
                 font: {
                     style: 'normal',

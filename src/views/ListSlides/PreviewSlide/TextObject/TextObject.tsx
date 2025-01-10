@@ -12,6 +12,7 @@ function TextObject({ object, widthCoef}: ObjectProps)
     const containerRef = useRef<HTMLDivElement>(null)
 
     return (
+        
         <div className={styles.textArea} 
             style={{
                 top: `${object.pos.y*widthCoef}px`,
@@ -24,14 +25,21 @@ function TextObject({ object, widthCoef}: ObjectProps)
                 fontWeight: object.font.weight,  
                 transform: `scale(${widthCoef})`,
                 transformOrigin: "top left",
+                // transform: `rotateZ(${45}deg)`,
                 //fontSize: `${object.font.size}px`, //Влияет на высоту блока
                 // lineHeight: `${object.font.lineHeight}px` 
-            }}>
+            }}
+        >
             <div 
-                ref={containerRef} 
-                className={styles.text} 
-                dangerouslySetInnerHTML={{ __html: object.value}}
-            ></div>
+                className={styles.rotateContainer}
+                style={{transform: `rotateZ(${object.rotation}deg)`}}
+            >
+                <div 
+                    ref={containerRef} 
+                    className={styles.text} 
+                    dangerouslySetInnerHTML={{ __html: object.value}}
+                ></div>
+            </div>
         </div>
     )
 }

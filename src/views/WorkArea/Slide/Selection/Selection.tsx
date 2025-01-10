@@ -24,6 +24,7 @@ function Selection({
     scale,
     selectedObjects,
 }: SelectionProps) {
+    const rotatePoint = useDragAndDrop()
     const leftPoint = useDragAndDrop()
     const rightPoint = useDragAndDrop()
     const downPoint = useDragAndDrop()
@@ -47,7 +48,8 @@ function Selection({
             pos: {
                 x: transform.position.x  + dragX/scale + (object.pos.x - transform.position.x) * widthScale,
                 y: transform.position.y  + dragY/scale + (object.pos.y - transform.position.y) * heightScale
-            }
+            },
+            rotation: rotation
         }
     }
 
@@ -60,7 +62,8 @@ function Selection({
             size: {
                 width: transform.size.width + dragWidth/scale,
                 height: transform.size.height + dragHeight/scale
-            }
+            },
+            rotation: rotation,
         }
         transformObjects(transform_)
     }
@@ -79,10 +82,26 @@ function Selection({
         }  
     }, [selectedObjectIds]);
 
-    const dragX = leftUpPoint.position.x + leftDownPoint.position.x + drag.position.x + leftPoint.position.x
-    const dragY = leftUpPoint.position.y + rightUpPoint.position.y + drag.position.y + upPoint.position.y
-    const dragWidth = rightUpPoint.position.x - leftUpPoint.position.x - leftDownPoint.position.x + rightDownPoint.position.x - leftPoint.position.x + rightPoint.position.x
-    const dragHeight = - rightUpPoint.position.y - leftUpPoint.position.y + leftDownPoint.position.y + rightDownPoint.position.y - upPoint.position.y + downPoint.position.y
+    function getDegrees(radians: number): number {
+        return radians * 180 / Math.PI
+    }
+
+    function getRadians(degrees: number): number {
+        return degrees * Math.PI / 180
+    }
+    const dy = (rotatePoint.position.y - transform.size.height/2 - 20)
+    const dx = rotatePoint.position.x
+    const added = Math.sign(dy) == 1 ? 180 : 0
+    const rotation = -getDegrees(Math.atan(dx/dy)) + added + transform.rotation
+
+    const dragX = 0 + leftUpPoint.position.x + leftDownPoint.position.x + drag.position.x + leftPoint.position.x
+    const dragY = 0 + leftUpPoint.position.y + rightUpPoint.position.y + drag.position.y + upPoint.position.y
+    const dragWidth = (rightUpPoint.position.x - leftUpPoint.position.x - leftDownPoint.position.x + rightDownPoint.position.x - leftPoint.position.x + rightPoint.position.x)
+    const dragHeight = 0 - rightUpPoint.position.y - leftUpPoint.position.y + leftDownPoint.position.y + rightDownPoint.position.y - upPoint.position.y + downPoint.position.y
+    
+
+    //const dragWidth = rightPoint.position.y * Math.sin(getRadians(rotation)) + rightPoint.position.x * Math.cos(getRadians(rotation))
+
 
     const widthScale = (dragWidth + transform.size.width) / transform.size.width;
     const heightScale = (dragHeight + transform.size.height) / transform.size.height;
@@ -93,8 +112,10 @@ function Selection({
         top: transform.position.y * scale + dragY + "px",
         left: transform.position.x * scale + dragX + "px",
         width: transform.size.width * scale + dragWidth + "px",
-        height: transform.size.height * scale + dragHeight + "px"
+        height: transform.size.height * scale + dragHeight + "px",
+        transform: `rotateZ(${rotation}deg)`,
     }
+    // console.log(transform.position.x * scale + dragX + "px", dragWidth, transform.rotation)
 
     return (
         <>
@@ -121,6 +142,12 @@ function Selection({
                             className={joinStyles(styles.horizontalLine, styles.bottom)}
                             onMouseDown={drag.startDrag}>
                         </div>
+
+                        <ResizePoint 
+                            className={joinStyles(styles.rotate, styles.point)}
+                            saveTransformObjects={saveTransformObjects}
+                            dragPoint={rotatePoint}
+                        />
 
                         <ResizePoint 
                             className={joinStyles(styles.left, styles.point)}

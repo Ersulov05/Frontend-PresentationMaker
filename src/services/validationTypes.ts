@@ -4,12 +4,12 @@ import { EditorType, KeyCodeType } from "../store/redux/EditorType"
 const validateObjectData = (data: any): data is ObjectType => {
     if (typeof data !== 'object' || data === null) return false
 
-    const { uid, pos, size, type } = data
-
+    const { uid, pos, size, rotation, type } = data
     if (
         typeof uid !== 'string' ||
         typeof pos !== 'object' || pos === null ||
         typeof size !== 'object' || size === null ||
+        typeof rotation !== 'number' ||
         !['image', 'text'].includes(type)
     ) {
         return false
@@ -62,7 +62,9 @@ const validatePresentationData = (presentation: any): presentation is Presentati
         typeof presentation.name !== 'string' ||
         typeof presentation.scale !== 'number' ||
         !Array.isArray(presentation.slides)
-    )
+    ) {
+        return false
+    }
 
     for (const slide of presentation.slides) {
         if (!validateSlideData(slide)) {

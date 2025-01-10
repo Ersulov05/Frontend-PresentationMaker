@@ -25,7 +25,8 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
             size: {
                 width: 0,
                 height: 0
-            }
+            },
+            rotation: 0,
         }
     }
     let xStart = selectedObjects[0].pos.x
@@ -46,7 +47,8 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
         size: {
             width: xEnd - xStart,
             height: yEnd - yStart
-        }
+        },
+        rotation: selectedObjects[0].rotation,
     }
 }
 

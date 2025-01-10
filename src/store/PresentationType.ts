@@ -9,8 +9,9 @@ export type Size = {
 }
 
 export type TransformType = {
-    position: Position,
-    size: Size,
+    position: Position
+    size: Size
+    rotation: number
 }
 
 export type Solid = {
@@ -26,7 +27,8 @@ export type Image = {
 export type BaseObject = {
     uid: string
     pos: Position
-    size: Size    
+    size: Size
+    rotation: number
 }
 
 export type ObjectImageType = BaseObject & {

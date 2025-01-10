@@ -1,4 +1,4 @@
-import { ObjectImage as ObjectType } from '../../../../store/PresentationType.ts';
+import { ObjectImageType as ObjectType } from '../../../../store/PresentationType.ts';
 import styles from './ImageObject.module.css';
 
 interface ObjectProps {
@@ -16,6 +16,7 @@ function ImageObject({ object, widthCoef }: ObjectProps)
                 left: `${object.pos.x*widthCoef}px`,
                 width: `${object.size.width*widthCoef}px`,
                 height: `${object.size.height*widthCoef}px`,
+                transform: `rotateZ(${object.rotation}deg)`,
             }}
         />
     )
