@@ -13,6 +13,7 @@ import {
     ChangeBackgroundAction, 
     ChangeTextObjectAction, 
     DeleteObjectsAction,
+    DeleteObjectSelectionAction,
     DeleteSlidesAction, 
     SelectObjectAction, 
     SelectSlideAction, 
@@ -59,6 +60,12 @@ const addObjectToSelection = (objectUid: string): AddObjectToSelectionAction => 
     return {
         type: ActionType.ADD_OBJECT_TO_SELECTION,
         payload: objectUid
+    }
+}
+
+const deleteObjectSelection = (): DeleteObjectSelectionAction => {
+    return {
+        type: ActionType.DELETE_OBJECT_SELECTION
     }
 }
 
@@ -198,6 +205,7 @@ export {
     addImageObject,
     addTextObject,
     addObjectToSelection,
+    deleteObjectSelection,
     addSlideToSelection,
     changeBackground,
     transformObjects,

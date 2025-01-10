@@ -5,7 +5,7 @@ type UseClickOutsideProps = {
     ignoreClasses?: string[]
     ignoreTags?: string[]
     ignoreRefs?: RefObject<HTMLElement>[]
-    onClickOutside: () => void
+    onClickOutside?: () => void
 }
 
 function useClickOutside({
@@ -13,17 +13,18 @@ function useClickOutside({
     ignoreIds = [],
     ignoreTags = [],
     ignoreRefs = [],
-    onClickOutside
+    onClickOutside,
 }: UseClickOutsideProps) {
     const handleClick = (event: MouseEvent) => {
+        if (!onClickOutside) return 
         const target = event.target as HTMLElement
         const isIgnoredClass = ignoreClasses.some(className => target.closest(`.${className}`))
         const isIgnoredId = ignoreIds.some(id => target.closest(`#${id}`))
         const isIgnoredTag = ignoreTags.includes(target.tagName.toLowerCase())
         const isIgnoredRef = ignoreRefs.some(ref => ref.current && ref.current.contains(target))
 
-        if (!isIgnoredClass && !isIgnoredId && !isIgnoredTag && !isIgnoredRef && onClickOutside) {
-            onClickOutside();
+        if (!isIgnoredClass && !isIgnoredId && !isIgnoredTag && !isIgnoredRef) {
+            onClickOutside()
         }
     };
 
@@ -33,7 +34,7 @@ function useClickOutside({
         return () => {
             document.removeEventListener("click", handleClick, true);
         };
-    }, [handleClick]);
+    }, [handleClick, onClickOutside]);
 }
 
 export { useClickOutside };

@@ -28,6 +28,7 @@ export enum ActionType {
     ADD_KEY_TO_SET_KEYS = "ADD_KEY_TO_SET_KEYS",
     REMOVE_KEY_TO_SET_KEYS = "REMOVE_KEY_TO_SET_KEYS",
     CHANGE_TEXT_OBJECT = "CHANGE_TEXT_OBJECT",
+    DELETE_OBJECT_SELECTION = "DELETE_OBJECT_SELECTION",
 }
 
 export interface AddSlideAction {
@@ -55,6 +56,10 @@ export interface SelectObjectAction {
 export interface AddObjectToSelectionAction {
     type: ActionType.ADD_OBJECT_TO_SELECTION,
     payload: string
+}
+
+export interface DeleteObjectSelectionAction {
+    type: ActionType.DELETE_OBJECT_SELECTION
 }
 
 export interface AddSlideToSelectionAction {
@@ -149,6 +154,7 @@ export type SlidesAction =
     | SelectSlideAction 
     | SelectObjectAction
     | AddObjectToSelectionAction
+    | DeleteObjectSelectionAction
     | AddSlideToSelectionAction
     | ChangeBackgroundAction
     | TransformObjectsAction

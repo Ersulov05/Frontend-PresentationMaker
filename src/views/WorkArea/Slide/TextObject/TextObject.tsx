@@ -41,26 +41,10 @@ function TextObject({
         selectObject,
         addObjectToSelection,
         changeTextObject,
+        deleteObjectSelection,
     } = useAppActions()
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
     const isSelected = selectedObjectIds.includes(object.uid)
-
-    // function changeFontSize() {
-    //     const newSize = prompt("Введите размер шрифта (например, '24px'):", "24px");
-    //     if (newSize) {
-    //         const selection = window.getSelection();
-    //         if (selection && selection.rangeCount > 0) {
-    //             const range = selection.getRangeAt(0);
-    //             const selectedContents = range.extractContents(); // Извлекаем выделенный текст
-                
-    //             const span = document.createElement('span');
-    //             span.style.fontSize = newSize; // Устанавливаем размер шрифта
-    //             span.appendChild(selectedContents); // Добавляем извлечённый текст в <span>
-                
-    //             range.insertNode(span); // Вставляем <span> обратно в документ
-    //         }
-    //     }
-    // }
 
     const textAreaRef = useRef<HTMLDivElement>(null)
     const textValue = useRef<string>(object.value)
@@ -69,15 +53,18 @@ function TextObject({
            return
         }
         if (object.value !== textValue.current) {
+            console.log("!=")
             changeTextObject(textValue.current)
             textValue.current = object.value
         }
+        deleteObjectSelection()
     }
 
     useClickOutside({
-        onClickOutside: handleBlur,
+        onClickOutside: isSelected ? handleBlur : undefined,
         ignoreRefs: [textAreaRef],
-        ignoreIds: ["boldButton", "italicButton", "strikeThroughButton", "changeSizeButton"]
+        ignoreClasses: [styles.textArea],
+        ignoreIds: ["boldButton", "italicButton", "strikeThroughButton", "changeSizeButton", "objectSelection"]
     })
 
     useLayoutEffect(() => {

@@ -4,6 +4,7 @@ import { joinStyles } from '../../../../store/utils/joinStyles.ts';
 
 import useAppSelector from '../../../hooks/useAppSelector.ts';
 import { useAppActions } from '../../../hooks/useAppActions.ts';
+import { useClickOutside } from '../../../hooks/useClickOutside.tsx';
 
 interface ObjectProps {
     object: ObjectType 
@@ -23,6 +24,14 @@ function ImageObject({
 {
     const keys = useAppSelector(editor => editor.keys)
 
+    const { 
+        selectObject,
+        addObjectToSelection,
+        deleteObjectSelection,
+    } = useAppActions()
+    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
+    const isSelected = selectedObjectIds.includes(object.uid)
+
     function handleClick() {
         if (!edited) {
             if (onSetEdited) {
@@ -37,15 +46,15 @@ function ImageObject({
         }
     }
 
-    const { 
-        selectObject,
-        addObjectToSelection,
-    } = useAppActions()
-    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
-    const isSelected = selectedObjectIds.includes(object.uid) && selected
+    useClickOutside({
+        onClickOutside: isSelected ? deleteObjectSelection : undefined,
+        ignoreClasses: [styles.image],
+        ignoreIds: ["objectSelection"],
+    })
+    
     return (
         <img
-            className={joinStyles(styles.image, isSelected ? styles.select : '')} 
+            className={joinStyles(styles.image, isSelected && selected ? styles.select : '')} 
             src={object.src}
             draggable={false}
             style={{

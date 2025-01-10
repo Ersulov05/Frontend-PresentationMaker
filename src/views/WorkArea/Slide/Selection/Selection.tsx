@@ -99,6 +99,7 @@ function Selection({
     return (
         <>
             <div 
+                id={"objectSelection"}
                 className={styles.container}
                 style={selectStyles}
             >

@@ -5,7 +5,7 @@ import { addSlide } from "../slides/addSlide";
 import { deleteSlides } from "../slides/deleteSlides";
 import { deleteObjects } from "../objects/deleteObject";
 import { addSlideToSelection, selectSlide } from "../slides/selectSlide";
-import { addObjectToSelection, selectObject } from "../objects/selectObject";
+import { addObjectToSelection, deleteObjectSelection, selectObject } from "../objects/selectObject";
 import { addImageToSlide } from "../objects/addImageToSlide";
 import { addTextToSlide } from "../objects/addTextToSlide";
 import { transformObjects } from "../objects/transformObject";
@@ -83,6 +83,8 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
             }
         case ActionType.CHANGE_TEXT_OBJECT:
             return changeTextObject(editor, action.payload)
+        case ActionType.DELETE_OBJECT_SELECTION:
+            return deleteObjectSelection(editor)
         // case ActionType.CHANGE_SCALE:
         //     return changeScale(action.payload)
         // case ActionType.ADD_SCALE:

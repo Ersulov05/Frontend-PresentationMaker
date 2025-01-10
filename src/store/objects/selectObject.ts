@@ -33,7 +33,18 @@ function addObjectToSelection(editor: EditorType, objectUid: string): EditorType
     }
 }
 
+function deleteObjectSelection(editor: EditorType): EditorType {
+    return {
+        ...editor,
+        selection: {
+            ...editor.selection,
+            selectedObjectIds: []
+        }
+    }
+}
+
 export {
     selectObject,
-    addObjectToSelection
+    addObjectToSelection,
+    deleteObjectSelection,
 }
