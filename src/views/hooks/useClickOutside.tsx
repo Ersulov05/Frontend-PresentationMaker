@@ -34,7 +34,7 @@ function useClickOutside({
         return () => {
             document.removeEventListener("click", handleClick, true);
         };
-    }, [handleClick, onClickOutside]);
+    }, [handleClick]);
 }
 
 export { useClickOutside };

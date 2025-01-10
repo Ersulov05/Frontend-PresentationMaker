@@ -17,7 +17,7 @@ interface ObjectProps {
 function ImageObject({ 
     object, 
     scale,
-    selected = false,
+    selected = true,
     onSetEdited,
     edited,
 }: ObjectProps)
@@ -34,10 +34,10 @@ function ImageObject({
 
     function handleClick() {
         if (!edited) {
-            if (onSetEdited) {
-                onSetEdited(object.uid)
-                return
-            }
+            // if (onSetEdited) {
+            //     onSetEdited(object.uid)
+            //     return
+            // }
             if (keys.has('ctrl')) {
                 addObjectToSelection(object.uid)
                 return
@@ -46,8 +46,14 @@ function ImageObject({
         }
     }
 
+    function handleBlur() {
+        if (!keys.has('ctrl')) {
+            deleteObjectSelection()
+        }
+    } 
+
     useClickOutside({
-        onClickOutside: isSelected ? deleteObjectSelection : undefined,
+        onClickOutside: isSelected ? handleBlur : undefined,
         ignoreClasses: [styles.image],
         ignoreIds: ["objectSelection"],
     })

@@ -1,19 +1,16 @@
-.textArea 
-{
-    position: absolute;
-    padding: 5px;
-}
-
 .image
 {  
     aspect-ratio: none;
     object-fit: fill;
     position: absolute;
     user-select: none;
+    box-sizing: border-box;
+    border: solid 1px transparent
 
     /* background-size: 100% 100%;
     background-repeat: no-repeat; */
 }
+
 .select {
     border: solid 1px blue;
 }

@@ -53,17 +53,18 @@ function TextObject({
            return
         }
         if (object.value !== textValue.current) {
-            console.log("!=")
             changeTextObject(textValue.current)
             textValue.current = object.value
         }
-        deleteObjectSelection()
+        if (!keys.has('ctrl')) {
+            deleteObjectSelection()
+        }
     }
 
     useClickOutside({
         onClickOutside: isSelected ? handleBlur : undefined,
         ignoreRefs: [textAreaRef],
-        ignoreClasses: [styles.textArea],
+        ignoreClasses: ["textAreaSelect"],
         ignoreIds: ["boldButton", "italicButton", "strikeThroughButton", "changeSizeButton", "objectSelection"]
     })
 
@@ -91,7 +92,13 @@ function TextObject({
     }
 
     return (
-        <div className={joinStyles(styles.textArea, isSelected && selected ? styles.select : '')} 
+        <div className={joinStyles(
+                styles.textArea, 
+                isSelected && selected 
+                    ? styles.select 
+                    : '', 
+                isSelected && "textAreaSelect"
+            )} 
             onClick={handleClick}
             style={{
                 top: `${(object.pos.y)*scale}px`,

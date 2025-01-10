@@ -90,8 +90,8 @@ function Selection({
     const heightScale_ = (dragHeight + transform.size.height) / transform.size.height;
 
     const selectStyles: CSSProperties = {
-        top: transform.position.y * scale + dragY -2 + "px",
-        left: transform.position.x * scale + dragX -2 + "px",
+        top: transform.position.y * scale + dragY + "px",
+        left: transform.position.x * scale + dragX + "px",
         width: transform.size.width * scale + dragWidth + "px",
         height: transform.size.height * scale + dragHeight + "px"
     }
@@ -175,7 +175,7 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale} 
-                                selected={false}
+                                // selected={false}
                                 onSetEdited={selectedObjectIds.length === 1 
                                     ? setEditedObject
                                     : undefined
@@ -189,7 +189,7 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale}
-                                selected={false}
+                                // selected={false}
                                 onSetEdited={selectedObjectIds.length === 1 
                                     ? () => setEditedObject(object.uid)
                                     : undefined

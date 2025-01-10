@@ -1,31 +1,32 @@
 .container {
-    border: red solid 2px;
+    border: transparent solid 1px;
     position: relative;
     user-select: none;
+    box-sizing: border-box;
 }
 
 .leftUp {
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(-70%, -70%);
 }
 
 .leftDown {
     left: 0;
     bottom: 0;
-    transform: translate(-50%, 50%);
+    transform: translate(-70%, 70%);
 }
 
 .rightUp {
     right: 0;
     top: 0;
-    transform: translate(50%, -50%);
+    transform: translate(70%, -70%);
 }
 
 .rightDown {
     right: 0;
     bottom: 0;
-    transform: translate(50%, 50%);
+    transform: translate(70%, 70%);
 }
 
 .horizontalLine {
@@ -55,22 +56,22 @@
 .left {
     left: 0;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-70%, -50%);
 }
 .top {
     left: 50%;
     top: 0;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -70%);
 }
 .right {
     right: 0;
     top: 50%;
-    transform: translate(50%, -50%);
+    transform: translate(70%, -50%);
 }
 .bottom {
     left: 50%;
     bottom: 0;
-    transform: translate(-50%, 50%);
+    transform: translate(-50%, 70%);
 }
 
 
