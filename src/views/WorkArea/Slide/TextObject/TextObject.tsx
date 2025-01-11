@@ -109,7 +109,8 @@ function TextObject({
                 color: object.color,
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,
-                transform: `rotateZ(${object.rotation}deg)`,
+                transform: `rotateZ(${object.rotation}rad) translate(-50%, -50%)`,
+                transformOrigin: 'left top'
                 //fontSize: `${object.font.size*scale}px`,  
                 //lineHeight: `${object.font.lineHeight*scale}px` 
             }}

@@ -19,6 +19,7 @@ function addTextToSlide(editor: EditorType, data: TextDataType): EditorType {
         pos: data.position,
         size: data.size,
         value: "New text",
+        rotation: 0,
         font: {
             style: "normal",
             family: "arial",

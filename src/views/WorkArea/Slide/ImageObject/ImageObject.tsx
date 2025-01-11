@@ -68,7 +68,8 @@ function ImageObject({
                 left: `${object.pos.x*scale}px`,
                 width: `${object.size.width*scale}px`,
                 height: `${object.size.height*scale}px`,
-                transform: `rotateZ(${object.rotation}deg)`,
+                transform: `rotateZ(${object.rotation}rad) translate(-50%, -50%)`,
+                transformOrigin: 'left top'
             }}
             onClick={handleClick}
         />

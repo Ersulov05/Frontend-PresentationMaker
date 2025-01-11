@@ -19,6 +19,7 @@ function addImageToSlide(editor: EditorType, data: ImageDataType): EditorType {
         uid: generateUID(),
         pos: data.position,
         size: data.size,
+        rotation: 0,
         src: data.src,
         type: "image"
     }
