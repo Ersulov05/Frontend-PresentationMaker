@@ -41,14 +41,12 @@ function PopupAddColor({
                     <div className={styles.popupButtonsContainer}>
                         <Button 
                             className={styles.popupButton} 
-                            value='Cancel'
                             onClick={onClose}
-                        />
+                        >Cancel</Button>
                         <Button 
                             className={styles.popupButton} 
-                            value='Add'
                             onClick={onAddColor}
-                        />
+                        >Add</Button>
                     </div>
                 </div>
             </div>

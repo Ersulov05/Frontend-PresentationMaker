@@ -1,6 +1,6 @@
 import { ImageDataType } from "../objects/addImageToSlide"
 import { TextDataType } from "../objects/addTextToSlide"
-import { PresentationType, TransformType } from "../PresentationType"
+import { Gradient, PresentationType, Solid, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 import { EditorType, ImageData, KeyCodeType } from "./EditorType"
 
@@ -94,7 +94,7 @@ export interface RenamePresentationAction {
 
 export interface AddColorAction {
     type: ActionType.ADD_COLOR,
-    payload: string
+    payload: Solid | Gradient
 }
 
 export interface AddScaleAction {

@@ -91,8 +91,11 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
         //     return addScale(state)
         // case ActionType.SUB_SCALE:
         //     return subScale(state)
-        // case ActionType.ADD_COLOR:
-        //     return [...state, action.payload]
+        case ActionType.ADD_COLOR:
+            return {
+                ...editor,
+                colors: [...editor.colors, action.payload]
+            }
         default:
             return editor
     }

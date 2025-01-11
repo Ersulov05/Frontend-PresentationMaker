@@ -23,6 +23,12 @@ export type Image = {
     type: "image"
 }
 
+export type Gradient = {
+    colors: string[]
+    angle: number
+    type: "gradient"
+}
+
 export type BaseObject = {
     uid: string
     pos: Position
@@ -51,7 +57,7 @@ export type ObjectTextType = BaseObject & {
 }
 
 export type ObjectType = ObjectTextType | ObjectImageType
-export type BackgroundType = Solid | Image
+export type BackgroundType = Solid | Image | Gradient
 
 export type SlideType = {
     uid: string

@@ -60,17 +60,29 @@ function Slide({
 {
     const parentRef = useRef<HTMLDivElement | null>(null); 
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
-    const backgroundStyle = tempBackground
-        ? tempBackground.type === "solid"
-            ? { backgroundColor: tempBackground.color }
-            : { backgroundImage: `url(${tempBackground.src})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' }
-        : slide.background.type === 'solid'
-            ? { backgroundColor: slide.background.color }
-            : { backgroundImage: `url(${slide.background.src})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' }
+
+    const getBackgroundStyle = (background: BackgroundType) => {  
+        switch (background.type) {
+            case "solid":
+                return { backgroundColor: background.color }
+            case "gradient":
+                return {
+                    background: `linear-gradient(${background.angle}deg, ${background.colors.join(', ')})`
+                }
+            case "image":
+                return {
+                    backgroundImage: `url(${background.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }
+            default:
+                return {}
+        }
+    }
+
+    const backgroundStyle = tempBackground 
+        ? getBackgroundStyle(tempBackground) 
+        : getBackgroundStyle(slide.background)
 
     const slideStyles: CSSProperties = {
         ...backgroundStyle,

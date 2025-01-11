@@ -23,7 +23,6 @@ function NumberField({ className = "", style = {}, value="", placeholder = "", i
     function onChangeHandler(value: string)
     {
         const validValue = isFloat ? /^-?\d*(\.\d*)?$/ : /^-?\d*$/;
-
         if (validValue.test(value) || value === "") {
             setInputValue(value)
         }
@@ -37,7 +36,7 @@ function NumberField({ className = "", style = {}, value="", placeholder = "", i
                 ? limit.minValue <= numericValue && numericValue <= limit.maxValue
                 : true
 
-            if (onChange && isLimit) {
+            if (onChange && isLimit && !isNaN(numericValue)) {
                 onChange(numericValue)
             }
         }
@@ -50,7 +49,10 @@ function NumberField({ className = "", style = {}, value="", placeholder = "", i
         if (validValue.test(_value) || _value === "") {
             if (_value === "") {
                 if (limit === undefined) {
-                    setInputValue(value)
+                    setInputValue("0")
+                    if (onChange) {
+                        onChange(0)
+                    }
                 } else {
                     setInputValue(limit.minValue.toString())
                     if (onChange) {

@@ -1,4 +1,4 @@
-import { PresentationType } from "../PresentationType"
+import { Gradient, Image, PresentationType, Solid } from "../PresentationType"
 
 export type SelectionType = {
     selectedSlideIds: string[]
@@ -11,12 +11,16 @@ export type ImageData = {
     alt: string
 }
 
+export type Color = {
+
+}
+
 export type KeyCodeType = 'ctrl' | 'alt' | 'shift'
 
 export type EditorType = {
     presentation: PresentationType
     selection: SelectionType
-    colors: string[]
+    colors: Array<Solid | Gradient>
     searchedImages: ImageData[]
     keys: Set<KeyCodeType>
 }

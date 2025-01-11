@@ -28,17 +28,28 @@ function PreviewSlide({
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [mouseMoved, setMouseMoved] = useState<boolean>(false);
 
+    const getBackgroundStyle = (background: BackgroundType) => {  
+        switch (background.type) {
+            case "solid":
+                return { backgroundColor: background.color }
+            case "gradient":
+                return {
+                    background: `linear-gradient(${background.angle}deg, ${background.colors.join(', ')})`
+                }
+            case "image":
+                return {
+                    backgroundImage: `url(${background.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }
+            default:
+                return {}
+        }
+    }
+
     const backgroundStyle = background 
-        ? background.type === "solid"
-            ? { backgroundColor: background.color }
-            : { backgroundImage: `url(${background.src})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' }
-        : slide.background.type === 'solid'
-            ? { backgroundColor: slide.background.color }
-            : { backgroundImage: `url(${slide.background.src})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' }
+        ? getBackgroundStyle(background) 
+        : getBackgroundStyle(slide.background)
 
     const slideStyles: CSSProperties = {
         ...backgroundStyle,

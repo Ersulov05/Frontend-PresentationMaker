@@ -3,11 +3,12 @@ import { Button } from '../../../components/button/Button'
 import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithChild'
 import { ListChooseColor } from '../../ListChooseColor/ListChooseColor'
 import styles from './PopupChangeBackground.module.css'
-import { BackgroundType } from '../../../store/PresentationType'
+import { BackgroundType, Gradient, Solid } from '../../../store/PresentationType'
 import { BackgroundDataType } from '../../../store/slides/changeBackgroundSlide'
 import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
 import { useAppActions } from '../../hooks/useAppActions'
 import useAppSelector from '../../hooks/useAppSelector'
+import { PopupAddGradient } from '../PopupAddGradient/PopupAddGradient'
 
 type PopupChangeBackgroundProps = {
     onClose: () => void,
@@ -26,15 +27,13 @@ function PopupChangeBackground({
     
     const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
     const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
+    const [openPopupAddGradient, setOpenPopupAddGradient] = useState(false)
     function onApplyToAllHandler() {
         onCloseHandler()
     }
 
-    function onGetColor(color: string) {
-        const backgraund: BackgroundType = {
-            type: "solid",
-            color: color
-        }
+    function onGetColor(color: Solid | Gradient) {
+        const backgraund: BackgroundType = color
         setCurrentBackground(backgraund)
         if (onGetBackground) {
             onGetBackground(backgraund)
@@ -82,6 +81,7 @@ function PopupChangeBackground({
                                     colors={colors} 
                                     onGetColor={(color) => onGetColor(color)}
                                     addColor={() => setOpenPopupAddColor(true)}
+                                    addGradient={() => setOpenPopupAddGradient(true)}
                                 />
                             </ButtonWithChild>
                         </div>
@@ -89,28 +89,33 @@ function PopupChangeBackground({
                             <label className={styles.popupLabel}>Image:</label>
                             <Button 
                                 className={styles.popupButton} 
-                                value='Load image'
                                 onClick={onApplyToAllHandler}
-                            />
+                            >
+                                Load image
+                            </Button>
                         </div>
                     </div>
                     <div className={styles.popupButtonsContainer}>
                         <Button 
                             className={styles.popupButton} 
-                            value='Apply to all'
                             onClick={() => onChangeBackgroundSlide(true)}
-                        />
+                        >Apply to all</Button>
                         <Button 
                             className={styles.popupButton} 
-                            value='Save'
                             onClick={() => onChangeBackgroundSlide()}
-                        />
+                        >Save</Button>
                     </div>
                 </div>
             </div>
             {openPopupAddColor && (
                 <PopupAddColor 
                     onClose={() => setOpenPopupAddColor(false)}
+                />
+            )}
+            {openPopupAddGradient && (
+                <PopupAddGradient
+                    onClose={() => setOpenPopupAddGradient(false)}
+                    onGetColor={onGetColor}
                 />
             )}
         </>
