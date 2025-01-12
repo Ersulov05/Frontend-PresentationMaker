@@ -39,7 +39,7 @@ function ListChooseColor({
                     }
                     return (
                         <div 
-                            key={color.color}
+                            key={generateUID()}
                             style={colorStyles} 
                             className={styles.colorItem}
                             onClick={() => onGetValueHandler(color)}

@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button } from '../../../components/button/Button'
 import { Solid } from '../../../store/PresentationType'
 import styles from './PopupAddColor.module.css'
+import { useAppActions } from '../../hooks/useAppActions'
 
 type PopupAddColorProps = {
-    onGetColor?: (color: Solid | null) => void
+    onGetColor?: (color: Solid) => void
     onClose: () => void
 }
 
@@ -12,11 +13,18 @@ function PopupAddColor({
     onGetColor, 
     onClose
 }: PopupAddColorProps) {
-    const [color, setColor] = useState<Solid | null>(null)
-
+    // const [color, setColor] = useState<Solid | null>(null)
+    const {addColor} = useAppActions()
+    const colorInputRef = useRef<HTMLInputElement>(null)
     function onAddColor() {
-        if (onGetColor) {
-            onGetColor(color)
+        console.log(colorInputRef.current)
+        if (colorInputRef.current && onGetColor) {
+            const solid: Solid ={
+                color: colorInputRef.current.value,
+                type: "solid"
+            }
+            onGetColor(solid)
+            addColor(solid)
         }
         onClose()
     }
@@ -32,11 +40,19 @@ function PopupAddColor({
                         />
                     </div>
                     <div className={styles.popupContent}>
-                        <div className={styles.colorContainer}>
+                        <input 
+                            // key={generateUID()}
+                            ref={colorInputRef}
+                            className={styles.inputColor}
+                            type="color" 
+                            // defaultValue={color}
+                            // onChange={onChangeColor}
+                        />
+                        {/* <div className={styles.colorContainer}>
                             <div className={styles.color}></div>
                             <div className={styles.whiteGradient}></div>
                             <div className={styles.blackGradient}></div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className={styles.popupButtonsContainer}>
                         <Button 

@@ -99,15 +99,15 @@ const PresentationMax: PresentationType = {
 let localEditor: EditorType | null = null
 
 const data = localStorage.getItem('localData')
-if (data) {
-    const editorData = JSON.parse(data)
-    if (validateEditorData(editorData)) {
-        localEditor = {
-            ...editorData,
-            keys: new Set<KeyCodeType>()
-        }
-    }
-}
+// if (data) {
+//     const editorData = JSON.parse(data)
+//     if (validateEditorData(editorData)) {
+//         localEditor = {
+//             ...editorData,
+//             keys: new Set<KeyCodeType>()
+//         }
+//     }
+// }
 
 const defaultEditor: EditorType = localEditor ??
     {
@@ -116,7 +116,35 @@ const defaultEditor: EditorType = localEditor ??
             selectedSlideIds: [ '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b', 'b27d7ce8-86c7-4e45-8cbd-79e8fbf8c465', 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465' ],
             selectedObjectIds: []
         },
-        colors: [],
+        colors: [
+            {
+                color: "#000000",
+                type: "solid"
+            },
+            {
+                color: "#ff0000",
+                type: "solid"
+            },
+            {
+                color: "#0000ff",
+                type: "solid"
+            },
+            {
+                colors: ["#000000", "#ff0000"],
+                angle: 0,
+                type: "gradient"
+            },
+            {
+                colors: ["#00ff00", "#ff0000"],
+                angle: 0,
+                type: "gradient"
+            },
+            {
+                colors: ["#0000ff", "#ff0000"],
+                angle: 0,
+                type: "gradient"
+            }
+        ],
         searchedImages: [],
         keys: new Set<KeyCodeType>()
     }

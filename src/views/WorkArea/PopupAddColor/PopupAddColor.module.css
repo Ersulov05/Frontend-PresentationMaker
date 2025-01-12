@@ -104,3 +104,8 @@
 .popupButton:active {
     opacity: 0.8;
 }
+
+.inputColor {
+    width: 100%;
+    height: 150px;
+}

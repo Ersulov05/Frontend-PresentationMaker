@@ -59,6 +59,27 @@ function PopupChangeBackground({
         onClose()
     }
 
+    const getBackgroundStyle = (background: BackgroundType) => {  
+        switch (background.type) {
+            case "solid":
+                return { backgroundColor: background.color }
+            case "gradient":
+                return {
+                    background: `linear-gradient(${background.angle}deg, ${background.colors.join(', ')})`
+                }
+            case "image":
+                return {
+                    backgroundImage: `url(${background.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }
+            default:
+                return {}
+        }
+    }
+
+    const backgroundStyle = getBackgroundStyle(currentBackground) 
+
     return (
         <>
             <div className={styles.popupContainer}>
@@ -73,6 +94,14 @@ function PopupChangeBackground({
                     <div className={styles.popupContent}>
                         <div className={styles.popupContentItem}>
                             <label className={styles.popupLabel}>Color:</label>
+                            {(currentBackground.type === "gradient" 
+                            || currentBackground.type === "solid") && 
+                                <div 
+                                    style={backgroundStyle} 
+                                    className={styles.colorItem}
+                                >
+                                </div>
+                            }
                             <ButtonWithChild
                                 className={styles.popupButton} 
                                 value='Choose color'
@@ -87,9 +116,17 @@ function PopupChangeBackground({
                         </div>
                         <div className={styles.popupContentItem}>
                             <label className={styles.popupLabel}>Image:</label>
+                            {currentBackground.type === "image" && 
+                                <div 
+                                    style={backgroundStyle} 
+                                    className={styles.colorItem}
+                                >
+                                </div>
+                            }
                             <Button 
                                 className={styles.popupButton} 
                                 onClick={onApplyToAllHandler}
+                                border={15}
                             >
                                 Load image
                             </Button>
@@ -110,6 +147,7 @@ function PopupChangeBackground({
             {openPopupAddColor && (
                 <PopupAddColor 
                     onClose={() => setOpenPopupAddColor(false)}
+                    onGetColor={onGetColor}
                 />
             )}
             {openPopupAddGradient && (
