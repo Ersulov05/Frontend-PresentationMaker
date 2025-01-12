@@ -16,7 +16,7 @@ function TextField({ className = "", style = {}, value="", placeholder = "", onC
     {
         setInputValue(value)
         if (onChange) {
-            onChange(value); // Вызываем обработчик с новым значением
+            onChange(value)
         }
     }
     return (

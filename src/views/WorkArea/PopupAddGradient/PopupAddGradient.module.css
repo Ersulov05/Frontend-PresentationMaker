@@ -114,3 +114,24 @@
 .popupButton:active {
     opacity: 0.8;
 }
+
+.angleField {
+    width: 55px;
+    border: solid 1px black;
+    padding-inline: 10px;
+    padding-block: 5px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.angleContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+}
+
+.popupLabel {
+    font-size: 18px;
+}

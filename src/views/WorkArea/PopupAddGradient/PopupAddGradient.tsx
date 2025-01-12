@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 import { Button } from '../../../components/button/Button'
 import { Gradient} from '../../../store/PresentationType'
-import styles from './PopupAddGradient.module.css'
 import { generateUID } from '../../../store/utils/generateUID'
 import { useAppActions } from '../../hooks/useAppActions'
 import { NumberField } from '../../../components/numberField/NumberField'
+import styles from './PopupAddGradient.module.css'
 
 type PopupAddGradientProps = {
     onGetColor?: (color: Gradient) => void
@@ -83,6 +83,18 @@ function PopupAddGradient({
                     >
 
                     </div>
+                    <div className={styles.angleContainer}>
+                        <label className={styles.popupLabel}>Angle:</label>
+                        <NumberField
+                            value={angle.toString()}
+                            onChange={setAngle}
+                            className={styles.angleField}
+                            limit={{
+                                minValue: -360,
+                                maxValue: 360
+                            }}
+                        /> 
+                    </div>
                     <div 
                         ref={colorsContainerRef}
                     >
@@ -95,13 +107,7 @@ function PopupAddGradient({
                                 onChange={onChangeColor}
                             />
                         ))}
-                    </div>
-                    <NumberField
-                        value={angle.toString()}
-                        onChange={setAngle}
-                    />
-                    
-                    
+                    </div>                                       
                     <Button onClick={addColorPreview}>
                         Добавить цвет
                     </Button>

@@ -23,20 +23,24 @@ function NumberField({ className = "", style = {}, value="", placeholder = "", i
     function onChangeHandler(value: string)
     {
         const validValue = isFloat ? /^-?\d*(\.\d*)?$/ : /^-?\d*$/;
+        let numericValue: number = isFloat 
+            ? parseFloat(value) 
+            : parseInt(value, 10);
+
+        numericValue = (limit !== undefined)
+            ? Math.max(limit.minValue, Math.min(limit.maxValue, numericValue))
+            : numericValue
+
         if (validValue.test(value) || value === "") {
-            setInputValue(value)
+            if (!isNaN(numericValue)) {
+                setInputValue(numericValue.toString())
+            } else {
+                setInputValue(value)
+            }
         }
 
-        if (validValue.test(value)) {
-            const numericValue: number = isFloat 
-                ? parseFloat(value) 
-                : parseInt(value, 10);
-
-            const isLimit: boolean = limit !== undefined
-                ? limit.minValue <= numericValue && numericValue <= limit.maxValue
-                : true
-
-            if (onChange && isLimit && !isNaN(numericValue)) {
+        if (validValue.test(value)) {            
+            if (onChange && !isNaN(numericValue)) {
                 onChange(numericValue)
             }
         }
