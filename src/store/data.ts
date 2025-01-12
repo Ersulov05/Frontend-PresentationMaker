@@ -99,15 +99,15 @@ const PresentationMax: PresentationType = {
 let localEditor: EditorType | null = null
 
 const data = localStorage.getItem('localData')
-// if (data) {
-//     const editorData = JSON.parse(data)
-//     if (validateEditorData(editorData)) {
-//         localEditor = {
-//             ...editorData,
-//             keys: new Set<KeyCodeType>()
-//         }
-//     }
-// }
+if (data) {
+    const editorData = JSON.parse(data)
+    if (validateEditorData(editorData)) {
+        localEditor = {
+            ...editorData,
+            keys: new Set<KeyCodeType>()
+        }
+    }
+}
 
 const defaultEditor: EditorType = localEditor ??
     {

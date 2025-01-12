@@ -1,4 +1,4 @@
-import { ObjectType, PresentationType, SlideType } from "../store/PresentationType"
+import { Gradient, ObjectType, PresentationType, SlideType, Solid } from "../store/PresentationType"
 import { EditorType, KeyCodeType } from "../store/redux/EditorType"
 
 const validateObjectData = (data: any): data is ObjectType => {
@@ -117,7 +117,7 @@ const validateEditorData = (data: any): data is EditorType => {
         return false
     }
 
-    if (!Array.isArray(colors) || !colors.every(color => typeof color === 'string')) {
+    if (!Array.isArray(colors) || !colors.every(color => isValidColor(color))) {
         return false
     }
 
@@ -131,6 +131,25 @@ const validateEditorData = (data: any): data is EditorType => {
 
 const isValidKeyCode = (key: unknown): key is KeyCodeType => {
     return key === 'ctrl' || key === 'alt' || key === 'shift';
+}
+
+const isValidColor = (color: any): color is Solid | Gradient => {
+    if (typeof color !== "object" || color === null) {
+        return false
+    }
+    console.log()
+
+    const { type } = color
+
+    if (type === "solid") {
+        return typeof color.color === "string"
+    } else if (type === "gradient") {
+        return Array.isArray(color.colors) && 
+            color.colors.every((c: string) => typeof c === "string") && 
+            typeof color.angle === "number"
+    }
+
+    return false
 }
 
 
