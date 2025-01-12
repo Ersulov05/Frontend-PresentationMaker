@@ -9,6 +9,8 @@ import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
 import { useAppActions } from '../../hooks/useAppActions'
 import useAppSelector from '../../hooks/useAppSelector'
 import { PopupAddGradient } from '../PopupAddGradient/PopupAddGradient'
+import { FileInput } from '../../../components/fileInput/fileInput'
+import { Base64FormatType, getBase64ByFile, isValidBase64Data } from '../../../store/utils/imageManager'
 
 type PopupChangeBackgroundProps = {
     onClose: () => void,
@@ -25,12 +27,29 @@ function PopupChangeBackground({
     const { changeBackground } = useAppActions()
     const colors = useAppSelector(editor => editor.colors)
     
+    const getBackgroundStyle = (background: BackgroundType) => {  
+        switch (background.type) {
+            case "solid":
+                return { backgroundColor: background.color }
+            case "gradient":
+                return {
+                    background: `linear-gradient(${background.angle}deg, ${background.colors.join(', ')})`
+                }
+            case "image":
+                return {
+                    backgroundImage: `url(${background.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }
+            default:
+                return {}
+        }
+    }
+
     const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
     const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
     const [openPopupAddGradient, setOpenPopupAddGradient] = useState(false)
-    function onApplyToAllHandler() {
-        onCloseHandler()
-    }
+    const backgroundStyle = getBackgroundStyle(currentBackground) 
 
     function onGetColor(color: Solid | Gradient) {
         const backgraund: BackgroundType = color
@@ -59,26 +78,37 @@ function PopupChangeBackground({
         onClose()
     }
 
-    const getBackgroundStyle = (background: BackgroundType) => {  
-        switch (background.type) {
-            case "solid":
-                return { backgroundColor: background.color }
-            case "gradient":
-                return {
-                    background: `linear-gradient(${background.angle}deg, ${background.colors.join(', ')})`
-                }
-            case "image":
-                return {
-                    backgroundImage: `url(${background.src})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                }
-            default:
-                return {}
+    function handleLoad(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+        if (file && file.type === 'image/png') {
+            getBase64ByFile(file)
+                .then((imageBase64) => {
+                    const formats: Base64FormatType[] = [
+                        Base64FormatType.IMAGE_PNG,
+                        Base64FormatType.IMAGE_SVG,
+                        Base64FormatType.IMAGE_JPEG,
+                        Base64FormatType.IMAGE_GIF,
+                    ]
+                    if (isValidBase64Data(imageBase64, formats)) {
+                        const backgraund: BackgroundType = {
+                            src: imageBase64,
+                            type: "image"
+                        }
+                        setCurrentBackground(backgraund)
+                        if (onGetBackground) {
+                            onGetBackground(backgraund)
+                        }
+                    } else {
+                        console.log("неверный тип base64")
+                    }
+                })
+                .catch((error) => {
+                    console.error("Ошибка при загрузке изображения:", error);
+                });
+        } else {
+            console.error("Выберите файл формата PNG.");
         }
     }
-
-    const backgroundStyle = getBackgroundStyle(currentBackground) 
 
     return (
         <>
@@ -123,9 +153,13 @@ function PopupChangeBackground({
                                 >
                                 </div>
                             }
+                            <FileInput
+                                id={"loadBackgroundImage"}
+                                onChange={handleLoad}
+                            />
                             <Button 
                                 className={styles.popupButton} 
-                                onClick={onApplyToAllHandler}
+                                onClick={() => {document.getElementById('loadBackgroundImage')?.click()}}
                                 border={15}
                             >
                                 Load image

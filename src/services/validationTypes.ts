@@ -137,7 +137,6 @@ const isValidColor = (color: any): color is Solid | Gradient => {
     if (typeof color !== "object" || color === null) {
         return false
     }
-    console.log()
 
     const { type } = color
 
