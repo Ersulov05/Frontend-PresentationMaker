@@ -71,9 +71,7 @@ function Slide({
                 }
             case "image":
                 return {
-                    backgroundImage: `url(${background.src})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    background: `url(${background.src}) center center / 100% 100% no-repeat`,
                 }
             default:
                 return {}

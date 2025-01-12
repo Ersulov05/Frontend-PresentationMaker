@@ -10,11 +10,13 @@ import styles from './ImagesPopup.module.css'
 import { Text } from "../../components/text/Text"
 import { FileInput } from "../../components/fileInput/fileInput"
 import { Base64FormatType, getBase64ByFile, getBase64ByURL, isValidBase64Data } from "../../store/utils/imageManager"
+import { BackgroundDataType } from "../../store/slides/changeBackgroundSlide"
 
 function SearchedImages() {
     const { 
         searchImageAsync,
         addImageObject,
+        changeBackground,
     } = useAppActions() 
 
     const images = useAppSelector(editor => editor.searchedImages)
@@ -41,6 +43,18 @@ function SearchedImages() {
             }
             addImageObject(data)
         }
+    }
+
+    function onChangeBackground() {
+        const image = images.find(image => image.id === selectedImageId)
+        if (!image) return
+        const backgroundData: BackgroundDataType = {
+            background: {
+                src: image.url,
+                type: "image"
+            }
+        }
+        changeBackground(backgroundData)
     }
 
     return (
@@ -88,6 +102,16 @@ function SearchedImages() {
                     disabled={!selectedImageId}
                 >
                     Добавить картинку
+                </Button>
+                <Button  
+                    onClick={onChangeBackground}
+                    border={10}
+                    style={{
+                        width: "100%"
+                    }}
+                    disabled={!selectedImageId}
+                >
+                    Вставить картинку как фон
                 </Button>
             </div>
         </>
