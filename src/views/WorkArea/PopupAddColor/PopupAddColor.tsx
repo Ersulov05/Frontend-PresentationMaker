@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Button } from '../../../components/button/Button'
 import { Solid } from '../../../store/PresentationType'
 import styles from './PopupAddColor.module.css'
@@ -13,11 +13,9 @@ function PopupAddColor({
     onGetColor, 
     onClose
 }: PopupAddColorProps) {
-    // const [color, setColor] = useState<Solid | null>(null)
     const {addColor} = useAppActions()
     const colorInputRef = useRef<HTMLInputElement>(null)
     function onAddColor() {
-        console.log(colorInputRef.current)
         if (colorInputRef.current && onGetColor) {
             const solid: Solid ={
                 color: colorInputRef.current.value,
@@ -31,41 +29,33 @@ function PopupAddColor({
 
     return (
         <div className={styles.popupContainer}>
-                <div className={styles.popup}>
-                    <div className={styles.popupTitleContainer}>
-                        <div className={styles.popupTitle}>Add Color</div>
-                        <Button 
-                            className={styles.buttonClosePopup} 
-                            onClick={onClose}
-                        />
-                    </div>
-                    <div className={styles.popupContent}>
-                        <input 
-                            // key={generateUID()}
-                            ref={colorInputRef}
-                            className={styles.inputColor}
-                            type="color" 
-                            // defaultValue={color}
-                            // onChange={onChangeColor}
-                        />
-                        {/* <div className={styles.colorContainer}>
-                            <div className={styles.color}></div>
-                            <div className={styles.whiteGradient}></div>
-                            <div className={styles.blackGradient}></div>
-                        </div> */}
-                    </div>
-                    <div className={styles.popupButtonsContainer}>
-                        <Button 
-                            className={styles.popupButton} 
-                            onClick={onClose}
-                        >Cancel</Button>
-                        <Button 
-                            className={styles.popupButton} 
-                            onClick={onAddColor}
-                        >Add</Button>
-                    </div>
+            <div className={styles.popup}>
+                <div className={styles.popupTitleContainer}>
+                    <div className={styles.popupTitle}>Add Color</div>
+                    <Button 
+                        className={styles.buttonClosePopup} 
+                        onClick={onClose}
+                    />
+                </div>
+                <div className={styles.popupContent}>
+                    <input 
+                        ref={colorInputRef}
+                        className={styles.inputColor}
+                        type="color" 
+                    />
+                </div>
+                <div className={styles.popupButtonsContainer}>
+                    <Button 
+                        className={styles.popupButton} 
+                        onClick={onClose}
+                    >Cancel</Button>
+                    <Button 
+                        className={styles.popupButton} 
+                        onClick={onAddColor}
+                    >Add</Button>
                 </div>
             </div>
+        </div>
     )
 }
 
