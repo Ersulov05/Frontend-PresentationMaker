@@ -1,0 +1,28 @@
+.container {
+    display: inline-block;
+    position: relative;
+}
+
+.button {
+    display: inline-flex;
+    user-select: none;
+}
+
+.buttonDefault {
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    padding: 5px;
+    margin: 1px;
+    border-radius: 5px;
+    background-color: blueviolet;
+}
+
+.buttonDefault:hover {
+    opacity: 0.9;
+}
+
+.buttonDefault:active {
+    opacity: 0.8;
+    transform: scale(0.9);
+}

@@ -1,7 +1,7 @@
 import { HistoryType } from './store/utils/history.ts';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import Editor from './views/Editor/Editor.tsx';
-import SlideShow from './views/slideShow/SlideShow.tsx';
+import SlideShow from './views/SlideShow/SlideShow.tsx';
 
 type AppProps = {
     history: HistoryType,

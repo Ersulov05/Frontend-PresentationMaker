@@ -1,27 +1,35 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface ToolContextType {
-    openedSidePopup: boolean;
-    togglePopup: () => void;
+    openedPresentationPreview: boolean
+    openedSidePopup: boolean
+    togglePopup: () => void
+    togglePresentationPreview: () => void
 }
 
-// Создаем контекст с типом ToolContextType или undefined
 const ToolContext = createContext<ToolContextType | undefined>(undefined);
 
 interface ToolProviderProps {
-    children: React.ReactNode; // Явно указываем тип для children
+    children: React.ReactNode; 
 }
 
 export const ToolProvider: React.FC<ToolProviderProps> = ({ children }) => {
     const [openedSidePopup, setOpenedSidePopup] = useState(false);
+    const [openedPresentationPreview, setOpenedPresentationPreview] = useState(false);
 
     const togglePopup = () => {
         setOpenedSidePopup(prevState => !prevState);
     };
 
+    const togglePresentationPreview = () => {
+        setOpenedPresentationPreview(prevState => !prevState);
+    };
+
     const value = {
+        openedPresentationPreview,
         openedSidePopup,
         togglePopup,
+        togglePresentationPreview,
     }
 
     return (

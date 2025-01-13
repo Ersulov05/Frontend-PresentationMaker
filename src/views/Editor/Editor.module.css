@@ -41,3 +41,13 @@
     width: 100%;
     height: calc(100vh - var(--top-panel-height) - var(--tool-panel-height));
 }
+
+.hiddenContainer {
+    overflow: hidden;
+    height: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 2000px;
+
+}

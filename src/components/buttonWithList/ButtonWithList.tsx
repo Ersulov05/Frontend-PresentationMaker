@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef, useState } from "react"
 import { joinStyles } from "../../store/utils/joinStyles"
 // import classNames from "classnames";
-import styles from './Button.module.css'
+import styles from './ButtonWithList.module.css'
 
 export type ButtopProps = {
     onClick?: () => void
@@ -92,7 +92,11 @@ function ButtonWithList({
                     ref={buttonRef}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className={joinStyles(className ? className : styles.buttonDefault, styles.button)} 
+                    className={joinStyles(
+                        styles.buttonDefault, 
+                        styles.button, 
+                        className
+                    )} 
                     style={{ ...style, ...buttonStyles }} 
                     onClick={handleClick}
                     
