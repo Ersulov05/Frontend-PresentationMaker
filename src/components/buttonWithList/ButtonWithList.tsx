@@ -14,7 +14,7 @@ export type ButtopProps = {
     isClickToFix?: boolean
 }
 
-function Button({ 
+function ButtonWithList({ 
     className = undefined, 
     style = {}, 
     value = "", 
@@ -118,5 +118,5 @@ function Button({
 }
 
 export {
-    Button
+    ButtonWithList
 }

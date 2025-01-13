@@ -72,3 +72,34 @@
     overflow: hidden;
     height: 0;
 }
+
+.buttonFamilyContainer {
+    position: relative;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.buttonWithList {
+    
+    width: 100px;
+    height: fit-content;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 1px;
+    background-color: blueviolet;
+    
+}
+
+.buttonWithList:hover {
+    opacity: 0.9;
+}
+
+.buttonWithList:active {
+    opacity: 0.8;
+}

@@ -46,9 +46,8 @@ function Button({
         <div 
             id={id}
             className={joinStyles(
-                className 
-                    ? className 
-                    : styles.buttonDefault, 
+                className, 
+                styles.buttonDefault, 
                 styles.button,
                 disabled && styles.disabled
             )} 

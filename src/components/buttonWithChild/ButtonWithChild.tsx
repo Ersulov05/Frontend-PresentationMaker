@@ -7,6 +7,7 @@ type ButtonWithChildProps = {
     onClick?: () => void
     value?: string
     className?: string
+    id?: string
     style?: CSSProperties
     valueLocationHorizontal?: "center" | "left" | "right"
     valueLocationVertical?: "center" | "top" | "bottom"
@@ -17,6 +18,7 @@ type ButtonWithChildProps = {
 
 function ButtonWithChild({ 
     className = undefined, 
+    id,
     style = {}, 
     value = "", 
     onClick, 
@@ -94,6 +96,7 @@ function ButtonWithChild({
 
     return (
             <div 
+                id={id}
                 className={styles.buttonContainer}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -101,7 +104,7 @@ function ButtonWithChild({
                 <div 
                     ref={buttonRef}
                     
-                    className={joinStyles(className ? className : styles.buttonDefault, styles.button)} 
+                    className={joinStyles(className ? className : styles.buttonDefault, styles.button, styles.buttonDefault)} 
                     style={{ ...style, ...buttonStyles }} 
                     onClick={handleClick}
                     

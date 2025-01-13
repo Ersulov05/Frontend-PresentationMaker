@@ -65,7 +65,10 @@ function TextObject({
         onClickOutside: isSelected ? handleBlur : undefined,
         ignoreRefs: [textAreaRef],
         ignoreClasses: ["textAreaSelect"],
-        ignoreIds: ["boldButton", "italicButton", "strikeThroughButton", "changeSizeButton", "objectSelection"]
+        ignoreIds: [
+            "boldButton", "italicButton", "strikeThroughButton", 
+            "changeSizeButton", "objectSelection", "fontFamilyContainer", "deleteObjectButton"
+        ]
     })
 
     useLayoutEffect(() => {

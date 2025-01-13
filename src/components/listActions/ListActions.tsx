@@ -1,7 +1,7 @@
 import { CSSProperties } from "react"
 import _style from './ListActions.module.css'
 import { joinStyles } from "../../store/utils/joinStyles"
-import { Button, ButtopProps } from "../buttonWithList/Button"
+import { ButtonWithList, ButtopProps } from "../buttonWithList/ButtonWithList"
 import { generateUID } from "../../store/utils/generateUID"
 
 type BaseComponent = ButtopProps
@@ -95,7 +95,7 @@ function ListActions({
                 switch (component.type) {
                     case "Button": {
                         return (
-                            <Button
+                            <ButtonWithList
                                 key={uid} 
                                 onClick={component.onClick} 
                                 value={component.value} // Передаем текст кнопки
@@ -108,7 +108,7 @@ function ListActions({
                     }
                     case "ListAction": {
                         return (
-                            <Button
+                            <ButtonWithList
                                 key={uid} 
                                 onClick={() => console.log(uid)} 
                                 value={component.value} // Передаем текст кнопки
@@ -117,7 +117,7 @@ function ListActions({
                                     components={component.components} 
                                     regarding={component.regarding}
                                 />
-                            </Button>
+                            </ButtonWithList>
                         );
                     }
                     default: {

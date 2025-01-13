@@ -55,7 +55,7 @@ function ImageObject({
     useClickOutside({
         onClickOutside: isSelected ? handleBlur : undefined,
         ignoreClasses: [styles.image],
-        ignoreIds: ["objectSelection"],
+        ignoreIds: ["objectSelection", "deleteObjectButton"],
     })
     
     return (

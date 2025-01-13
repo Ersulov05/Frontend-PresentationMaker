@@ -3,7 +3,7 @@ import { Icon } from '../../components/icon/Icon'
 import { Text } from '../../components/text/Text'
 import { Strip } from '../../components/strip/Strip'
 import { useAppActions } from '../hooks/useAppActions'
-import styles from './ToolPanel.module.css'
+
 import { TextDataType } from '../../store/objects/addTextToSlide'
 import React, { forwardRef, useEffect, useRef } from 'react'
 import { HistoryContext } from '../hooks/historyContext'
@@ -12,6 +12,8 @@ import useAppSelector from '../hooks/useAppSelector'
 import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide'
 import { useGeneratePDF } from '../hooks/useGeneratePDF'
 import { FileInput } from '../../components/fileInput/fileInput'
+import { ButtonWithChild } from '../../components/buttonWithChild/ButtonWithChild'
+import styles from './ToolPanel.module.css'
 
 type ToolPanelProps = {
     setOpenedSidePopap?: () => void
@@ -139,6 +141,15 @@ function ToolPanel({}: ToolPanelProps)
         }
     }
 
+    const fonts = [
+        "Arial",
+        "Times New Roman",
+        "Georgia",
+        "Verdana",
+        "Jersey 15",
+        "Comic Sans MS",
+    ]
+
     return (
         <>
             <div className={styles.container}>
@@ -202,6 +213,7 @@ function ToolPanel({}: ToolPanelProps)
                             <Icon iconSrc={"/image/iconImage.svg"} size={30} className={styles.iconPlus}/>
                         </Button>
                         <Button 
+                            id={"deleteObjectButton"}
                             onClick={deleteObjects}
                             className={styles.addSlideButton}
                             border={3}
@@ -230,6 +242,25 @@ function ToolPanel({}: ToolPanelProps)
                         <Button id={"italicButton"} onClick={() => document.execCommand('italic')} border={5}>Курсив</Button>
                         <Button id={"strikeThroughButton"} onClick={() => document.execCommand('strikeThrough')} border={5}>Зачеркнутый</Button>
                         <Button id={"changeSizeButton"} onClick={() => changeFontSize()} border={5}>Другой кегль</Button>
+                        <ButtonWithChild 
+                            value='font-family' 
+                            id={"fontFamilyContainer"}
+                            className={styles.buttonWithList}
+                            valueLocationHorizontal={'center'}
+                        >
+                            <div className={styles.buttonFamilyContainer}>
+                                {fonts.map(font => (
+                                    <Button 
+                                        className='buttonFamily'
+                                        style={{width: "100%"}} 
+                                        border={10}
+                                        onClick={() => changeFont(font)}
+                                    >
+                                        {font}
+                                    </Button>
+                                ))}
+                            </div>
+                        </ButtonWithChild>
                     </div>
                 </div>
             </div>
@@ -238,55 +269,28 @@ function ToolPanel({}: ToolPanelProps)
     )
 }
 
-function toggleBold() {
+function changeFont(fontName: string) {
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
 
     const range = selection.getRangeAt(0);
-    const selectedContents = range.cloneContents(); // Клонируем выделенный текст
+    const selectedContents = range.cloneContents()
 
-    // Проверяем, обернут ли выделенный текст в <strong>
-    let isBold = false;
-    const tempDiv = document.createElement('div');
-    tempDiv.appendChild(selectedContents);
-    
-    // Проверяем наличие тега <strong>
-    const strongElements = tempDiv.querySelectorAll('strong');
-    if (strongElements.length > 0) {
-        isBold = true; // Если есть <strong>, значит текст уже жирный
-    }
+    const parentSpan = range.startContainer.parentNode as HTMLElement;
+    console.log(selectedContents)
 
-    // Создаем новый элемент <strong> или убираем его
-    if (!isBold) {
-        // Создаем новый элемент <strong>
-        const strong = document.createElement('strong');
-        strong.appendChild(selectedContents);
-
-        // Удаляем старое содержимое и вставляем новый <strong>
-        range.deleteContents(); 
-        range.insertNode(strong);
-        
-        // Сбрасываем выделение
-        selection.removeAllRanges();
-        selection.addRange(range); // Восстанавливаем выделение
+    if (parentSpan.tagName === 'SPAN' && parentSpan.style.fontFamily === fontName) {
+        parentSpan.style.fontFamily = fontName
     } else {
-        // Убираем <strong>, если текст уже жирный
-        strongElements.forEach(strong => {
-            const parent = strong.parentNode;
-            if (parent) {
-                while (strong.firstChild) {
-                    parent.insertBefore(strong.firstChild, strong);
-                }
-                parent.removeChild(strong);
-            }
-        });
+        const span = document.createElement('span')
+        span.style.fontFamily = `'${fontName}'`
+
+        range.deleteContents()
         
-        // Сбрасываем выделение
-        selection.removeAllRanges();
-        selection.addRange(range); // Восстанавливаем выделение
+        span.appendChild(selectedContents)
+        range.insertNode(span)
     }
 }
-
 
 export {
     ToolPanel,
