@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
+import { NumberField } from '../../../../components/numberField/NumberField'
 import { Button } from '../../../../components/button/Button'
 import { Gradient} from '../../../../store/PresentationType'
 import { generateUID } from '../../../../store/utils/generateUID'
 import { useAppActions } from '../../../hooks/useAppActions'
-import { NumberField } from '../../../../components/numberField/NumberField'
 import styles from './PopupAddGradient.module.css'
 
 type PopupAddGradientProps = {
