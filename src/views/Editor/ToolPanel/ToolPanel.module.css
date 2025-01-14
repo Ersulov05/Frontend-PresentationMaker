@@ -103,3 +103,18 @@
 .buttonWithList:active {
     opacity: 0.8;
 }
+
+.importExportContainer {
+    display: flex;
+    gap: 5px;
+}
+
+.sizeField {
+    border: solid 1px black;
+    width: 50px;
+    padding-inline: 10px;
+    padding-block: 5px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    text-align: center;
+}

@@ -3,7 +3,7 @@ import { ObjectTextType as ObjectType } from '../../../../../store/PresentationT
 import styles from './TextObject.module.css';
 import { useAppActions } from '../../../../hooks/useAppActions.ts';
 import useAppSelector from '../../../../hooks/useAppSelector.ts';
-import { useLayoutEffect, useRef } from 'react';
+import { CSSProperties, useLayoutEffect, useRef } from 'react';
 import { useClickOutside } from '../../../../hooks/useClickOutside.tsx';
 
 interface ObjectProps {
@@ -16,7 +16,7 @@ interface ObjectProps {
 
 function TextObject({ 
     object, 
-    scale,
+    scale = 1,
     selected = true,
     onSetEdited,
     edited,
@@ -53,7 +53,12 @@ function TextObject({
            return
         }
         if (object.value !== textValue.current) {
-            changeTextObject(textValue.current)
+            changeTextObject(
+                    {
+                        ...object,
+                        value: textValue.current
+                    }
+                )
             textValue.current = object.value
         }
         if (!keys.has('ctrl')) {
@@ -66,7 +71,7 @@ function TextObject({
         ignoreRefs: [textAreaRef],
         ignoreClasses: ["textAreaSelect"],
         ignoreIds: [
-            "boldButton", "italicButton", "strikeThroughButton", 
+            "boldButton", "italicButton", "strikeThroughButton", "ChangeTextStyleButtons",
             "changeSizeButton", "objectSelection", "fontFamilyContainer", "deleteObjectButton"
         ]
     })
@@ -94,6 +99,17 @@ function TextObject({
         }
     }
 
+    const textColorStyles: CSSProperties =  object.color.type === "solid" 
+        ? {
+            color: object.color.color,
+            caretColor: object.color.color
+        }
+        : {
+            backgroundImage: `linear-gradient(${object.color.angle}deg, ${object.color.colors.join(', ')})`,
+            color: 'transparent',
+            caretColor: 'black'
+        }
+
     return (
         <div className={joinStyles(
                 styles.textArea, 
@@ -108,11 +124,12 @@ function TextObject({
                 left: `${(object.pos.x)*scale}px`,
                 width: `${object.size.width*scale}px`,
                 height: `${object.size.height*scale}px`,
-                background: object.backgroundColor,
-                color: object.color,
+                background: object.backgroundColor.type === "solid"
+                    ? object.backgroundColor.color
+                    : `linear-gradient(${object.backgroundColor.angle}deg, ${object.backgroundColor.colors.join(', ')})`,
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,  
-                //fontSize: `${object.font.size*scale}px`,  
+                fontSize: `${object.font.size*scale}px`,  
                 //lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >
@@ -120,6 +137,7 @@ function TextObject({
                 ? <div 
                     ref={textAreaRef}
                     className={styles.text} 
+                    style={textColorStyles}
                     contentEditable={true}
                     suppressContentEditableWarning={true}
                     dangerouslySetInnerHTML={{ __html: object.value }}
@@ -129,6 +147,7 @@ function TextObject({
                     }}
                 />
                 : <div 
+                    style={textColorStyles}
                     className={styles.text} 
                     dangerouslySetInnerHTML={{ __html: object.value }}
                 ></div>

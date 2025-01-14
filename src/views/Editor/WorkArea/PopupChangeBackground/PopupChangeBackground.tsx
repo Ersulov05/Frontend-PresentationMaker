@@ -47,8 +47,6 @@ function PopupChangeBackground({
     }
 
     const [currentBackground, setCurrentBackground] = useState<BackgroundType>(background)
-    const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
-    const [openPopupAddGradient, setOpenPopupAddGradient] = useState(false)
     const backgroundStyle = getBackgroundStyle(currentBackground) 
 
     function onGetColor(color: Solid | Gradient) {
@@ -135,12 +133,11 @@ function PopupChangeBackground({
                             <ButtonWithChild
                                 className={styles.popupButton} 
                                 value='Choose color'
+                                isClickChildClose={false}
                             >
                                 <ListChooseColor 
                                     colors={colors} 
                                     onGetColor={(color) => onGetColor(color)}
-                                    addColor={() => setOpenPopupAddColor(true)}
-                                    addGradient={() => setOpenPopupAddGradient(true)}
                                 />
                             </ButtonWithChild>
                         </div>
@@ -178,18 +175,6 @@ function PopupChangeBackground({
                     </div>
                 </div>
             </div>
-            {openPopupAddColor && (
-                <PopupAddColor 
-                    onClose={() => setOpenPopupAddColor(false)}
-                    onGetColor={onGetColor}
-                />
-            )}
-            {openPopupAddGradient && (
-                <PopupAddGradient
-                    onClose={() => setOpenPopupAddGradient(false)}
-                    onGetColor={onGetColor}
-                />
-            )}
         </>
     )
 }

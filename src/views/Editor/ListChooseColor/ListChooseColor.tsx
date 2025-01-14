@@ -1,22 +1,21 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, useState } from 'react'
 import styles from './ListChooseColor.module.css'
 import { Gradient, Solid } from '../../../store/PresentationType'
 import { generateUID } from '../../../store/utils/generateUID'
+import { PopupAddColor } from '../WorkArea/PopupAddColor/PopupAddColor'
+import { PopupAddGradient } from '../WorkArea/PopupAddGradient/PopupAddGradient'
 
 type ListChooseColorProps = {
     onGetColor?: (color: Solid | Gradient) => void
-    addColor: () => void
-    addGradient: () => void
     colors: Array<Solid | Gradient>
 }
 
 function ListChooseColor({
     onGetColor,
-    addColor,
-    addGradient,
     colors,
 }: ListChooseColorProps) {
-
+    const [openPopupAddColor, setOpenPopupAddColor] = useState(false)
+    const [openPopupAddGradient, setOpenPopupAddGradient] = useState(false)
     function onGetValueHandler(color: Solid | Gradient) {
         if (onGetColor)
         {
@@ -28,6 +27,7 @@ function ListChooseColor({
     const gradients: Gradient[] = colors.filter(shape => shape.type === "gradient")
 
     return (
+        <>
         <div className={styles.listContainer}>
             <div className={styles.titleContainer}>
                 <div className={styles.title}>Color</div>
@@ -50,7 +50,7 @@ function ListChooseColor({
                 <img 
                     src='/image/react.svg'
                     className={styles.colorItem}
-                    onClick={addColor}
+                    onClick={() => setOpenPopupAddColor(true)}
                 />
             </div>
             <div className={styles.titleContainer}>
@@ -74,10 +74,24 @@ function ListChooseColor({
                 <img 
                     src='/image/react.svg'
                     className={styles.colorItem}
-                    onClick={addGradient}
+                    onClick={() => setOpenPopupAddGradient(true)}
                 />
             </div>
+            
         </div>
+        {openPopupAddColor && (
+            <PopupAddColor 
+                onClose={() => setOpenPopupAddColor(false)}
+                onGetColor={onGetValueHandler}
+            />
+        )}
+        {openPopupAddGradient && (
+            <PopupAddGradient
+                onClose={() => setOpenPopupAddGradient(false)}
+                onGetColor={onGetValueHandler}
+            />
+        )}
+        </>
     )
 }
 

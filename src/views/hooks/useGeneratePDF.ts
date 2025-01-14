@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { WIDTH_SLIDE, HEIGHT_SLIDE } from '../../store/constants'
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -7,7 +7,7 @@ function useGeneratePDF() {
     const [isGeneratePDF, setIsGeneratePDF] = useState(true)
     const [status, setStatus] = useState(true)
 
-    const generatePDFs = async (hiddenContainerRef: React.RefObject<HTMLDivElement>): Promise<void> => {
+    const generatePDFs = async (hiddenContainerRef: React.RefObject<HTMLDivElement>, filename: string): Promise<void> => {
         if (!isGeneratePDF) return Promise.resolve();
 
         setIsGeneratePDF(false);
@@ -42,7 +42,7 @@ function useGeneratePDF() {
             });
 
             await Promise.all(promises); // Ждем завершения всех промисов
-            pdf.save('slides.pdf'); // Сохраняем PDF с именем "slides.pdf"
+            pdf.save(`${filename}.pdf`); // Сохраняем PDF с именем "slides.pdf"
             setIsGeneratePDF(true); // Возвращаем состояние обратно
         } catch (error) {
             console.error("Ошибка при создании PDF:", error);

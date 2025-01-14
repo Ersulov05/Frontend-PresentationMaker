@@ -1,6 +1,7 @@
+import { ObjectTextType } from "../PresentationType";
 import { EditorType } from "../redux/EditorType";
 
-function changeTextObject(editor: EditorType, text: string): EditorType {
+function changeTextObject(editor: EditorType, text: ObjectTextType): EditorType {
     const { selectedSlideIds, selectedObjectIds } = editor.selection
     if (selectedSlideIds.length === 0 || selectedObjectIds.length === 0) return editor
     const { slides } = editor.presentation
@@ -16,7 +17,7 @@ function changeTextObject(editor: EditorType, text: string): EditorType {
                             if (selectedObjectIds[0] === object.uid) {
                                 return {
                                     ...object,
-                                    value: text
+                                    ...text
                                 }
                             }
                             return object

@@ -23,8 +23,8 @@ const validateObjectData = (data: any): data is ObjectType => {
         return (
             typeof value === 'string' &&
             typeof font === 'object' && font !== null &&
-            typeof color === 'string' &&
-            typeof backgroundColor === 'string'
+            isValidColor(color) &&
+            isValidColor(backgroundColor)
         )
     }
 

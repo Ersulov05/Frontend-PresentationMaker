@@ -98,7 +98,7 @@ const MainContent = () => {
     const { generatePDFs, status } = useGeneratePDF();
 
     const handleGeneratePDF = async () => {
-        await generatePDFs(hiddenContainerRef);
+        await generatePDFs(hiddenContainerRef, presentation.name);
         if (status) {
             console.log("PDF успешно создан!");
         } else {
@@ -113,6 +113,7 @@ const MainContent = () => {
             <div className={joinStyles(styles.container, !openedSidePopup && styles.containerFullWidth)}>
                 <ToolPanel 
                     onGeneratePDF={handleGeneratePDF}
+                    selectedSlide={selectedSlide}
                 />
                 <div className={styles.workContainer}>
                     <ListSlides tempBackground={tempBackground} />

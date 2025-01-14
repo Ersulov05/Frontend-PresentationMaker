@@ -93,7 +93,7 @@ function PreviewSlide({
         >   
             {slide.objects.map(object => (
                 (object.type == 'text')
-                    ? <TextObject key={object.uid} object={object} widthCoef={scale}/>
+                    ? <TextObject key={object.uid} object={object} widthCoef={scale} />
                     : <ImageObject key={object.uid} object={object} widthCoef={scale}/>
             ))}
         </div>

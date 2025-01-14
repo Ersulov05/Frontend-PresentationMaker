@@ -5,23 +5,33 @@ import { Strip } from '../../../components/strip/Strip'
 import { useAppActions } from '../../hooks/useAppActions'
 
 import { TextDataType } from '../../../store/objects/addTextToSlide'
-import React, { forwardRef, useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HistoryContext } from '../../hooks/historyContext'
 import { useToolContext } from '../../context/toolContext'
 import useAppSelector from '../../hooks/useAppSelector'
-import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide'
-import { useGeneratePDF } from '../../hooks/useGeneratePDF'
 import { FileInput } from '../../../components/fileInput/fileInput'
 import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithChild'
 import styles from './ToolPanel.module.css'
 import { ButtonWithList } from '../../../components/buttonWithList/ButtonWithList'
+import { changeFont } from '../../../store/utils/textChangeStyle'
+import { Gradient, ObjectTextType, SlideType, Solid } from '../../../store/PresentationType'
+import { NumberField } from '../../../components/numberField/NumberField'
+import { ListChooseColor } from '../ListChooseColor/ListChooseColor'
+import { PopupAddColor } from '../WorkArea/PopupAddColor/PopupAddColor'
+import { PopupAddGradient } from '../WorkArea/PopupAddGradient/PopupAddGradient'
 
 type ToolPanelProps = {
+    onGeneratePDF: () => void
+    selectedSlide?: SlideType
+}
+
+type ImportExportButtonsProps = {
     onGeneratePDF: () => void
 }
 
 function ToolPanel({
-    onGeneratePDF
+    onGeneratePDF,
+    selectedSlide
 }: ToolPanelProps) 
 {
     const { 
@@ -30,11 +40,7 @@ function ToolPanel({
         deleteObjects,
         addTextObject,
         setEditor,
-        importPresentationFromJSON,
-        exportPresentationToJSON,
     } = useAppActions()
-    
-    const presentation = useAppSelector(editor => editor.presentation)
 
     function onAddTextToSlide() {
         const data: TextDataType = {
@@ -81,48 +87,10 @@ function ToolPanel({
             setEditor(newEditor)
         }
     }
-    const { togglePopup, togglePresentationPreview } = useToolContext() || {};
-
-    function changeFontSize() {
-        const newSize = prompt("Введите размер шрифта (например, '24px'):", "24px");
-        if (newSize) {
-            const selection = window.getSelection();
-            if (selection && selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                const selectedContents = range.cloneContents(); // Клонируем выделенный текст
-                const elements = selectedContents.childNodes;
-                console.log("clon: ", elements)
-
-                for (let i = 0; i < elements.length; i++) {
-                    const element = elements[i];
-                    console.log(element); 
-                }
-    
-                // Создаём новый элемент <span> с нужным размером шрифта
-                const span = document.createElement('span');
-                span.style.fontSize = newSize; // Устанавливаем новый размер шрифта
-                
-                // Удаляем старое содержимое
-                range.deleteContents();
-                
-                // Оборачиваем все выделенные узлы в новый <span>
-                const fragment = document.createDocumentFragment();
-                fragment.appendChild(span);
-                span.appendChild(selectedContents); // Добавляем клонированное содержимое в <span>
-                
-                range.insertNode(fragment); // Вставляем новый фрагмент в документ
-            }
-        }
-    }
-
-    const fonts = [
-        "Arial",
-        "Times New Roman",
-        "Georgia",
-        "Verdana",
-        "Jersey 15",
-        "Comic Sans MS",
-    ]
+    const { togglePopup } = useToolContext() || {};
+    const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
+    const selectedObject = selectedSlide?.objects.find(object => object.uid === selectedObjectIds[0])
+    const viewChangeTextStyle = selectedObject?.type === "text" ? true : false
 
     return (
         <>
@@ -193,88 +161,163 @@ function ToolPanel({
                             border={3}
                         >
                             <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
-                        </Button>
-                        <Button 
-                            onClick={onAddTextToSlide}
-                            className={styles.addSlideButton}
-                        >
-                            <Text>Scale</Text>
-                        </Button>
-                        <ButtonWithList
-                            value={"Generate PDF"}
-                            onClick={onGeneratePDF}
-                        >
-                            <Button
-                                style={{width: "100%"}} 
-                                border={10}
-                                onClick={togglePresentationPreview}
-                            >
-                                Preview
-                            </Button>
-                        </ButtonWithList>
-                        
-                        <FileInput
-                            id={"importPresentationFromJSON"}
-                            onChange={importPresentationFromJSON}
-                        />
-                        
-                        <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
-                        <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
+                        </Button>                        
                     </div>
                     <Strip orientation={"vertical"}/>
-                    <div className={styles.editButtonsContainer}>
-                        <Button id={"boldButton"} onClick={() => document.execCommand('bold')} border={5}>B</Button>
-                        <Button id={"italicButton"} onClick={() => document.execCommand('italic')} border={5}>Курсив</Button>
-                        <Button id={"strikeThroughButton"} onClick={() => document.execCommand('strikeThrough')} border={5}>Зачеркнутый</Button>
-                        <Button id={"changeSizeButton"} onClick={() => changeFontSize()} border={5}>Другой кегль</Button>
-                        <ButtonWithChild 
-                            value='font-family' 
-                            id={"fontFamilyContainer"}
-                            className={styles.buttonWithList}
-                            valueLocationHorizontal={'center'}
-                        >
-                            <div className={styles.buttonFamilyContainer}>
-                                {fonts.map(font => (
-                                    <Button 
-                                        key={font}
-                                        className='buttonFamily'
-                                        style={{width: "100%"}} 
-                                        border={10}
-                                        onClick={() => changeFont(font)}
-                                    >
-                                        {font}
-                                    </Button>
-                                ))}
-                            </div>
-                        </ButtonWithChild>
-                    </div>
+                    <ImportExportButtons onGeneratePDF={onGeneratePDF}/>
+                    {viewChangeTextStyle && selectedObject?.type === "text" && (
+                        <>
+                            <Strip orientation={"vertical"}/>
+                            <ChangeTextStyleButtons selectedObject={selectedObject}/>
+                        </>
+                    )}
                 </div>
             </div>
         </>
     )
 }
 
-function changeFont(fontName: string) {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
 
-    const range = selection.getRangeAt(0);
-    const selectedContents = range.cloneContents()
+function ImportExportButtons({
+    onGeneratePDF
+}: ImportExportButtonsProps) {
+    const { togglePresentationPreview } = useToolContext() || {};
 
-    const parentSpan = range.startContainer.parentNode as HTMLElement;
-    console.log(selectedContents)
+    const { 
+        importPresentationFromJSON,
+        exportPresentationToJSON,
+    } = useAppActions()
+    const presentation = useAppSelector(editor => editor.presentation)
 
-    if (parentSpan.tagName === 'SPAN' && parentSpan.style.fontFamily === fontName) {
-        parentSpan.style.fontFamily = fontName
-    } else {
-        const span = document.createElement('span')
-        span.style.fontFamily = `'${fontName}'`
+    return (
+        <div className={styles.importExportContainer}>
+            <ButtonWithList
+                value={"Generate PDF"}
+                onClick={onGeneratePDF}
+            >
+                <Button
+                    style={{width: "100%"}} 
+                    border={10}
+                    onClick={togglePresentationPreview}
+                >
+                    Preview
+                </Button>
+            </ButtonWithList>
+            
+            <FileInput
+                id={"importPresentationFromJSON"}
+                onChange={importPresentationFromJSON}
+            />
+            
+            <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
+            <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
+        </div>
+    )
+}
 
-        range.deleteContents()
-        
-        span.appendChild(selectedContents)
-        range.insertNode(span)
+function ChangeTextStyleButtons({
+    selectedObject
+}: {selectedObject: ObjectTextType}) {
+    const fonts = [
+        "Arial",
+        "Times New Roman",
+        "Georgia",
+        "Verdana",
+        "Jersey 15",
+        "Comic Sans MS",
+    ]
+
+    const { 
+        changeTextObject,
+    } = useAppActions()
+
+    function handleChangeSize(size: number) {
+        if (size < 5) return
+        changeTextObject(
+            {
+                ...selectedObject,
+                font: {
+                    ...selectedObject.font,
+                    size: size
+                }
+            }
+        )
     }
+    const colors = useAppSelector(editor => editor.colors)
+    function onGetTextColor(color: Solid | Gradient) {
+        changeTextObject(
+            {
+                ...selectedObject,
+                color: color
+            }
+        )
+    }
+
+    function onGetTextBackgroundColor(color: Solid | Gradient) {
+        changeTextObject(
+            {
+                ...selectedObject,
+                backgroundColor: color
+            }
+        )
+    }
+
+    return (
+        <div className={styles.editButtonsContainer} id={"ChangeTextStyleButtons"}>
+            <Button id={"boldButton"} onClick={() => document.execCommand('bold')} border={5}>B</Button>
+            <Button id={"italicButton"} onClick={() => document.execCommand('italic')} border={5}>Курсив</Button>
+            <Button id={"strikeThroughButton"} onClick={() => document.execCommand('strikeThrough')} border={5}>Зачеркнутый</Button>
+            <NumberField
+                className={styles.sizeField}
+                limit={{
+                    minValue: 1,
+                    maxValue: 200
+                }}
+                value={selectedObject.font.size.toString()}
+                onChange={handleChangeSize}
+            />
+            <ButtonWithChild 
+                value='font-family' 
+                id={"fontFamilyContainer"}
+                className={styles.buttonWithList}
+                valueLocationHorizontal={'center'}
+            >
+                <div className={styles.buttonFamilyContainer}>
+                    {fonts.map(font => (
+                        <Button 
+                            key={font}
+                            className='buttonFamily'
+                            style={{width: "100%"}} 
+                            border={10}
+                            onClick={() => changeFont(font)}
+                        >
+                            {font}
+                        </Button>
+                    ))}
+                </div>
+            </ButtonWithChild>
+            <ButtonWithChild
+                className={styles.popupButton} 
+                value='color'
+                isClickChildClose={false}
+            >
+                <ListChooseColor 
+                    colors={colors} 
+                    onGetColor={(color) => onGetTextColor(color)}
+                />
+            </ButtonWithChild>
+            <ButtonWithChild
+                className={styles.popupButton} 
+                value='color'
+                isClickChildClose={false}
+            >
+                <ListChooseColor 
+                    colors={colors} 
+                    onGetColor={(color) => onGetTextBackgroundColor(color)}
+                />
+            </ButtonWithChild>
+        </div>
+    )
 }
 
 export {

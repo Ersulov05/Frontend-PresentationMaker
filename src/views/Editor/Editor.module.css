@@ -3,6 +3,9 @@
     --tool-panel-height: 48px;
     --slide-list-width: 245px;
     --side-popap-width: 350px;
+    --list-choose-color-z-index: 3;
+    --popup-add-color-z-index: 4;
+    --popup-add-gradient-z-index: 4;
 
     --dark-gray: #555555;
 

@@ -1,5 +1,5 @@
 import { BackgroundDataType } from "../slides/changeBackgroundSlide";
-import { TransformType } from "../PresentationType";
+import { ObjectTextType, TransformType } from "../PresentationType";
 import { ImageDataType } from "../objects/addImageToSlide";
 import { TextDataType } from "../objects/addTextToSlide";
 import { AppDispatch } from '../../store/redux/store';
@@ -83,7 +83,7 @@ const addTextObject = (textObject: TextDataType): AddTextObjectAction => {
     }
 }
 
-const changeTextObject = (text: string): ChangeTextObjectAction => {
+const changeTextObject = (text: ObjectTextType): ChangeTextObjectAction => {
     return {
         type: ActionType.CHANGE_TEXT_OBJECT,
         payload: text

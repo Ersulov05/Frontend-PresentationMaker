@@ -1,6 +1,6 @@
 import { ImageDataType } from "../objects/addImageToSlide"
 import { TextDataType } from "../objects/addTextToSlide"
-import { Gradient, PresentationType, Solid, TransformType } from "../PresentationType"
+import { Gradient, ObjectTextType, PresentationType, Solid, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 import { EditorType, ImageData, KeyCodeType } from "./EditorType"
 
@@ -142,7 +142,7 @@ export interface RemoveKeyToSetKeysAction {
 
 export interface ChangeTextObjectAction {
     type: ActionType.CHANGE_TEXT_OBJECT,
-    payload: string
+    payload: ObjectTextType
 }
 
 export type SlidesAction = 

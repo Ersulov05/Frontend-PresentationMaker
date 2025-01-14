@@ -51,8 +51,8 @@ export type Font = {
 export type ObjectTextType = BaseObject & {
     value: string
     font: Font
-    color: string
-    backgroundColor: string
+    color: Solid | Gradient
+    backgroundColor: Solid | Gradient
     type: 'text'
 }
 

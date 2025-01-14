@@ -28,8 +28,14 @@ const PresentationMax: PresentationType = {
                     weight: 400,
                     lineHeight: 1
                 },
-                color: '#ff00ff',
-                backgroundColor: '#00fff0',
+                color: {
+                    type: "solid",
+                    color: "#000000"
+                },
+                backgroundColor: {
+                    type: "solid",
+                    color: "#00000000"
+                },
                 type: 'text'
                 }
             ],
@@ -57,8 +63,14 @@ const PresentationMax: PresentationType = {
                     weight: 400,
                     lineHeight: 1
                 },
-                color: 'none',
-                backgroundColor: 'none',
+                color: {
+                    type: "solid",
+                    color: "#000000"
+                },
+                backgroundColor: {
+                    type: "solid",
+                    color: "#00000000"
+                },
                 type: 'text'
                 }
             ],
@@ -86,8 +98,14 @@ const PresentationMax: PresentationType = {
                     weight: 400,
                     lineHeight: 1
                 },
-                color: '#ff00ff',
-                backgroundColor: '#00fff0',
+                color: {
+                    type: "solid",
+                    color: "#000000"
+                },
+                backgroundColor: {
+                    type: "solid",
+                    color: "#00000000"
+                },
                 type: 'text'
                 }
             ],
@@ -99,15 +117,15 @@ const PresentationMax: PresentationType = {
 let localEditor: EditorType | null = null
 
 const data = localStorage.getItem('localData')
-if (data) {
-    const editorData = JSON.parse(data)
-    if (validateEditorData(editorData)) {
-        localEditor = {
-            ...editorData,
-            keys: new Set<KeyCodeType>()
-        }
-    }
-}
+// if (data) {
+//     const editorData = JSON.parse(data)
+//     if (validateEditorData(editorData)) {
+//         localEditor = {
+//             ...editorData,
+//             keys: new Set<KeyCodeType>()
+//         }
+//     }
+// }
 
 const defaultEditor: EditorType = localEditor ??
     {

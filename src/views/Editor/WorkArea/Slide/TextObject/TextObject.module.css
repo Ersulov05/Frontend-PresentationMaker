@@ -19,6 +19,10 @@
     white-space: pre-wrap; 
     word-wrap: break-word;
     /* overflow-y: auto; overflow-x: hidden; */
+    /* -webkit-text-fill-color: transparent; */
+    /* -webkit-background-clip: text; */
+    /* background-clip: text; */
+    background-clip: text;
 }
 
 .select {
@@ -37,4 +41,8 @@
 }
 .controls {
     margin-bottom: 10px;
+}
+
+strike {
+    text-decoration: line-through; /* Зачеркивание текста */
 }
