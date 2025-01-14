@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import useAppSelector from "../hooks/useAppSelector"
 import { PreviewSlide } from "../Editor/ListSlides/PreviewSlide/PreviewSlide"
 import styles from './SlideShow.module.css'
@@ -24,11 +24,24 @@ function SlideShow() {
         }
     }
 
-    const navigate = useNavigate()
+    function quit() {
+        if (!document.fullscreenElement) {
+            navigate('/')
+        }
+    }
 
+    const navigate = useNavigate()
+    useLayoutEffect(() => {
+        document.getElementById('full')?.requestFullscreen()
+        document.addEventListener("fullscreenchange", quit)
+        return () => {
+            document.removeEventListener("fullscreenchange", quit)
+        }
+    }, [])
+    
     return (
-        <div className={styles.container}>
-            <div className={styles.slideContainer}>
+        <div className={styles.container} id="full">
+            <div className={styles.slideContainer} >
                 <PreviewSlide slide={slide} key={slide.uid}/>
                 <Button 
                     onClick={() => navigate('/')} 
