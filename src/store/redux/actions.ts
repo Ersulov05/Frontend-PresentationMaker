@@ -1,5 +1,4 @@
 import { ImageDataType } from "../objects/addImageToSlide"
-import { TextDataType } from "../objects/addTextToSlide"
 import { Gradient, ObjectTextType, PresentationType, Solid, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
 import { EditorType, ImageData, KeyCodeType } from "./EditorType"
@@ -69,7 +68,6 @@ export interface AddSlideToSelectionAction {
 
 export interface AddTextObjectAction {
     type: ActionType.ADD_TEXT_OBJECT,
-    payload: TextDataType
 }
 
 export interface AddImageObjectAction {

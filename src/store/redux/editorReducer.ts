@@ -28,7 +28,7 @@ function editorReducer(editor: EditorType = defaultEditor, action: EditorAction)
         case ActionType.ADD_IMAGE_OBJECT:
             return addImageToSlide(editor, action.payload)
         case ActionType.ADD_TEXT_OBJECT:
-            return addTextToSlide(editor, action.payload)
+            return addTextToSlide(editor)
         case ActionType.ADD_SLIDE_TO_SELECTION:
             return addSlideToSelection(editor, action.payload)
         case ActionType.ADD_OBJECT_TO_SELECTION:

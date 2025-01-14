@@ -4,8 +4,7 @@ import { Text } from '../../../components/text/Text'
 import { Strip } from '../../../components/strip/Strip'
 import { useAppActions } from '../../hooks/useAppActions'
 
-import { TextDataType } from '../../../store/objects/addTextToSlide'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { HistoryContext } from '../../hooks/historyContext'
 import { useToolContext } from '../../context/toolContext'
 import useAppSelector from '../../hooks/useAppSelector'
@@ -17,8 +16,6 @@ import { changeFont } from '../../../store/utils/textChangeStyle'
 import { Gradient, ObjectTextType, SlideType, Solid } from '../../../store/PresentationType'
 import { NumberField } from '../../../components/numberField/NumberField'
 import { ListChooseColor } from '../ListChooseColor/ListChooseColor'
-import { PopupAddColor } from '../WorkArea/PopupAddColor/PopupAddColor'
-import { PopupAddGradient } from '../WorkArea/PopupAddGradient/PopupAddGradient'
 
 type ToolPanelProps = {
     onGeneratePDF: () => void
@@ -41,20 +38,6 @@ function ToolPanel({
         addTextObject,
         setEditor,
     } = useAppActions()
-
-    function onAddTextToSlide() {
-        const data: TextDataType = {
-            position: {
-                x: 10,
-                y: 10,
-            },
-            size: {
-                width: 100,
-                height: 100,
-            }
-        }
-        addTextObject(data)
-    }
 
     const handleKeyDown = (event: KeyboardEvent) => {
         const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
@@ -117,7 +100,7 @@ function ToolPanel({
                             <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
                         </Button>
                         <Button 
-                            onClick={onAddTextToSlide}
+                            onClick={() => {}}
                             className={styles.addSlideButton}
                         >
                             <Text>Тemplate</Text>
@@ -143,7 +126,7 @@ function ToolPanel({
                     <Strip orientation={"vertical"}/>
                     <div className={styles.objectButtonsContainer}>
                         <Button 
-                            onClick={onAddTextToSlide}
+                            onClick={addTextObject}
                             className={styles.toolButton}
                         >
                             <Text>Т</Text>

@@ -7,7 +7,7 @@ export type TextDataType = {
     size: Size,
 }
 
-function addTextToSlide(editor: EditorType, data: TextDataType): EditorType {
+function addTextToSlide(editor: EditorType): EditorType {
     const { slides } = editor.presentation
     const { selectedSlideIds } = editor.selection
     if (selectedSlideIds.length == 0) {
@@ -16,8 +16,14 @@ function addTextToSlide(editor: EditorType, data: TextDataType): EditorType {
     
     const newText: ObjectTextType = {
         uid: generateUID(),
-        pos: data.position,
-        size: data.size,
+        pos: {
+            x: 100,
+            y: 100,
+        },
+        size: {
+            width: 100,
+            height: 100,
+        },
         value: "New text",
         font: {
             style: "normal",
@@ -26,8 +32,14 @@ function addTextToSlide(editor: EditorType, data: TextDataType): EditorType {
             weight: 400,
             lineHeight: 1
         },
-        color: "none",
-        backgroundColor: "none",
+        color: {
+            type: "solid",
+            color: "#000000"
+        },
+        backgroundColor: {
+            type: "solid",
+            color: "#00000000"
+        },
         type: "text"
     }
 

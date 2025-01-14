@@ -1,7 +1,6 @@
 import { BackgroundDataType } from "../slides/changeBackgroundSlide";
 import { ObjectTextType, TransformType } from "../PresentationType";
 import { ImageDataType } from "../objects/addImageToSlide";
-import { TextDataType } from "../objects/addTextToSlide";
 import { AppDispatch } from '../../store/redux/store';
 import { 
     ActionType, 
@@ -76,10 +75,9 @@ const addSlideToSelection = (slideUid: string): AddSlideToSelectionAction => {
     }
 }
 
-const addTextObject = (textObject: TextDataType): AddTextObjectAction => {
+const addTextObject = (): AddTextObjectAction => {
     return {
         type: ActionType.ADD_TEXT_OBJECT,
-        payload: textObject
     }
 }
 
