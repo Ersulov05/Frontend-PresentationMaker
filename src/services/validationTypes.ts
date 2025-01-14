@@ -121,8 +121,7 @@ const validateEditorData = (data: any): data is EditorType => {
         return false
     }
 
-    if (!(keys instanceof Set) || !Array.from(keys).every(key => isValidKeyCode(key))) {
-        console.log('/---/')
+    if (!(keys instanceof Set) || !Array.from(keys).every(key => typeof key === 'string')) {
         return false;
     }
 

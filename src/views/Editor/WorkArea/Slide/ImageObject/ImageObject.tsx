@@ -38,7 +38,7 @@ function ImageObject({
             //     onSetEdited(object.uid)
             //     return
             // }
-            if (keys.has('ctrl')) {
+            if (keys.has('Control')) {
                 addObjectToSelection(object.uid)
                 return
             }
@@ -47,7 +47,7 @@ function ImageObject({
     }
 
     function handleBlur() {
-        if (!keys.has('ctrl')) {
+        if (!keys.has('Control')) {
             deleteObjectSelection()
         }
     } 

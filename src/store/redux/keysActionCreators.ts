@@ -1,14 +1,14 @@
 import { ActionType, AddKeyToSetKeysAction, RemoveKeyToSetKeysAction } from "./actions";
 import { KeyCodeType } from "./EditorType";
 
-const addKeyToSetKeys = (keyCode: KeyCodeType): AddKeyToSetKeysAction => {
+const addKeyToSetKeys = (keyCode: string): AddKeyToSetKeysAction => {
     return {
         type: ActionType.ADD_KEY_TO_SET_KEYS,
         payload: keyCode,
     }
 }
 
-const removeKeyToSetKeys = (keyCode: KeyCodeType): RemoveKeyToSetKeysAction => {
+const removeKeyToSetKeys = (keyCode: string): RemoveKeyToSetKeysAction => {
     return {
         type: ActionType.REMOVE_KEY_TO_SET_KEYS,
         payload: keyCode,

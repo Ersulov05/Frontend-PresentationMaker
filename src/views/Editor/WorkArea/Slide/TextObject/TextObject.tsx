@@ -29,7 +29,7 @@ function TextObject({
                 onSetEdited(object.uid)
                 return
             }
-            if (keys.has('ctrl')) {
+            if (keys.has('Control')) {
                 addObjectToSelection(object.uid)
                 return
             }
@@ -61,7 +61,7 @@ function TextObject({
                 )
             textValue.current = object.value
         }
-        if (!keys.has('ctrl')) {
+        if (!keys.has('Control')) {
             deleteObjectSelection()
         }
     }

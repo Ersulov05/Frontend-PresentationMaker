@@ -15,12 +15,12 @@ export type Color = {
 
 }
 
-export type KeyCodeType = 'ctrl' | 'alt' | 'shift'
+export type KeyCodeType = 'ctrl' | 'alt' | 'shift' | "ArrowRight" | "ArrowLeft" | "ArrowUp" | "ArrowDown" | "Space"
 
 export type EditorType = {
     presentation: PresentationType
     selection: SelectionType
     colors: Array<Solid | Gradient>
     searchedImages: ImageData[]
-    keys: Set<KeyCodeType>
+    keys: Set<string>
 }

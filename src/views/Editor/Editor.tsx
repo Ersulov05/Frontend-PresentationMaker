@@ -69,32 +69,6 @@ const MainContent = () => {
         togglePresentationPreview,
     } = useToolContext() || {};
 
-    const {
-        addKeyToSetKeys,
-        removeKeyToSetKeys,
-    } = useAppActions()
-    
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.ctrlKey) {
-            addKeyToSetKeys('ctrl')
-        }
-    }
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-        if (!event.ctrlKey) {
-            removeKeyToSetKeys('ctrl')
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown)
-        window.addEventListener('keyup', handleKeyUp)
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown)
-            window.removeEventListener('keyup', handleKeyUp)
-        };
-    }, [])
-
     const { generatePDFs, status } = useGeneratePDF();
 
     const handleGeneratePDF = async () => {

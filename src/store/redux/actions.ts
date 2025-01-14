@@ -130,12 +130,12 @@ export interface SetSearchedImagesAction {
 
 export interface AddKeyToSetKeysAction {
     type: ActionType.ADD_KEY_TO_SET_KEYS,
-    payload: KeyCodeType
+    payload: string
 }
 
 export interface RemoveKeyToSetKeysAction {
     type: ActionType.REMOVE_KEY_TO_SET_KEYS,
-    payload: KeyCodeType
+    payload: string
 }
 
 export interface ChangeTextObjectAction {

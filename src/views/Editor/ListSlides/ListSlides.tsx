@@ -52,7 +52,7 @@ function ListSlides({
     }
 
     function handleClick(slideUid: string) {
-        if (keys.has('ctrl')) {
+        if (keys.has('Control')) {
             addSlideToSelection(slideUid)
             return
         }
