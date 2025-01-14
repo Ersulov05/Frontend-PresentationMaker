@@ -23,6 +23,7 @@
     /* -webkit-background-clip: text; */
     /* background-clip: text; */
     background-clip: text;
+    box-sizing: border-box;
 }
 
 .select {

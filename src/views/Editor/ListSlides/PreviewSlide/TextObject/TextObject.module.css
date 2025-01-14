@@ -2,6 +2,8 @@
 {
     position: absolute;
     box-sizing: border-box;
+    border: solid 1px transparent;
+    padding: 3px;
 }
 
 .text
@@ -19,4 +21,6 @@
     user-select: none;
     white-space: pre-wrap;
     word-wrap: break-word;
+    box-sizing: border-box;
+    background-clip: text;
 }

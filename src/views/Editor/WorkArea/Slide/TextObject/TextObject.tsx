@@ -122,14 +122,14 @@ function TextObject({
             style={{
                 top: `${(object.pos.y)*scale}px`,
                 left: `${(object.pos.x)*scale}px`,
-                width: `${object.size.width*scale}px`,
-                height: `${object.size.height*scale}px`,
+                width: `${object.size.width}px`,
+                height: `${object.size.height}px`,
                 background: object.backgroundColor.type === "solid"
                     ? object.backgroundColor.color
                     : `linear-gradient(${object.backgroundColor.angle}deg, ${object.backgroundColor.colors.join(', ')})`,
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,  
-                fontSize: `${object.font.size*scale}px`,  
+                fontSize: `${object.font.size}px`,  
                 //lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >
