@@ -1,7 +1,7 @@
 import { ListSlides } from './ListSlides/ListSlides.tsx';
 import { WorkArea } from './WorkArea/WorkArea.tsx';
 import { BackgroundType } from '../../store/PresentationType.ts';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import useAppSelector from '../hooks/useAppSelector.ts';
 
 import { HistoryType } from '../../store/utils/history.ts';
@@ -11,7 +11,6 @@ import { ToolPanel } from './ToolPanel/ToolPanel.tsx';
 import { SidePopap } from './SidePopap/SidePopap.tsx';
 import { joinStyles } from '../../store/utils/joinStyles.ts';
 import { ToolProvider, useToolContext } from '../context/toolContext.tsx';
-import { useAppActions } from '../hooks/useAppActions.ts';
 import { ImagesPopup } from './ImagesPopup/ImagesPopup.tsx';
 import { PreviewPresentation } from './PreviewPresentation/PreviewPresentation.tsx';
 import { useGeneratePDF } from '../hooks/useGeneratePDF.ts';
@@ -36,22 +35,6 @@ function Editor({history}: EditorProps) {
         </HistoryContext.Provider>
     )
 }
-
-
-const HiddenContainer = forwardRef<HTMLDivElement>((_, ref) => {
-    const slides = useAppSelector(editor => editor.presentation.slides);
-
-    return (
-        <div 
-            className={styles.hiddenContainer}
-            ref={ref}
-        >
-            {slides.map(slide => (
-                <PreviewSlide slide={slide} scale={1} key={'hidden' + slide.uid} />
-            ))}
-        </div>
-    );
-});
 
 const MainContent = () => {
     const presentation = useAppSelector(editor => editor.presentation)
@@ -114,5 +97,20 @@ const MainContent = () => {
         </main>
     );
 };
+
+const HiddenContainer = forwardRef<HTMLDivElement>((_, ref) => {
+    const slides = useAppSelector(editor => editor.presentation.slides);
+
+    return (
+        <div 
+            className={styles.hiddenContainer}
+            ref={ref}
+        >
+            {slides.map(slide => (
+                <PreviewSlide slide={slide} scale={1} key={'hidden' + slide.uid} />
+            ))}
+        </div>
+    );
+});
 
 export default Editor

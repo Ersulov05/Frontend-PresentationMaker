@@ -1,6 +1,6 @@
 import { validateEditorData } from "../services/validationTypes"
 import { PresentationType } from "./PresentationType"
-import { EditorType, KeyCodeType } from "./redux/EditorType"
+import { EditorType } from "./redux/EditorType"
 
 const PresentationMax: PresentationType = {
     name: 'New presentation',

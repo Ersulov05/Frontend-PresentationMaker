@@ -1,7 +1,7 @@
 import { ImageDataType } from "../objects/addImageToSlide"
 import { Gradient, ObjectTextType, PresentationType, Solid, TransformType } from "../PresentationType"
 import { BackgroundDataType } from "../slides/changeBackgroundSlide"
-import { EditorType, ImageData, KeyCodeType } from "./EditorType"
+import { EditorType, ImageData } from "./EditorType"
 
 export enum ActionType {
     ADD_SLIDE = "ADD_SLIDE",

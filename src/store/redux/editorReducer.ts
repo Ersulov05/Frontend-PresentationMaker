@@ -1,4 +1,4 @@
-import { EditorType, KeyCodeType } from "./EditorType";
+import { EditorType } from "./EditorType";
 import { ActionType, EditorAction } from "./actions";
 import { defaultEditor } from "../data";
 import { addSlide } from "../slides/addSlide";

@@ -10,7 +10,6 @@ interface ObjectProps {
     object: ObjectType 
     scale: number
     selected?: boolean
-    onSetEdited?: (objectUid: string) => void
     edited?: boolean
 }
 
@@ -18,7 +17,6 @@ function ImageObject({
     object, 
     scale,
     selected = true,
-    onSetEdited,
     edited,
 }: ObjectProps)
 {

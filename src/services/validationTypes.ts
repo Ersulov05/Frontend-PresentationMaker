@@ -128,9 +128,9 @@ const validateEditorData = (data: any): data is EditorType => {
     return true
 }
 
-const isValidKeyCode = (key: unknown): key is KeyCodeType => {
-    return key === 'ctrl' || key === 'alt' || key === 'shift';
-}
+// const isValidKeyCode = (key: unknown): key is KeyCodeType => {
+//     return key === 'ctrl' || key === 'alt' || key === 'shift';
+// }
 
 const isValidColor = (color: any): color is Solid | Gradient => {
     if (typeof color !== "object" || color === null) {

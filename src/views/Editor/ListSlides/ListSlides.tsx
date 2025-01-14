@@ -1,7 +1,6 @@
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BackgroundType } from '../../../store/PresentationType.ts'
 import styles from './ListSlides.module.css';
-import { HEIGHT_SLIDE, WIDTH_SLIDE } from '../../../store/constants.ts';
 import { PreviewSlide } from './PreviewSlide/PreviewSlide.tsx';
 import { useDragAndDrop } from '../../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';

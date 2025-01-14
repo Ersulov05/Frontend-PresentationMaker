@@ -1,5 +1,4 @@
 import { ActionType, AddKeyToSetKeysAction, RemoveKeyToSetKeysAction } from "./actions";
-import { KeyCodeType } from "./EditorType";
 
 const addKeyToSetKeys = (keyCode: string): AddKeyToSetKeysAction => {
     return {

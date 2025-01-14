@@ -1,4 +1,4 @@
-import { Gradient, Image, PresentationType, Solid } from "../PresentationType"
+import { Gradient, PresentationType, Solid } from "../PresentationType"
 
 export type SelectionType = {
     selectedSlideIds: string[]

@@ -1,10 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import useAppSelector from "../hooks/useAppSelector"
 import { PreviewSlide } from "../Editor/ListSlides/PreviewSlide/PreviewSlide"
 import styles from './SlideShow.module.css'
-import { Button } from "../../components/button/Button"
 import { Text } from "../../components/text/Text"
-import { Icon } from "../../components/icon/Icon"
 import { useNavigate } from "react-router"
 import { HEIGHT_SLIDE, WIDTH_SLIDE } from "../../store/constants"
 
