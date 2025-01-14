@@ -1,8 +1,9 @@
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Button } from '../../../components/button/Button'
 import useAppSelector from '../../hooks/useAppSelector';
-import { useGeneratePDF } from '../../hooks/useGeneratePDF';
 import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide';
 import styles from './PreviewPresentation.module.css'
+import { WIDTH_SLIDE } from '../../../store/constants';
 
 type PreviewPresentationProps = {
     onClose?: () => void
@@ -15,6 +16,27 @@ function PreviewPresentation({
 }: PreviewPresentationProps) {
 
     const slides = useAppSelector(editor => editor.presentation.slides)
+
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const slideRef = useRef<HTMLDivElement>(null);
+    useLayoutEffect(() => {
+        const updateDimensions = () => {
+            if (slideRef.current) {
+                const { offsetWidth, offsetHeight } = slideRef.current;
+                setDimensions({ width: offsetWidth, height: offsetHeight });
+            }
+        };
+
+        updateDimensions();
+
+        window.addEventListener('resize', updateDimensions);
+
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+        };
+    }, []);
+
+    const scaleX = (dimensions.width - 40) / WIDTH_SLIDE
 
     return (
         <div className={styles.previewContainer}>
@@ -29,11 +51,12 @@ function PreviewPresentation({
                 
                 <div
                     className={styles.content}
+                    ref={slideRef}
                 >
                     {slides.map(slide => (
                         <PreviewSlide 
                             slide={slide} 
-                            scale={1} 
+                            scale={scaleX} 
                             key={'preview' + slide.uid} 
                         />
                     ))}

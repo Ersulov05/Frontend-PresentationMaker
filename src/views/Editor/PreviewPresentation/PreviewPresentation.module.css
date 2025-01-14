@@ -37,6 +37,7 @@
     overflow-y: auto;
     gap: 20px;
     padding-block: 20px;
+    padding-inline: 10px;
     box-sizing: border-box;
 }
 
