@@ -12,7 +12,7 @@ import { FileInput } from '../../../components/fileInput/fileInput'
 import { ButtonWithChild } from '../../../components/buttonWithChild/ButtonWithChild'
 import styles from './ToolPanel.module.css'
 import { ButtonWithList } from '../../../components/buttonWithList/ButtonWithList'
-import { changeFont } from '../../../store/utils/textChangeStyle'
+// import { changeFont } from '../../../store/utils/textChangeStyle'
 import { Gradient, ObjectTextType, SlideType, Solid } from '../../../store/PresentationType'
 import { NumberField } from '../../../components/numberField/NumberField'
 import { ListChooseColor } from '../ListChooseColor/ListChooseColor'
@@ -160,7 +160,6 @@ function ToolPanel({
     )
 }
 
-
 function ImportExportButtons({
     onGeneratePDF
 }: ImportExportButtonsProps) {
@@ -245,6 +244,19 @@ function ChangeTextStyleButtons({
         )
     }
 
+    function onChangeFontFamily(family: string) {
+        changeTextObject(
+            {
+                ...selectedObject,
+                font: {
+                    ...selectedObject.font,
+                    family: `'${family}'`
+                }
+                // backgroundColor: color
+            }
+        )
+    }
+
     return (
         <div className={styles.editButtonsContainer} id={"ChangeTextStyleButtons"}>
             <Button id={"boldButton"} onClick={() => document.execCommand('bold')} border={5}>B</Button>
@@ -272,7 +284,7 @@ function ChangeTextStyleButtons({
                             className='buttonFamily'
                             style={{width: "100%"}} 
                             border={10}
-                            onClick={() => changeFont(font)}
+                            onClick={() => onChangeFontFamily(font)}
                         >
                             {font}
                         </Button>
