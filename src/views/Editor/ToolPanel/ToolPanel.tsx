@@ -271,11 +271,31 @@ function ChangeTextStyleButtons({
                 value={selectedObject.font.size.toString()}
                 onChange={handleChangeSize}
             />
+            <ButtonWithChild
+                className={styles.popupButton} 
+                value='color'
+                isClickChildClose={false}
+            >
+                <ListChooseColor 
+                    colors={colors} 
+                    onGetColor={(color) => onGetTextColor(color)}
+                />
+            </ButtonWithChild>
+            <ButtonWithChild
+                className={styles.popupButton} 
+                value='background'
+                isClickChildClose={false}
+            >
+                <ListChooseColor 
+                    colors={colors} 
+                    onGetColor={(color) => onGetTextBackgroundColor(color)}
+                />
+            </ButtonWithChild>
             <ButtonWithChild 
                 value='font-family' 
                 id={"fontFamilyContainer"}
                 className={styles.buttonWithList}
-                valueLocationHorizontal={'center'}
+                // valueLocationHorizontal={'center'}
             >
                 <div className={styles.buttonFamilyContainer}>
                     {fonts.map(font => (
@@ -290,26 +310,6 @@ function ChangeTextStyleButtons({
                         </Button>
                     ))}
                 </div>
-            </ButtonWithChild>
-            <ButtonWithChild
-                className={styles.popupButton} 
-                value='color'
-                isClickChildClose={false}
-            >
-                <ListChooseColor 
-                    colors={colors} 
-                    onGetColor={(color) => onGetTextColor(color)}
-                />
-            </ButtonWithChild>
-            <ButtonWithChild
-                className={styles.popupButton} 
-                value='color'
-                isClickChildClose={false}
-            >
-                <ListChooseColor 
-                    colors={colors} 
-                    onGetColor={(color) => onGetTextBackgroundColor(color)}
-                />
             </ButtonWithChild>
         </div>
     )
