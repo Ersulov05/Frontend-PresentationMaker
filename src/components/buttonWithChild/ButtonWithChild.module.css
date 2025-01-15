@@ -34,6 +34,10 @@
 }
 
 
+.value {
+    height: 18px;
+}
+
 /* .button {
     display: flex;
     user-select: none;

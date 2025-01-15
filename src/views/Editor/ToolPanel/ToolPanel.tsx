@@ -124,6 +124,8 @@ function ToolPanel({
                         </Button>
                     </div>
                     <Strip orientation={"vertical"}/>
+                    <ImportExportButtons onGeneratePDF={onGeneratePDF}/>
+                    <Strip orientation={"vertical"}/>
                     <div className={styles.objectButtonsContainer}>
                         <Button 
                             onClick={addTextObject}
@@ -146,8 +148,7 @@ function ToolPanel({
                             <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
                         </Button>                        
                     </div>
-                    <Strip orientation={"vertical"}/>
-                    <ImportExportButtons onGeneratePDF={onGeneratePDF}/>
+                    
                     {viewChangeTextStyle && selectedObject?.type === "text" && (
                         <>
                             <Strip orientation={"vertical"}/>
@@ -176,11 +177,13 @@ function ImportExportButtons({
             <ButtonWithList
                 value={"Generate PDF"}
                 onClick={onGeneratePDF}
+                className={styles.toolButtonNoAspect}
             >
                 <Button
                     style={{width: "100%"}} 
                     border={10}
                     onClick={togglePresentationPreview}
+                    className={styles.toolButtonNoAspect}
                 >
                     Preview
                 </Button>
@@ -191,8 +194,20 @@ function ImportExportButtons({
                 onChange={importPresentationFromJSON}
             />
             
-            <Button onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}>Import</Button>
-            <Button onClick={() => exportPresentationToJSON(presentation)}>Export</Button>
+            <Button 
+                onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}
+                border={7}
+                className={styles.toolButtonNoAspect}
+            >
+                Import
+            </Button>
+            <Button 
+                onClick={() => exportPresentationToJSON(presentation)}
+                border={7}
+                className={styles.toolButtonNoAspect}
+            >
+                Export
+            </Button>
         </div>
     )
 }
@@ -252,16 +267,36 @@ function ChangeTextStyleButtons({
                     ...selectedObject.font,
                     family: `'${family}'`
                 }
-                // backgroundColor: color
             }
         )
     }
 
     return (
         <div className={styles.editButtonsContainer} id={"ChangeTextStyleButtons"}>
-            <Button id={"boldButton"} onClick={() => document.execCommand('bold')} border={5}>B</Button>
-            <Button id={"italicButton"} onClick={() => document.execCommand('italic')} border={5}>Курсив</Button>
-            <Button id={"strikeThroughButton"} onClick={() => document.execCommand('strikeThrough')} border={5}>Зачеркнутый</Button>
+            <Button 
+                id={"boldButton"} 
+                onClick={() => document.execCommand('bold')} 
+                border={9}
+                className={styles.toolButton}
+            >
+                B
+            </Button>
+            <Button 
+                id={"italicButton"} 
+                onClick={() => document.execCommand('italic')} 
+                border={5}
+                className={styles.toolButton}
+            >
+                <Icon iconSrc={"/image/cursiveIcon.svg"} size={18}/>
+            </Button>
+            <Button 
+                id={"strikeThroughButton"} 
+                onClick={() => document.execCommand('strikeThrough')} 
+                border={5}
+                className={styles.toolButton}
+            >
+                <Icon iconSrc={"/image/strikeIcon.svg"} size={18}/>
+            </Button>
             <NumberField
                 className={styles.sizeField}
                 limit={{
@@ -272,8 +307,8 @@ function ChangeTextStyleButtons({
                 onChange={handleChangeSize}
             />
             <ButtonWithChild
-                className={styles.popupButton} 
-                value='color'
+                className={styles.toolButton} 
+                value={<Icon iconSrc={"/image/colorTextIcon.svg"} size={18}/>}
                 isClickChildClose={false}
             >
                 <ListChooseColor 
@@ -282,8 +317,8 @@ function ChangeTextStyleButtons({
                 />
             </ButtonWithChild>
             <ButtonWithChild
-                className={styles.popupButton} 
-                value='background'
+                className={styles.toolButton} 
+                value={<Icon iconSrc={"/image/fillIcon.svg"} size={18}/>}
                 isClickChildClose={false}
             >
                 <ListChooseColor 

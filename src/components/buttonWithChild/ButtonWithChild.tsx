@@ -5,7 +5,7 @@ import styles from './ButtonWithChild.module.css'
 
 type ButtonWithChildProps = {
     onClick?: () => void
-    value?: string
+    value?: string | React.ReactNode
     className?: string
     id?: string
     style?: CSSProperties
@@ -109,7 +109,7 @@ function ButtonWithChild({
                     onClick={handleClick}
                     
                 >
-                    <div>
+                    <div className={styles.value}>
                         {value}
                     </div>
                 </div>
