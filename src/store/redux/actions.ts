@@ -10,6 +10,7 @@ export enum ActionType {
     CHANGE_SCALE = "CHANGE_SCALE",
     ADD_SCALE = "ADD_SCALE",
     SUB_SCALE = "SUB_SCALE",
+    COPY_SLIDES = "COPY_SLIDES",
     DELETE_SLIDES = "DELETE_SLIDES",
     DELETE_OBJECTS = "DELETE_OBJECTS",
     SELECT_SLIDE = "SELECT_SLIDE",
@@ -143,6 +144,10 @@ export interface ChangeTextObjectAction {
     payload: ObjectTextType
 }
 
+export interface CopySlidesAction {
+    type: ActionType.COPY_SLIDES
+}
+
 export type SlidesAction = 
     AddSlideAction 
     | AddTextObjectAction
@@ -159,6 +164,7 @@ export type SlidesAction =
     | TranslateSlidesAction
     | SetSearchedImagesAction
     | ChangeTextObjectAction
+    | CopySlidesAction
 export type NamePresentationAction = RenamePresentationAction
 export type ColorsAction = AddColorAction
 export type ScaleAction = 

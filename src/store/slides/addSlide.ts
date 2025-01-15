@@ -17,7 +17,6 @@ function addSlide(editor: EditorType): EditorType {
             type: "solid"
         },
         objects: [],
-        selectedObjectIds: []
     }
     const newSlides = lastSelectedIndex >= 0
         ? [...slides.slice(0, lastSelectedIndex + 1), newSlide, ...slides.slice(lastSelectedIndex + 1)]

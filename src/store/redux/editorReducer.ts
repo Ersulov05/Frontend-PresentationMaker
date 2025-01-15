@@ -12,11 +12,14 @@ import { transformObjects } from "../objects/transformObject";
 import { translateSlides } from "../slides/translateSlides";
 import { changeBackgroundSlide } from "../slides/changeBackgroundSlide";
 import { changeTextObject } from "../objects/changeTextObject";
+import { copySlides } from "../slides/copySlides";
 
 function editorReducer(editor: EditorType = defaultEditor, action: EditorAction): EditorType {
     switch (action.type) {
         case ActionType.ADD_SLIDE: 
             return addSlide(editor)
+        case ActionType.COPY_SLIDES:
+            return copySlides(editor)
         case ActionType.DELETE_SLIDES:
             return deleteSlides(editor)
         case ActionType.DELETE_OBJECTS:

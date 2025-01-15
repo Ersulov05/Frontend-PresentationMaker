@@ -11,6 +11,7 @@ import {
     AddTextObjectAction, 
     ChangeBackgroundAction, 
     ChangeTextObjectAction, 
+    CopySlidesAction, 
     DeleteObjectsAction,
     DeleteObjectSelectionAction,
     DeleteSlidesAction, 
@@ -32,6 +33,12 @@ const addSlide = (): AddSlideAction => {
 const deleteSlides = (): DeleteSlidesAction => {
     return {
         type: ActionType.DELETE_SLIDES
+    }
+}
+
+const copySlides = (): CopySlidesAction => {
+    return {
+        type: ActionType.COPY_SLIDES
     }
 }
 
@@ -210,4 +217,5 @@ export {
     translateSlides,
     searchImageAsync,
     changeTextObject,
+    copySlides,
 }

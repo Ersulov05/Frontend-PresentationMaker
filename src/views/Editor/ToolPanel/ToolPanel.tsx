@@ -39,6 +39,7 @@ function ToolPanel({
         addTextObject,
         setEditor,
         setPresentation,
+        copySlides,
     } = useAppActions()
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -96,7 +97,7 @@ function ToolPanel({
                             <Icon iconSrc={"/image/iconPlus.svg"} size={30}/>
                         </Button>
                         <Button 
-                            onClick={addSlide}
+                            onClick={copySlides}
                             className={styles.addSlideButton}
                         >
                             <Icon iconSrc={"/image/iconCopySlide.svg"} size={30}/>
