@@ -130,7 +130,6 @@ function TextObject({
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,  
                 fontSize: `${object.font.size}px`,  
-                //lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >
             {edited 

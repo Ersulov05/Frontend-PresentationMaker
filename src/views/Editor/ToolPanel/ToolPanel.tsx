@@ -355,7 +355,6 @@ function ChangeTextStyleButtons({
                 value='font-family' 
                 id={"fontFamilyContainer"}
                 className={styles.buttonWithList}
-                // valueLocationHorizontal={'center'}
             >
                 <div className={styles.buttonFamilyContainer}>
                     {fonts.map(font => (

@@ -27,19 +27,6 @@ function useGeneratePDF() {
         const pdf = new jsPDF('landscape', 'pt', [WIDTH_SLIDE * scale, HEIGHT_SLIDE * scale]);
 
         try {
-            // const promises = slidesArray.map((slideRef, index) => {
-            //     return html2canvas(slideRef, { scale: 2 }).then((canvas) => {
-            //         const imgData = canvas.toDataURL('image/png');
-            //         const imgWidth = pdf.internal.pageSize.getWidth();
-            //         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            //         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
-            //         if (index < slidesArray.length - 1) {
-            //             pdf.addPage();
-            //         }
-            //     });
-            // });
             for (const [index, slideRef] of slidesArray.entries()) {
                 const canvas = await html2canvas(slideRef, { scale: 2 });
                 const imgData = canvas.toDataURL('image/png');
@@ -53,13 +40,12 @@ function useGeneratePDF() {
                 }
             }
 
-            //await Promise.all(promises); // Ждем завершения всех промисов
-            pdf.save(`${filename}.pdf`); // Сохраняем PDF с именем "slides.pdf"
-            setIsGeneratePDF(true); // Возвращаем состояние обратно
+            pdf.save(`${filename}.pdf`)
+            setIsGeneratePDF(true)
         } catch (error) {
-            console.error("Ошибка при создании PDF:", error);
-            setStatus(false); // Устанавливаем статус в false при ошибке
-            setIsGeneratePDF(true); // Возвращаем состояние обратно
+            console.error("Ошибка при создании PDF:", error)
+            setStatus(false)
+            setIsGeneratePDF(true)
         }
     };
 
