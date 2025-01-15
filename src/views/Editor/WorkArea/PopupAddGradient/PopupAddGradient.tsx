@@ -18,8 +18,6 @@ function PopupAddGradient({
 
     const {addColor} = useAppActions()
     function onAddColor() {
-
-        console.log(getColors())
         const gradient: Gradient = {
             colors: getColors(),
             angle: angle,
@@ -61,7 +59,12 @@ function PopupAddGradient({
         }
 
         return colors
-    }    
+    }  
+    
+    function onSetAngle(angle: number) {
+        setAngle(angle)
+        setColors(getColors())
+    }
 
     return (
         <div className={styles.popupContainer}>
@@ -87,7 +90,7 @@ function PopupAddGradient({
                         <label className={styles.popupLabel}>Angle:</label>
                         <NumberField
                             value={angle.toString()}
-                            onChange={setAngle}
+                            onChange={onSetAngle}
                             className={styles.angleField}
                             limit={{
                                 minValue: -360,

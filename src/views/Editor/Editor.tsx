@@ -96,8 +96,8 @@ const MainContent = () => {
                 <HiddenContainer ref={hiddenContainerRef}/>
             </main>
         </>
-    );
-};
+    )
+}
 
 const HiddenContainer = forwardRef<HTMLDivElement>((_, ref) => {
     const slides = useAppSelector(editor => editor.presentation.slides);
@@ -111,7 +111,7 @@ const HiddenContainer = forwardRef<HTMLDivElement>((_, ref) => {
                 <PreviewSlide slide={slide} scale={1} key={'hidden' + slide.uid} />
             ))}
         </div>
-    );
-});
+    )
+})
 
 export default Editor
