@@ -78,7 +78,7 @@ function PopupChangeBackground({
 
     function handleLoad(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        if (file && file.type === 'image/png') {
+        if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
             getBase64ByFile(file)
                 .then((imageBase64) => {
                     const formats: Base64FormatType[] = [

@@ -56,7 +56,7 @@ function PreviewPresentation({
                     {slides.map(slide => (
                         <PreviewSlide 
                             slide={slide} 
-                            scale={scaleX} 
+                            scale={scaleX < 1 ? scaleX : 1} 
                             key={'preview' + slide.uid} 
                         />
                     ))}
