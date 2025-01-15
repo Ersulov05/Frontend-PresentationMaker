@@ -40,6 +40,7 @@ function addTextToSlide(editor: EditorType): EditorType {
             type: "solid",
             color: "#00000000"
         },
+        rotation: 0,
         type: "text"
     }
 

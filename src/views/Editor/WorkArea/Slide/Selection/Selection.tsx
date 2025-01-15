@@ -24,6 +24,7 @@ function Selection({
     scale,
     selectedObjects,
 }: SelectionProps) {
+    const rotatePoint = useDragAndDrop()
     const leftPoint = useDragAndDrop()
     const rightPoint = useDragAndDrop()
     const downPoint = useDragAndDrop()
@@ -47,7 +48,8 @@ function Selection({
             pos: {
                 x: transform.position.x  + dragX/scale + (object.pos.x - transform.position.x) * widthScale,
                 y: transform.position.y  + dragY/scale + (object.pos.y - transform.position.y) * heightScale
-            }
+            },
+            rotation: rotation
         }
     }
 
@@ -60,7 +62,8 @@ function Selection({
             size: {
                 width: transform.size.width + dragWidth/scale,
                 height: transform.size.height + dragHeight/scale
-            }
+            },
+            rotation: rotation
         }
         transformObjects(transform_)
     }
@@ -89,11 +92,17 @@ function Selection({
     const widthScale_ = (dragWidth + transform.size.width) / transform.size.width;
     const heightScale_ = (dragHeight + transform.size.height) / transform.size.height;
 
+    const dy = (rotatePoint.position.y - transform.size.height/2 - 20)
+    const dx = rotatePoint.position.x
+    const added = Math.sign(dy) == 1 ? Math.PI : 0
+    const rotation = -Math.atan(dx/dy) + added + transform.rotation
+
     const selectStyles: CSSProperties = {
         top: transform.position.y * scale + dragY + "px",
         left: transform.position.x * scale + dragX + "px",
         width: transform.size.width * scale + dragWidth + "px",
-        height: transform.size.height * scale + dragHeight + "px"
+        height: transform.size.height * scale + dragHeight + "px",
+        transform: `rotateZ(${rotation}rad)`,
     }
 
     return (
@@ -122,6 +131,11 @@ function Selection({
                             onMouseDown={drag.startDrag}>
                         </div>
 
+                        <ResizePoint 
+                            className={joinStyles(styles.rotate, styles.point)}
+                            saveTransformObjects={saveTransformObjects}
+                            dragPoint={rotatePoint}
+                        />
                         <ResizePoint 
                             className={joinStyles(styles.left, styles.point)}
                             saveTransformObjects={saveTransformObjects}

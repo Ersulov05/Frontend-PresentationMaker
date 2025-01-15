@@ -14,6 +14,7 @@ const PresentationMax: PresentationType = {
                 pos: { x: 0, y: 0 },
                 size: { width: 50, height: 50 },
                 src: '/image/Test.svg',
+                rotation: 0,
                 type: 'image'
                 },
                 {
@@ -36,6 +37,7 @@ const PresentationMax: PresentationType = {
                     type: "solid",
                     color: "#00000000"
                 },
+                rotation: 0,
                 type: 'text'
                 }
             ],
@@ -49,6 +51,7 @@ const PresentationMax: PresentationType = {
                 pos: { x: -100, y: 100 },
                 size: { width: 100, height: 100 },
                 src: '/image/react.svg',
+                rotation: 0,
                 type: 'image'
                 },
                 {
@@ -71,6 +74,7 @@ const PresentationMax: PresentationType = {
                     type: "solid",
                     color: "#00000000"
                 },
+                rotation: 0,
                 type: 'text'
                 }
             ],
@@ -84,6 +88,7 @@ const PresentationMax: PresentationType = {
                 pos: { x: 0, y: 0 },
                 size: { width: 50, height: 50 },
                 src: '/image/Test.svg',
+                rotation: 0,
                 type: 'image'
                 },
                 {
@@ -106,6 +111,7 @@ const PresentationMax: PresentationType = {
                     type: "solid",
                     color: "#00000000"
                 },
+                rotation: 0,
                 type: 'text'
                 }
             ],
@@ -117,15 +123,15 @@ const PresentationMax: PresentationType = {
 let localEditor: EditorType | null = null
 
 const data = localStorage.getItem('localData')
-if (data) {
-    const editorData = JSON.parse(data)
-    if (validateEditorData(editorData)) {
-        localEditor = {
-            ...editorData,
-            keys: new Set<string>()
-        }
-    }
-}
+// if (data) {
+//     const editorData = JSON.parse(data)
+//     if (validateEditorData(editorData)) {
+//         localEditor = {
+//             ...editorData,
+//             keys: new Set<string>()
+//         }
+//     }
+// }
 
 export const firstSlide: SlideType = {
     uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
@@ -139,7 +145,8 @@ export const firstSlide: SlideType = {
         pos: { x: 260, y: 70 },
         size: { width: 400, height: 400 },
         src: "/image/iconPlus2.svg",
-        type: 'image'
+        type: 'image',
+        rotation: 0,
         },
     ],
 } 
@@ -174,6 +181,7 @@ export const defaultPresintation: PresentationType = {
                     type: "solid",
                     color: "#00000000"
                 },
+                rotation: 0,
                 type: 'text'
                 },
                 {
@@ -196,6 +204,7 @@ export const defaultPresintation: PresentationType = {
                         type: "solid",
                         color: "#00000000"
                     },
+                    rotation: 0,
                     type: 'text'
                 }
             ],

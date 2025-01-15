@@ -23,29 +23,41 @@ function TextObject({ object, widthCoef}: ObjectProps)
         }
 
     return (
-        <div className={styles.textArea} 
-            style={{
-                top: `${object.pos.y*widthCoef}px`,
-                left: `${object.pos.x*widthCoef}px`,
-                width: `${object.size.width}px`,
-                height: `${object.size.height}px`,
-                background: object.backgroundColor.type === "solid"
-                    ? object.backgroundColor.color
-                    : `linear-gradient(${object.backgroundColor.angle}deg, ${object.backgroundColor.colors.join(', ')})`,
-                fontFamily: object.font.family, 
-                fontWeight: object.font.weight,  
-                transform: `scale(${widthCoef})`,
-                transformOrigin: "top left",
-                fontSize: `${object.font.size}px`, //Влияет на высоту блока
-                // lineHeight: `${object.font.lineHeight}px` 
-            }}>
-            <div 
-                style={textColorStyles}
-                ref={containerRef} 
-                className={styles.text} 
-                dangerouslySetInnerHTML={{ __html: object.value}}
-            ></div>
+        <div style={{
+            position: "absolute",
+            transform: `scale(${widthCoef})`,
+            transformOrigin: "top left",
+            top: `${object.pos.y*widthCoef}px`,
+            left: `${object.pos.x*widthCoef}px`,
+            width: `${object.size.width}px`,
+            height: `${object.size.height}px`,
+        }}>
+            <div className={styles.textArea} 
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    transform: `rotateZ(${object.rotation}rad)`,
+                    background: object.backgroundColor.type === "solid"
+                        ? object.backgroundColor.color
+                        : `linear-gradient(${object.backgroundColor.angle}deg, ${object.backgroundColor.colors.join(', ')})`,
+                    fontFamily: object.font.family, 
+                    fontWeight: object.font.weight,  
+                    
+                    fontSize: `${object.font.size}px`,
+                    
+                    // lineHeight: `${object.font.lineHeight}px` 
+                }}>
+                <div 
+                    style={{
+                        ...textColorStyles,
+                    }}
+                    ref={containerRef} 
+                    className={styles.text} 
+                    dangerouslySetInnerHTML={{ __html: object.value}}
+                ></div>
+            </div>
         </div>
+        
     )
 }
 

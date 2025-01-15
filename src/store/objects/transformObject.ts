@@ -11,7 +11,8 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
             size: {
                 width: 0,
                 height: 0
-            }
+            },
+            rotation: 0
         }
     }
     let xStart = selectedObjects[0].pos.x
@@ -32,7 +33,8 @@ function getGlobalSelectionObject(selectedObjects: ObjectType[]): TransformType 
         size: {
             width: xEnd - xStart,
             height: yEnd - yStart
-        }
+        },
+        rotation: 0
     }
 }
 
@@ -68,7 +70,8 @@ function transformObjects(editor: EditorType, transform: TransformType): EditorT
                                     size: {
                                         width: object.size.width * widthScale,
                                         height: object.size.height * heightScale
-                                    }
+                                    },
+                                    rotation: transform.rotation
                                 }
                             } 
                             return object

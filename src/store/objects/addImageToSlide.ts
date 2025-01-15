@@ -20,6 +20,7 @@ function addImageToSlide(editor: EditorType, data: ImageDataType): EditorType {
         pos: data.position,
         size: data.size,
         src: data.src,
+        rotation: 0,
         type: "image"
     }
 

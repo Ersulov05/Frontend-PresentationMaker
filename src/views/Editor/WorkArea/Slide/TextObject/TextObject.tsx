@@ -130,6 +130,7 @@ function TextObject({
                 fontFamily: object.font.family, 
                 fontWeight: object.font.weight,  
                 fontSize: `${object.font.size}px`,  
+                transform: `rotateZ(${object.rotation}rad)`
                 //lineHeight: `${object.font.lineHeight*scale}px` 
             }}
         >

@@ -66,6 +66,7 @@ function ImageObject({
                 left: `${object.pos.x*scale}px`,
                 width: `${object.size.width*scale}px`,
                 height: `${object.size.height*scale}px`,
+                transform: `rotateZ(${object.rotation}rad)`,
             }}
             onClick={handleClick}
         />
