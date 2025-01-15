@@ -8,6 +8,7 @@ import styles from './topPanel.module.css'
 
 function TopPanel() {
     const name = useAppSelector(editor => editor.presentation.name)
+    const slides = useAppSelector(editor => editor.presentation.slides)
 
     const { 
         renamePresentation,
@@ -26,7 +27,7 @@ function TopPanel() {
                 </h1>
                 
             </div>
-            <Button border={10} onClick={() => navigate('slide-show')}>Слайд-шоу</Button>
+            <Button disabled={slides.length === 0} border={10} onClick={() => navigate('slide-show')}>Слайд-шоу</Button>
         </header>
     )
 }

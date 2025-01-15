@@ -17,6 +17,7 @@ import { Gradient, ObjectTextType, SlideType, Solid } from '../../../store/Prese
 import { NumberField } from '../../../components/numberField/NumberField'
 import { ListChooseColor } from '../ListChooseColor/ListChooseColor'
 import { defaultPresintation } from '../../../store/data'
+import { joinStyles } from '../../../store/utils/joinStyles'
 
 type ToolPanelProps = {
     onGeneratePDF: () => void
@@ -74,6 +75,7 @@ function ToolPanel({
         }
     }
     const { togglePopup } = useToolContext() || {};
+    const slides = useAppSelector(editor => editor.presentation.slides)
     const selectedObjectIds = useAppSelector(editor => editor.selection.selectedObjectIds)
     const selectedObject = selectedSlide?.objects.find(object => object.uid === selectedObjectIds[0])
     const viewChangeTextStyle = selectedObject?.type === "text" ? true : false
@@ -98,13 +100,19 @@ function ToolPanel({
                         </Button>
                         <Button 
                             onClick={copySlides}
-                            className={styles.addSlideButton}
+                            className={joinStyles(
+                                styles.addSlideButton,
+                                slides.length === 0 && styles.disabled
+                            )}
                         >
                             <Icon iconSrc={"/image/iconCopySlide.svg"} size={30}/>
                         </Button>
                         <Button 
                             onClick={deleteSlides}
-                            className={styles.addSlideButton}
+                            className={joinStyles(
+                                styles.addSlideButton,
+                                slides.length === 0 && styles.disabled
+                            )}
                             border={3}
                         >
                             <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
@@ -137,29 +145,30 @@ function ToolPanel({
                     <Strip orientation={"vertical"}/>
                     <ImportExportButtons onGeneratePDF={onGeneratePDF}/>
                     <Strip orientation={"vertical"}/>
-                    <div className={styles.objectButtonsContainer}>
-                        <Button 
-                            onClick={addTextObject}
-                            className={styles.toolButton}
-                        >
-                            <Text>Т</Text>
-                        </Button>
-                        <Button 
-                            onClick={togglePopup}
-                            className={styles.addSlideButton}
-                        >
-                            <Icon iconSrc={"/image/iconImage.svg"} size={30} className={styles.iconPlus}/>
-                        </Button>
-                        <Button 
-                            id={"deleteObjectButton"}
-                            onClick={deleteObjects}
-                            className={styles.addSlideButton}
-                            border={3}
-                        >
-                            <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
-                        </Button>                        
-                    </div>
-                    
+                    {slides.length > 0 && 
+                        <div className={styles.objectButtonsContainer}>
+                            <Button 
+                                onClick={addTextObject}
+                                className={styles.toolButton}
+                            >
+                                <Text>Т</Text>
+                            </Button>
+                            <Button 
+                                onClick={togglePopup}
+                                className={styles.addSlideButton}
+                            >
+                                <Icon iconSrc={"/image/iconImage.svg"} size={30} className={styles.iconPlus}/>
+                            </Button>
+                            <Button 
+                                id={"deleteObjectButton"}
+                                onClick={deleteObjects}
+                                className={styles.addSlideButton}
+                                border={3}
+                            >
+                                <Icon iconSrc={"/image/iconDelete.svg"} size={22}/>
+                            </Button>                        
+                        </div>
+                    }
                     {viewChangeTextStyle && selectedObject?.type === "text" && (
                         <>
                             <Strip orientation={"vertical"}/>
@@ -182,13 +191,17 @@ function ImportExportButtons({
         exportPresentationToJSON,
     } = useAppActions()
     const presentation = useAppSelector(editor => editor.presentation)
+    const slides = useAppSelector(editor => editor.presentation.slides)
 
     return (
         <div className={styles.importExportContainer}>
             <ButtonWithList
                 value={"Generate PDF"}
                 onClick={onGeneratePDF}
-                className={styles.toolButtonNoAspect}
+                className={joinStyles(
+                    styles.toolButtonNoAspect,
+                    slides.length === 0 && styles.disabled)
+                }
             >
                 <Button
                     style={{width: "100%"}} 
@@ -199,25 +212,26 @@ function ImportExportButtons({
                     Preview
                 </Button>
             </ButtonWithList>
-            
+            <Button 
+                onClick={() => exportPresentationToJSON(presentation)}
+                border={7}
+                className={joinStyles(
+                    styles.toolButtonNoAspect,
+                    slides.length === 0 && styles.disabled
+                )}
+            >
+                Export
+            </Button>
             <FileInput
                 id={"importPresentationFromJSON"}
                 onChange={importPresentationFromJSON}
             />
-            
             <Button 
                 onClick={() => {document.getElementById('importPresentationFromJSON')?.click()}}
                 border={7}
                 className={styles.toolButtonNoAspect}
             >
                 Import
-            </Button>
-            <Button 
-                onClick={() => exportPresentationToJSON(presentation)}
-                border={7}
-                className={styles.toolButtonNoAspect}
-            >
-                Export
             </Button>
         </div>
     )

@@ -128,3 +128,8 @@
     box-sizing: border-box;
     text-align: center;
 }
+
+.disabled {
+    pointer-events: none;
+    background-color: rgb(180, 180, 180);
+}
