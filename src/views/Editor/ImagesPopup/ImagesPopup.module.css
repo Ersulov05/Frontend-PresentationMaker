@@ -6,6 +6,7 @@
 }
 
 .searchField {
+    all: unset;
     border: solid 1px black;
     padding-inline: 10px;
     padding-block: 5px;

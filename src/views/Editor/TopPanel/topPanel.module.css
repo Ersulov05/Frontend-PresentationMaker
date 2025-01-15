@@ -6,3 +6,9 @@
     height: var(--top-panel-height);
     overflow: hidden;
 }
+
+.presentationNameField {
+    all: unset;
+    width: 80vw;
+    padding-inline: 10px;
+}

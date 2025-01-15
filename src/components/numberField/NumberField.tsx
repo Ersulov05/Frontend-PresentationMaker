@@ -80,7 +80,7 @@ function NumberField({ className = "", style = {}, value="", placeholder = "", i
     return (
         <input 
             type="text" 
-            className={joinStyles(className, _style.input)} 
+            className={joinStyles(className ?? _style.input)} 
             style={style} 
             value={inputValue}
             placeholder={placeholder}
