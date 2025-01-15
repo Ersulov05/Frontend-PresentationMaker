@@ -41,8 +41,8 @@ function Selection({
         return {
             ...object,
             size: {
-                width: object.size.width * widthScale_,
-                height: object.size.height * heightScale_
+                width: object.size.width * widthScale,
+                height: object.size.height * heightScale
             },
             pos: {
                 x: transform.position.x  + dragX/scale + (object.pos.x - transform.position.x) * widthScale,
@@ -84,10 +84,8 @@ function Selection({
     const dragWidth = rightUpPoint.position.x - leftUpPoint.position.x - leftDownPoint.position.x + rightDownPoint.position.x - leftPoint.position.x + rightPoint.position.x
     const dragHeight = - rightUpPoint.position.y - leftUpPoint.position.y + leftDownPoint.position.y + rightDownPoint.position.y - upPoint.position.y + downPoint.position.y
 
-    const widthScale = (dragWidth + transform.size.width) / transform.size.width;
-    const heightScale = (dragHeight + transform.size.height) / transform.size.height;
-    const widthScale_ = (dragWidth + transform.size.width) / transform.size.width;
-    const heightScale_ = (dragHeight + transform.size.height) / transform.size.height;
+    const widthScale = (dragWidth + transform.size.width) / transform.size.width
+    const heightScale = (dragHeight + transform.size.height) / transform.size.height
 
     const selectStyles: CSSProperties = {
         top: transform.position.y * scale + dragY + "px",
@@ -175,7 +173,6 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale} 
-                                // selected={false}
                                 onSetEdited={selectedObjectIds.length === 1 
                                     ? setEditedObject
                                     : undefined
@@ -189,16 +186,11 @@ function Selection({
                                 key={object.uid} 
                                 object={dragObject} 
                                 scale={scale}
-                                // selected={false}
-                                // onSetEdited={selectedObjectIds.length === 1 
-                                //     ? () => setEditedObject(object.uid)
-                                //     : undefined
-                                // }
                                 edited={edetedObject === object.uid}
                             />
                         );
                     default:
-                        return null;
+                        return null
                 }
             })}
         </>

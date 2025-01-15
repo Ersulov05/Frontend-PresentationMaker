@@ -5,10 +5,8 @@ import { ListChooseColor } from '../../ListChooseColor/ListChooseColor'
 import styles from './PopupChangeBackground.module.css'
 import { BackgroundType, Gradient, Solid } from '../../../../store/PresentationType'
 import { BackgroundDataType } from '../../../../store/slides/changeBackgroundSlide'
-import { PopupAddColor } from '../PopupAddColor/PopupAddColor'
 import { useAppActions } from '../../../hooks/useAppActions'
 import useAppSelector from '../../../hooks/useAppSelector'
-import { PopupAddGradient } from '../PopupAddGradient/PopupAddGradient'
 import { FileInput } from '../../../../components/fileInput/fileInput'
 import { Base64FormatType, getBase64ByFile, isValidBase64Data } from '../../../../store/utils/imageManager'
 
@@ -167,11 +165,17 @@ function PopupChangeBackground({
                         <Button 
                             className={styles.popupButton} 
                             onClick={() => onChangeBackgroundSlide(true)}
-                        >Apply to all</Button>
+                            border={5}
+                        >
+                            Apply to all
+                        </Button>
                         <Button 
                             className={styles.popupButton} 
                             onClick={() => onChangeBackgroundSlide()}
-                        >Save</Button>
+                            border={5}
+                        >
+                            Save
+                        </Button>
                     </div>
                 </div>
             </div>

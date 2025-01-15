@@ -98,7 +98,6 @@ function Slide({
             style={slideStyles}
         >
             {noSelectedObjects.map(object => (
-                //добавить switch case
                 (object.type == 'text')
                     ? <TextObject 
                         key={object.uid} 
