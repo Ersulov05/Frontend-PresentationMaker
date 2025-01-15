@@ -123,15 +123,15 @@ const PresentationMax: PresentationType = {
 let localEditor: EditorType | null = null
 
 const data = localStorage.getItem('localData')
-// if (data) {
-//     const editorData = JSON.parse(data)
-//     if (validateEditorData(editorData)) {
-//         localEditor = {
-//             ...editorData,
-//             keys: new Set<string>()
-//         }
-//     }
-// }
+if (data) {
+    const editorData = JSON.parse(data)
+    if (validateEditorData(editorData)) {
+        localEditor = {
+            ...editorData,
+            keys: new Set<string>()
+        }
+    }
+}
 
 export const firstSlide: SlideType = {
     uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
