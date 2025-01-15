@@ -190,10 +190,10 @@ function Selection({
                                 object={dragObject} 
                                 scale={scale}
                                 // selected={false}
-                                onSetEdited={selectedObjectIds.length === 1 
-                                    ? () => setEditedObject(object.uid)
-                                    : undefined
-                                }
+                                // onSetEdited={selectedObjectIds.length === 1 
+                                //     ? () => setEditedObject(object.uid)
+                                //     : undefined
+                                // }
                                 edited={edetedObject === object.uid}
                             />
                         );
