@@ -1,5 +1,5 @@
 import { validateEditorData } from "../services/validationTypes"
-import { PresentationType } from "./PresentationType"
+import { PresentationType, SlideType } from "./PresentationType"
 import { EditorType } from "./redux/EditorType"
 
 const PresentationMax: PresentationType = {
@@ -126,6 +126,23 @@ if (data) {
         }
     }
 }
+
+export const firstSlide: SlideType = {
+    uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
+    background: {
+        type: "solid",
+        color: "#ffffff"
+    },
+    objects: [
+        {
+        uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
+        pos: { x: 260, y: 70 },
+        size: { width: 400, height: 400 },
+        src: "/image/iconPlus2.svg",
+        type: 'image'
+        },
+    ],
+} 
 
 export const defaultPresintation: PresentationType = {
     name: 'New presentation',

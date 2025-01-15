@@ -6,6 +6,9 @@ import styles from './WorkArea.module.css';
 import { ListActions, ListComponentsType } from '../../../components/listActions/ListActions.tsx';
 import { joinStyles } from '../../../store/utils/joinStyles.ts';
 import { PopupChangeBackground } from './PopupChangeBackground/PopupChangeBackground.tsx';
+import { firstSlide } from '../../../store/data.ts';
+import { PreviewSlide } from '../ListSlides/PreviewSlide/PreviewSlide.tsx';
+import { useAppActions } from '../../hooks/useAppActions.ts';
 
 type OverflowType = {
     top: number,
@@ -72,15 +75,11 @@ function WorkArea({
         setContextMenuVisible(false)
     }
 
-    if (!slide) {
-        return (
-            <div className={styles.workArea}>
-                <p>Нет слайда для отображения</p>
-            </div>
-        );
-    }
+    const {
+        addSlide
+    } = useAppActions()
 
-    const { objects } = slide;
+    const { objects } = slide ?? firstSlide
     const overflow: OverflowType = calculateOverflow(objects)
     const workAreaStyles: CSSProperties = {
         width: `${ scale * (WIDTH_SLIDE + Math.max(overflow.left, overflow.right) * 2)}px`,
@@ -104,14 +103,21 @@ function WorkArea({
                 onClick={closeContextMenu}
             >
                 <div className={styles.workArea} style={workAreaStyles}>
-                    <Slide 
-                        slide={slide} 
-                        style={{
-                            ...slideStyles
-                        }}
-                        scale={scale}
-                        tempBackground={tempBackground}
-                    />
+                    {slide
+                        ? <Slide 
+                            slide={slide} 
+                            style={{
+                                ...slideStyles
+                            }}
+                            scale={scale}
+                            tempBackground={tempBackground}
+                        />
+                        :  <PreviewSlide
+                            slide={firstSlide}
+                            scale={scale}
+                            onClick={addSlide}
+                        />
+                    }
                 </div>
                 {contextMenuVisible && (
                     <ListActions 
@@ -127,12 +133,11 @@ function WorkArea({
             {openPopupChangeBackground && (
                 <PopupChangeBackground 
                     onClose={() => setOpenPopupChangeBackground(false)}
-                    background={slide.background}
+                    background={slide ? slide.background : firstSlide.background}
                     onGetBackground={onGetTempBackground}
                 />
             )}
         </>
-        
     )
 }
 

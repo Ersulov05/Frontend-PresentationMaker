@@ -6,6 +6,7 @@ import { useDragAndDrop } from '../../hooks/useDragAndDrop.tsx';
 import { SlidesDrag } from './SlidesDrag/SlidesDrag.tsx';
 import { useAppActions } from '../../hooks/useAppActions.ts';
 import useAppSelector from '../../hooks/useAppSelector.ts';
+import { firstSlide } from '../../../store/data.ts';
 
 type SlidesProps = {
     tempBackground: BackgroundType | null,
@@ -18,6 +19,7 @@ function ListSlides({
         selectSlide, 
         translateSlides,
         addSlideToSelection,
+        addSlide,
     } = useAppActions()
     const keys = useAppSelector(editor => editor.keys)
     const slides = useAppSelector(editor => editor.presentation.slides)
@@ -168,21 +170,28 @@ function ListSlides({
             ref={listSlidesRef}
             className={styles.slides}
         >
-            {slides.map(slide => (
-                <PreviewSlide 
-                    key={slide.uid} 
-                    slide={slide} 
+
+            {slides.length > 0
+                ? slides.map(slide => (
+                    <PreviewSlide 
+                        key={slide.uid} 
+                        slide={slide} 
+                        scale={scale}
+                        onClick={() => handleClick(slide.uid)}
+                        isSelected={selectedSlideIds.includes(slide.uid)}
+                        background={
+                            selectedSlideIds[0] === slide.uid 
+                                ? tempBackground 
+                                : null
+                        }
+                        onDrag={dragSlide.startDrag}
+                    />))
+                : <PreviewSlide
+                    slide={firstSlide}
                     scale={scale}
-                    onClick={() => handleClick(slide.uid)}
-                    isSelected={selectedSlideIds.includes(slide.uid)}
-                    background={
-                        selectedSlideIds[0] === slide.uid 
-                            ? tempBackground 
-                            : null
-                    }
-                    onDrag={dragSlide.startDrag}
-                 />
-            ))}
+                    onClick={addSlide}
+                />
+            }
         </div>
     )
 }
