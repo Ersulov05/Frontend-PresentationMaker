@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { joinStyles } from "../../store/utils/joinStyles";
 import _style from "./TextField.module.css"
 
@@ -19,6 +19,10 @@ function TextField({ className = "", style = {}, value="", placeholder = "", onC
             onChange(value)
         }
     }
+
+    useEffect(() => {
+        setInputValue(value)
+    }, [value])
     return (
         <input 
             type="text" 

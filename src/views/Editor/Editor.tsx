@@ -25,7 +25,6 @@ function Editor({history}: EditorProps) {
     return (
         <HistoryContext.Provider value={history}>
         <>
-            <TopPanel></TopPanel>
             <ToolProvider>
                 <MainContent/>
             </ToolProvider>
@@ -64,37 +63,39 @@ const MainContent = () => {
     };
 
     const hiddenContainerRef = useRef<HTMLDivElement>(null)
-
     return (
-        <main className={styles.main}>
-            <div className={joinStyles(styles.container, !openedSidePopup && styles.containerFullWidth)}>
-                <ToolPanel 
-                    onGeneratePDF={handleGeneratePDF}
-                    selectedSlide={selectedSlide}
-                />
-                <div className={styles.workContainer}>
-                    <ListSlides tempBackground={tempBackground} />
-                    <WorkArea 
-                        slide={selectedSlide} 
-                        scale={scale}
-                        onGetTempBackground={setTempBackground}
-                        tempBackground={tempBackground}
+        <>
+            <TopPanel></TopPanel>
+            <main className={styles.main}>
+                <div className={joinStyles(styles.container, !openedSidePopup && styles.containerFullWidth)}>
+                    <ToolPanel 
+                        onGeneratePDF={handleGeneratePDF}
+                        selectedSlide={selectedSlide}
                     />
+                    <div className={styles.workContainer}>
+                        <ListSlides tempBackground={tempBackground} />
+                        <WorkArea 
+                            slide={selectedSlide} 
+                            scale={scale}
+                            onGetTempBackground={setTempBackground}
+                            tempBackground={tempBackground}
+                        />
+                    </div>
                 </div>
-            </div>
-            {openedSidePopup && 
-                <SidePopap title={"Images"} onClose={togglePopup}>
-                    <ImagesPopup/>
-                </SidePopap>
-            }
-            {openedPresentationPreview && 
-                <PreviewPresentation 
-                    onClose={togglePresentationPreview}
-                    onGeneratePDF={handleGeneratePDF}
-                />
-            }
-            <HiddenContainer ref={hiddenContainerRef}/>
-        </main>
+                {openedSidePopup && 
+                    <SidePopap title={"Images"} onClose={togglePopup}>
+                        <ImagesPopup/>
+                    </SidePopap>
+                }
+                {openedPresentationPreview && 
+                    <PreviewPresentation 
+                        onClose={togglePresentationPreview}
+                        onGeneratePDF={handleGeneratePDF}
+                    />
+                }
+                <HiddenContainer ref={hiddenContainerRef}/>
+            </main>
+        </>
     );
 };
 
