@@ -127,9 +127,69 @@ if (data) {
     }
 }
 
+export const defaultPresintation: PresentationType = {
+    name: 'New presentation',
+    slides: [
+        {
+            uid: 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465',
+            background: {
+                type: "solid",
+                color: "#ffffff"
+            },
+            objects: [
+                {
+                uid: '40fd75e3-2abc-4b14-a02b-31740e2774d2',
+                pos: { x: 320, y: 150 },
+                size: { width: 400, height: 70 },
+                value: 'Заголовок',
+                font: {
+                    style: 'normal',
+                    family: 'arial',
+                    size: 60,
+                    weight: 400,
+                    lineHeight: 1
+                },
+                color: {
+                    type: "solid",
+                    color: "#000000"
+                },
+                backgroundColor: {
+                    type: "solid",
+                    color: "#00000000"
+                },
+                type: 'text'
+                },
+                {
+                    uid: '50fd75e3-2abc-4b14-a02b-31740e2774d2',
+                    pos: { x: 380, y: 300 },
+                    size: { width: 200, height: 50 },
+                    value: 'Подзаголовок',
+                    font: {
+                        style: 'normal',
+                        family: 'arial',
+                        size: 25,
+                        weight: 400,
+                        lineHeight: 1
+                    },
+                    color: {
+                        type: "solid",
+                        color: "#000000"
+                    },
+                    backgroundColor: {
+                        type: "solid",
+                        color: "#00000000"
+                    },
+                    type: 'text'
+                }
+            ],
+        }
+    ],
+    scale: 1
+}
+
 const defaultEditor: EditorType = localEditor ??
     {
-        presentation: PresentationMax,
+        presentation: defaultPresintation,
         selection: {
             selectedSlideIds: [ '28b0e84e-eb72-4f63-9cc9-1ed47ea3e07b', 'b27d7ce8-86c7-4e45-8cbd-79e8fbf8c465', 'b28d7ce8-86c7-4e45-8cbd-79e8fbf8c465' ],
             selectedObjectIds: []

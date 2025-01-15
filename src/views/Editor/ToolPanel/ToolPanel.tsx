@@ -16,6 +16,7 @@ import { ButtonWithList } from '../../../components/buttonWithList/ButtonWithLis
 import { Gradient, ObjectTextType, SlideType, Solid } from '../../../store/PresentationType'
 import { NumberField } from '../../../components/numberField/NumberField'
 import { ListChooseColor } from '../ListChooseColor/ListChooseColor'
+import { defaultPresintation } from '../../../store/data'
 
 type ToolPanelProps = {
     onGeneratePDF: () => void
@@ -37,6 +38,7 @@ function ToolPanel({
         deleteObjects,
         addTextObject,
         setEditor,
+        setPresentation,
     } = useAppActions()
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -80,6 +82,13 @@ function ToolPanel({
             <div className={styles.container}>
                 <div className={styles.toolPanel}>
                     <div className={styles.slideButtonsContainer}>
+                    <Button 
+                            onClick={() => setPresentation(defaultPresintation)}
+                            className={styles.addSlideButton}
+                            border={7}
+                        >
+                            New
+                        </Button>
                         <Button 
                             onClick={addSlide}
                             className={styles.addSlideButton}
@@ -102,6 +111,7 @@ function ToolPanel({
                         <Button 
                             onClick={() => {}}
                             className={styles.addSlideButton}
+                            border={7}
                         >
                             <Text>Тemplate</Text>
                         </Button>
